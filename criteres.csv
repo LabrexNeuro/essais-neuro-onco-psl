@@ -1,0 +1,99 @@
+﻿protocole_id;type;texte;champ;operateur;valeur;combinaison;a_confirmer
+LEGATO;inclusion;Âge d'au moins 18 ans;age;>=;18;;
+LEGATO;inclusion;Glioblastome IDH-sauvage prouvé histologiquement (diagnostic ou récidive);diagnostic;egal;glioblastome;;
+LEGATO;inclusion;Première progression ou récidive après le traitement de première intention;situation;egal;recidive1;;
+LEGATO;inclusion;Radiothérapie antérieure terminée depuis au moins 6 mois (26 semaines);rt_cerebrale;egal;VRAI;et;
+LEGATO;inclusion;Radiothérapie antérieure terminée depuis au moins 6 mois (26 semaines);delai_rt;>=;26;et;
+LEGATO;inclusion;Radiothérapie fractionnée ou abrégée d'au moins 15 fractions;rt_fractions;>=;15;;
+LEGATO;inclusion;Indice de performance OMS de 0 à 2;oms;<=;2;;
+LEGATO;inclusion;Maladie mesurable selon RANO, diamètre tumoral maximal de 5 cm au plus;mesurable;egal;mesurable;et;
+LEGATO;inclusion;Maladie mesurable selon RANO, diamètre tumoral maximal de 5 cm au plus;diametre_cm;<=;5;et;
+LEGATO;inclusion;Corticoïdes : dose stable ou en baisse pendant les 7 jours précédant l'inclusion (ou aucun corticoïde);dexa;<=;0;ou;
+LEGATO;inclusion;Corticoïdes : dose stable ou en baisse pendant les 7 jours précédant l'inclusion (ou aucun corticoïde);cortico_stable;egal;stable;ou;
+LEGATO;inclusion;Si chirurgie pour la récidive : rétablissement complet et récidive confirmée par l'histologie;;;;;oui
+LEGATO;non-inclusion;Traitement antérieur par nitroso-urée;nitrosouree;egal;VRAI;;
+LEGATO;non-inclusion;Traitement anticancéreux déjà reçu pour la récidive (sauf chirurgie);ttt_recidive;egal;VRAI;;
+LEGATO;non-inclusion;Leucémie aiguë ou maladie myéloïde (antécédent ou actuelle);hemopathie;egal;VRAI;;
+LEGATO;non-inclusion;Baisse significative des plaquettes ou des leucocytes, ou insuffisance rénale sévère;insuff_organe;egal;VRAI;;
+LEGATO;non-inclusion;Hypersensibilité connue à la lomustine ou à ses excipients;allergie_lomustine;egal;VRAI;;
+LEGATO;non-inclusion;Maladie cœliaque ou allergie au blé connue;coeliaque;egal;VRAI;;
+LEGATO;non-inclusion;Vaccin vivant atténué dans les 3 mois précédant la lomustine;vaccin_vivant;egal;VRAI;;
+LEGATO;non-inclusion;Affection médicale grave ou non contrôlée (infection, alcoolisme chronique, toxicomanie…) selon l'investigateur;maladie_grave;egal;VRAI;ou;
+LEGATO;non-inclusion;Affection médicale grave ou non contrôlée (infection, alcoolisme chronique, toxicomanie…) selon l'investigateur;infection;egal;VRAI;ou;
+LEGATO;non-inclusion;Contre-indication à l'IRM, au traceur d'imagerie ou au produit de contraste;irm_ci;egal;VRAI;ou;
+LEGATO;non-inclusion;Contre-indication à l'IRM, au traceur d'imagerie ou au produit de contraste;allergie_contraste;egal;VRAI;ou;
+SONOBIRD;inclusion;Âge d'au moins 18 ans;age;>=;18;;
+SONOBIRD;inclusion;Indice de Karnofsky d'au moins 70;kps;>=;70;;
+SONOBIRD;inclusion;Glioblastome en première récidive après le traitement de première ligne;diagnostic;egal;glioblastome;et;
+SONOBIRD;inclusion;Glioblastome en première récidive après le traitement de première ligne;situation;egal;recidive1;et;
+SONOBIRD;inclusion;Taille tumorale de 5 cm au plus (après chirurgie);diametre_cm;<=;5;;
+SONOBIRD;inclusion;Récidive éligible à une résection chirurgicale;resecable;egal;possible;;
+SONOBIRD;non-inclusion;Tumeur infratentorielle;infratentorielle;egal;VRAI;;
+SONOBIRD;non-inclusion;Corticoïdes pour la tumeur : 6 mg ou plus d'équivalent dexaméthasone;dexa;>=;6;;
+SONOBIRD;non-inclusion;Problème médical compromettant le traitement par ultrasons;;;;;oui
+NAVIG-1;inclusion;Âge d'au moins 18 ans;age;>=;18;;
+NAVIG-1;inclusion;Indice de Karnofsky d'au moins 60;kps;>=;60;;
+NAVIG-1;inclusion;Glioblastome nouvellement diagnostiqué;diagnostic;egal;glioblastome;et;
+NAVIG-1;inclusion;Glioblastome nouvellement diagnostiqué;situation;egal;nouveau;et;
+NAVIG-1;inclusion;Radiochimiothérapie de Stupp terminée (45 Gy ou plus), éligible au témozolomide adjuvant;stupp;egal;terminee;;
+NAVIG-1;inclusion;Patient HLA-A2;hla_a2;egal;positif;;
+NAVIG-1;inclusion;Expression de PTPRZ1;ptprz1;egal;exprime;;
+NAVIG-1;non-inclusion;Mutation IDH;diagnostic;dans;astro_idh|oligo;;
+NAVIG-1;non-inclusion;Corticoïdes : plus de 10 mg équivalent prednisone (environ 1,5 mg de dexaméthasone);dexa;>;1,5;;
+NAVIG-1;non-inclusion;Optune / champs électriques (TTFields) : exclus en phase 1, autorisés en phase 2;;;;;oui
+NAVIG-1;non-inclusion;Maladie dysimmunitaire;dysimmune;egal;VRAI;;
+NAVIG-1;non-inclusion;Traitement antérieur par bévacizumab;bevacizumab;egal;VRAI;;
+RESURGE;inclusion;Âge d'au moins 18 ans;age;>=;18;;
+RESURGE;inclusion;Glioblastome prouvé lors de la première chirurgie;diagnostic;egal;glioblastome;;
+RESURGE;inclusion;Traitement antérieur par radiothérapie, avec ou sans témozolomide;rt_cerebrale;egal;VRAI;;
+RESURGE;inclusion;Intervention chirurgicale réalisable;resecable;egal;possible;;
+RESURGE;inclusion;Première progression selon RANO;situation;egal;recidive1;;
+RESURGE;inclusion;Indice de Karnofsky d'au moins 70;kps;>=;70;;
+RESURGE;non-inclusion;Engagement sous-falcoriel à l'IRM;engagement_falcoriel;egal;VRAI;;
+RESURGE;non-inclusion;Prise de contraste en zone fonctionnelle;zone_fonctionnelle;egal;VRAI;;
+SONOFIRST;inclusion;Âge de 18 à 70 ans;age;>=;18;et;
+SONOFIRST;inclusion;Âge de 18 à 70 ans;age;<=;70;et;
+SONOFIRST;inclusion;Apte à donner un consentement libre et éclairé;;;;;oui
+SONOFIRST;inclusion;Glioblastome IDH-sauvage nouvellement diagnostiqué (biopsie stéréotaxique ou « king size » possible);diagnostic;egal;glioblastome;et;
+SONOFIRST;inclusion;Glioblastome IDH-sauvage nouvellement diagnostiqué (biopsie stéréotaxique ou « king size » possible);situation;egal;nouveau;et;
+SONOFIRST;inclusion;Indice de Karnofsky d'au moins 70;kps;>=;70;;
+SONOFIRST;inclusion;Admissible à une résection chirurgicale totale ou partielle;resecable;egal;possible;;
+SONOFIRST;inclusion;Extension tumorale de 70 mm au plus (IRM T1);diametre_cm;<=;7;;
+SONOFIRST;inclusion;Admissible à la radiochimiothérapie de Stupp;stupp;egal;a_venir;;
+SONOFIRST;inclusion;Hémoglobine d'au moins 10 g/dL;hemoglobine;>=;10;;
+SONOFIRST;inclusion;Leucocytes d'au moins 3 G/L;leucocytes;>=;3;;
+SONOFIRST;inclusion;Neutrophiles d'au moins 1,5 G/L;pnn;>=;1,5;;
+SONOFIRST;inclusion;Plaquettes d'au moins 100 G/L;plaquettes;>=;100;;
+SONOFIRST;inclusion;Bilirubine totale inférieure à 1,5 fois la limite supérieure;bilirubine;<;1,5;;
+SONOFIRST;inclusion;ASAT et ALAT à 3 fois la limite supérieure au plus;transaminases;<=;3;;
+SONOFIRST;inclusion;Phosphatases alcalines inférieures à 3 fois la limite supérieure;pal;<;3;;
+SONOFIRST;inclusion;Clairance de la créatinine d'au moins 60 mL/min;dfg;>=;60;;
+SONOFIRST;inclusion;"Femme en âge de procréer : test de grossesse négatif et contraception acceptée ; homme : contraception acceptée";;;;;oui
+SONOFIRST;inclusion;Consentement éclairé écrit, daté et signé;;;;;oui
+SONOFIRST;inclusion;Affiliation à la sécurité sociale française (hors AME);;;;;oui
+SONOFIRST;non-inclusion;Tumeur multifocale hors d'une zone de 70 mm, ou de la fosse postérieure;multifocal_large;egal;VRAI;ou;
+SONOFIRST;non-inclusion;Tumeur multifocale hors d'une zone de 70 mm, ou de la fosse postérieure;infratentorielle;egal;VRAI;ou;
+SONOFIRST;non-inclusion;Anomalies FLAIR diffuses attribuables à une gliomatose;gliomatose;egal;VRAI;;
+SONOFIRST;non-inclusion;Signes d'hypertension intracrânienne non contrôlée;htic;egal;VRAI;;
+SONOFIRST;non-inclusion;Épilepsie non contrôlée;epilepsie;egal;VRAI;;
+SONOFIRST;non-inclusion;Traitement antiplaquettaire ou antithrombotique à poursuivre;antiplaquettaire;egal;VRAI;ou;
+SONOFIRST;non-inclusion;Traitement antiplaquettaire ou antithrombotique à poursuivre;anticoag;egal;VRAI;ou;
+SONOFIRST;non-inclusion;Grossesse ou allaitement;grossesse;egal;VRAI;;
+SONOFIRST;non-inclusion;Contre-indication à l'IRM, ou allergie au gadolinium ou à un produit de contraste;irm_ci;egal;VRAI;ou;
+SONOFIRST;non-inclusion;Contre-indication à l'IRM, ou allergie au gadolinium ou à un produit de contraste;allergie_contraste;egal;VRAI;ou;
+SONOFIRST;non-inclusion;Hypersensibilité aux microsphères de perflutrène (Luminity, Definity);allergie_perflutren;egal;VRAI;;
+SONOFIRST;non-inclusion;Anévrisme intracrânien connu, ou matériel implanté (clips, shunt, stent, wafer, substitut de dure-mère non résorbable);anevrisme_materiel;egal;VRAI;;
+SONOFIRST;non-inclusion;Maladie intercurrente ou comorbidité pouvant gêner le dispositif ou l'évaluation (selon l'investigateur);maladie_grave;egal;VRAI;;
+SONOFIRST;non-inclusion;Hypertension artérielle de grade 3 ou plus non contrôlée;hta3;egal;VRAI;;
+SONOFIRST;non-inclusion;Infection connue ou suspectée, ou chronique instable, nécessitant un traitement systémique;infection;egal;VRAI;;
+SONOFIRST;non-inclusion;Maladie cardiaque importante;cardiopathie;egal;VRAI;;
+SONOFIRST;non-inclusion;Maladie pulmonaire importante;pneumopathie;egal;VRAI;;
+SONOFIRST;non-inclusion;Insuffisance rénale grave ou myélosuppression grave;insuff_organe;egal;VRAI;;
+SONOFIRST;non-inclusion;Maladie psychiatrique ou situation sociale limitant le respect de l'étude;psy;egal;VRAI;;
+SONOFIRST;non-inclusion;Immunodéficience (VIH);vih;egal;VRAI;;
+SONOFIRST;non-inclusion;Patient sous protection judiciaire;protection_judiciaire;egal;VRAI;;
+SONOFIRST;non-inclusion;Médicament expérimental dans les 30 jours précédant l'inclusion;med_experimental;egal;VRAI;;
+SONOFIRST;non-inclusion;Antibiotique de neurotoxicité connue, sauf substitution impossible;antibio_neurotoxique;egal;VRAI;;
+SONOFIRST;non-inclusion;Contre-indication au témozolomide ou hypersensibilité à la dacarbazine;ci_tmz;egal;VRAI;;
+SONOFIRST;non-inclusion;Temps de prothrombine ou TCA hors des limites du laboratoire;coag_anormale;egal;VRAI;;
+SONOFIRST;non-inclusion;Implantation du SonoCloud-9 impossible selon le neurochirurgien (ex. épaisseur de peau supérieure à 9 mm);;;;;oui
