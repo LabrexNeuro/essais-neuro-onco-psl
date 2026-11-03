@@ -1,0 +1,934 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Essais Neuro-Oncologie</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+/* Mise en page : en-tête sombre avec onglets, bandeau d'avertissement, puis formulaire à gauche
+   et résultats collants à droite (empilés sur téléphone). Lisibilité d'abord : police conçue pour
+   la lecture rapide, chiffres et identifiants en chasse fixe. */
+:root {
+  --bg: #F1F5F6;
+  --surface: #FFFFFF;
+  --surface-2: #E7EEF0;
+  --ink: #10242B;
+  --ink-2: #485E66;
+  --line: #CAD8DC;
+  --accent: #0A6A7E;
+  --accent-ink: #FFFFFF;
+  --accent-soft: #D6ECF1;
+  --head-bg: #2A74BC;
+  --head-ink: #FFFFFF;
+  --head-ink-2: #D3E5F6;
+  --ok: #1B7448;
+  --ok-soft: #DCF0E4;
+  --warn: #8A5600;
+  --warn-soft: #FAEBC9;
+  --ko: #A3322A;
+  --ko-soft: #F6DEDB;
+  --neutre: #55666C;
+  --neutre-soft: #E3E9EB;
+  --font-body: "Atkinson Hyperlegible", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+  --r: 6px;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0B171B; --surface: #122328; --surface-2: #1A2F36; --ink: #E3EEF0; --ink-2: #9DB4BB; --line: #29424B;
+    --accent: #56C2D8; --accent-ink: #06222A; --accent-soft: #12363F;
+    --head-bg: #1F5C97; --head-ink: #FFFFFF; --head-ink-2: #C3D9EE;
+    --ok: #5CCB92; --ok-soft: #123626; --warn: #E4B24F; --warn-soft: #3A2D0F; --ko: #F08A80; --ko-soft: #3D1D1A;
+    --neutre: #A2B3B9; --neutre-soft: #1F3037;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0B171B; --surface: #122328; --surface-2: #1A2F36; --ink: #E3EEF0; --ink-2: #9DB4BB; --line: #29424B;
+  --accent: #56C2D8; --accent-ink: #06222A; --accent-soft: #12363F;
+  --head-bg: #1F5C97; --head-ink: #FFFFFF; --head-ink-2: #C3D9EE;
+  --ok: #5CCB92; --ok-soft: #123626; --warn: #E4B24F; --warn-soft: #3A2D0F; --ko: #F08A80; --ko-soft: #3D1D1A;
+  --neutre: #A2B3B9; --neutre-soft: #1F3037;
+  color-scheme: dark;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  background: var(--bg); color: var(--ink);
+  font: 16px/1.5 var(--font-body);
+  margin: 0;
+}
+[hidden] { display: none !important; }
+button, input, select { font: inherit; color: inherit; }
+h1, h2, h3, h4, p { margin: 0; }
+h1, h2, h3 { text-wrap: balance; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.mono { font-family: var(--font-mono); }
+.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+/* ---------- Gabarit ---------- */
+.cadre {
+  max-width: 1280px; margin-inline: auto;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+.tete { background: var(--head-bg); color: var(--head-ink); }
+.tete .cadre { padding-block: 18px 0; display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 12px 32px; }
+.marque { padding-bottom: 14px; min-width: 0; }
+.marque small { display: block; color: var(--head-ink-2); font-size: .8125rem; letter-spacing: .08em; text-transform: uppercase; }
+.marque h1 { font-size: 1.5rem; line-height: 1.2; font-weight: 700; }
+.onglets { display: flex; flex-wrap: wrap; gap: 4px; }
+.onglets a {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 10px 16px; border-radius: var(--r) var(--r) 0 0;
+  color: var(--head-ink-2); text-decoration: none; font-weight: 700; font-size: .9375rem;
+  border-bottom: 3px solid transparent;
+}
+.onglets a:hover { color: var(--head-ink); }
+.onglets a[aria-current="page"] { color: var(--head-ink); border-bottom-color: var(--head-ink); background: rgba(255,255,255,.16); }
+.onglets .tag { font-size: .6875rem; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; padding: 1px 7px; border-radius: 99px; background: rgba(255,255,255,.14); color: var(--head-ink); }
+
+.bandeau { background: var(--surface-2); border-bottom: 1px solid var(--line); font-size: .875rem; color: var(--ink-2); }
+.bandeau .cadre { padding-block: 8px; display: flex; flex-wrap: wrap; gap: 4px 24px; }
+.bandeau .demo { color: var(--warn); font-weight: 700; }
+
+main .cadre { padding-block: 24px 56px; }
+.vue-titre { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px 24px; margin-bottom: 16px; }
+.vue-titre h2 { font-size: 1.375rem; line-height: 1.25; }
+.vue-titre p { color: var(--ink-2); max-width: 62ch; margin-top: 2px; }
+.actions { display: flex; flex-wrap: wrap; gap: 8px; }
+
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+  min-height: 40px; padding: 6px 14px; border-radius: var(--r);
+  border: 1px solid var(--line); background: var(--surface); cursor: pointer; font-weight: 700; font-size: .9375rem;
+  text-decoration: none; color: var(--ink);
+}
+.btn:hover { border-color: var(--accent); }
+.btn.primaire { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); }
+.btn.primaire:hover { filter: brightness(1.08); }
+.btn.petit { min-height: 30px; padding: 2px 10px; font-size: .8125rem; }
+.lien { background: none; border: 0; padding: 0; color: var(--accent); font-weight: 700; cursor: pointer; text-decoration: underline; text-underline-offset: 3px; }
+
+.note-exemple { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 16px; padding: 10px 14px; margin-bottom: 16px; border-radius: var(--r); background: var(--warn-soft); color: var(--warn); font-weight: 700; font-size: .9375rem; }
+
+/* ---------- Saisie ---------- */
+.saisie { display: grid; gap: 24px; grid-template-columns: minmax(0, 1fr); align-items: start; }
+@media (min-width: 1000px) { .saisie { grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr); } .resultats { position: sticky; top: 16px; } }
+.bloc { margin: 0 0 16px; padding: 16px; border: 1px solid var(--line); border-radius: var(--r); background: var(--surface); min-width: 0; }
+.bloc legend { font-weight: 700; font-size: .8125rem; letter-spacing: .06em; text-transform: uppercase; color: var(--accent); padding: 0 6px; margin-left: -6px; }
+.grille { display: grid; gap: 14px 16px; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); }
+.champ { min-width: 0; display: flex; flex-direction: column; gap: 4px; }
+.champ label { font-size: .875rem; font-weight: 700; color: var(--ink-2); display: flex; flex-wrap: wrap; gap: 2px 8px; align-items: baseline; }
+.champ .unite { font-weight: 400; font-family: var(--font-mono); font-size: .75rem; }
+.champ input, .champ select {
+  width: 100%; min-height: 42px; padding: 6px 10px; border-radius: var(--r);
+  border: 1px solid var(--line); background: var(--bg);
+}
+.champ input { font-family: var(--font-mono); font-variant-numeric: tabular-nums; }
+.champ input::placeholder { color: var(--ink-2); opacity: .7; font-family: var(--font-body); }
+.champ input:hover, .champ select:hover { border-color: var(--accent); }
+.cases { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
+.cases:empty { display: none; }
+.grille:empty { display: none; }
+.puce {
+  display: inline-flex; align-items: center; gap: 8px; min-height: 38px; padding: 4px 12px 4px 10px;
+  border: 1px solid var(--line); border-radius: 99px; background: var(--bg); cursor: pointer; font-size: .9375rem;
+}
+.puce:hover { border-color: var(--accent); }
+.puce input { width: 18px; height: 18px; accent-color: var(--accent); margin: 0; }
+.puce:has(input:checked) { background: var(--accent-soft); border-color: var(--accent); font-weight: 700; }
+.puce:has(input:focus-visible) { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+/* ---------- Résultats ---------- */
+.resultats { min-width: 0; }
+.resultats h3 { font-size: 1rem; margin-bottom: 10px; }
+.synthese { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; margin-bottom: 14px; }
+.tuile { padding: 10px 12px; border-radius: var(--r); display: flex; flex-direction: column; gap: 0; }
+.tuile b { font-family: var(--font-mono); font-size: 1.75rem; line-height: 1.1; font-variant-numeric: tabular-nums; }
+.tuile span { font-size: .8125rem; font-weight: 700; }
+.t-compatible { background: var(--ok-soft); color: var(--ok); }
+.t-verifier { background: var(--warn-soft); color: var(--warn); }
+.t-non { background: var(--ko-soft); color: var(--ko); }
+.liste-cartes { display: flex; flex-direction: column; gap: 8px; margin-bottom: 14px; }
+.titre-groupe { font-size: .8125rem; letter-spacing: .06em; text-transform: uppercase; font-weight: 700; color: var(--ink-2); margin: 16px 0 8px; }
+.vide { padding: 20px; border: 1px dashed var(--line); border-radius: var(--r); color: var(--ink-2); background: var(--surface); }
+.pied-resultats { font-size: .875rem; color: var(--ink-2); display: flex; flex-direction: column; gap: 10px; }
+
+.carte { border: 1px solid var(--line); border-radius: var(--r); background: var(--surface); min-width: 0; }
+.carte > summary { list-style: none; cursor: pointer; padding: 12px 14px; display: grid; gap: 4px; }
+.carte > summary::-webkit-details-marker { display: none; }
+.carte > summary:hover { background: var(--bg); }
+.carte[open] > summary { border-bottom: 1px solid var(--line); }
+.carte-ligne1 { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 10px; }
+.acro { font-family: var(--font-mono); font-weight: 600; font-size: .875rem; }
+.carte-titre { font-weight: 700; line-height: 1.3; }
+.raison { font-size: .875rem; color: var(--ink-2); }
+.carte-corps { padding: 14px; display: grid; gap: 14px; }
+.carte-corps .resume { color: var(--ink-2); font-size: .9375rem; }
+.pill { display: inline-flex; align-items: center; padding: 1px 10px; border-radius: 99px; font-size: .8125rem; font-weight: 700; white-space: nowrap; }
+.pill.compatible, .pill.ouvert { background: var(--ok-soft); color: var(--ok); }
+.pill.verifier, .pill.en_preparation { background: var(--warn-soft); color: var(--warn); }
+.pill.non, .pill.clos { background: var(--ko-soft); color: var(--ko); }
+.pill.suspendu { background: var(--neutre-soft); color: var(--neutre); }
+.chevron { margin-left: auto; color: var(--ink-2); transition: transform .15s; font-size: .75rem; }
+.carte[open] .chevron { transform: rotate(180deg); }
+
+.infos { display: grid; gap: 6px 20px; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); margin: 0; font-size: .9375rem; }
+.infos div { min-width: 0; }
+.infos dt { font-size: .75rem; font-weight: 700; letter-spacing: .05em; text-transform: uppercase; color: var(--ink-2); }
+.infos dd { margin: 0; overflow-wrap: anywhere; }
+.crit-titre { font-size: .8125rem; letter-spacing: .06em; text-transform: uppercase; font-weight: 700; color: var(--ink-2); margin-bottom: 6px; }
+.crits { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; }
+.crit { display: grid; grid-template-columns: 22px minmax(0, 1fr); gap: 4px 10px; align-items: start; font-size: .9375rem; }
+.ico { inline-size: 22px; block-size: 22px; border-radius: 50%; display: grid; place-items: center; font-size: .75rem; font-weight: 700; line-height: 1; margin-top: 1px; }
+.etat-ok .ico { background: var(--ok-soft); color: var(--ok); }
+.etat-ko .ico { background: var(--ko-soft); color: var(--ko); }
+.etat-inconnu .ico { background: var(--warn-soft); color: var(--warn); }
+.etat-manuel .ico { background: var(--neutre-soft); color: var(--neutre); }
+.crit-detail { display: flex; flex-wrap: wrap; gap: 0 10px; align-items: baseline; min-width: 0; }
+.crit-texte { overflow-wrap: anywhere; }
+.etat-ko .crit-texte { font-weight: 700; }
+.crit-val { font-family: var(--font-mono); font-size: .75rem; color: var(--ink-2); overflow-wrap: anywhere; }
+.crit-tag { font-size: .75rem; font-weight: 700; padding: 0 8px; border-radius: 99px; }
+.etat-ko .crit-tag { background: var(--ko-soft); color: var(--ko); }
+.etat-inconnu .crit-tag { background: var(--warn-soft); color: var(--warn); }
+.etat-manuel .crit-tag { background: var(--neutre-soft); color: var(--neutre); }
+.groupe-non { border: 1px solid var(--line); border-radius: var(--r); background: var(--surface); }
+.groupe-non > summary { cursor: pointer; padding: 10px 14px; font-weight: 700; font-size: .9375rem; color: var(--ink-2); }
+.groupe-non[open] > summary { border-bottom: 1px solid var(--line); }
+.groupe-non .liste-cartes { padding: 10px; margin: 0; }
+
+.barre-mobile { position: fixed; left: 0; right: 0; bottom: 0; z-index: 20; background: var(--surface); border-top: 1px solid var(--line);
+  padding: 10px max(16px, env(safe-area-inset-right, 0px)) calc(10px + env(safe-area-inset-bottom, 0px)) max(16px, env(safe-area-inset-left, 0px));
+  display: none; align-items: center; justify-content: space-between; gap: 12px; font-weight: 700; font-size: .9375rem; }
+@media (max-width: 999px) { .barre-mobile { display: flex; } body.avec-barre main .cadre { padding-bottom: 96px; } }
+
+/* ---------- Études ---------- */
+.filtres { display: flex; flex-wrap: wrap; gap: 10px 16px; align-items: end; margin-bottom: 16px; padding: 14px; border: 1px solid var(--line); border-radius: var(--r); background: var(--surface); }
+.filtres .champ { flex: 1 1 200px; }
+.groupe-statuts { display: flex; flex-wrap: wrap; gap: 6px; }
+.groupe-statuts button { min-height: 38px; padding: 4px 14px; border-radius: 99px; border: 1px solid var(--line); background: var(--bg); cursor: pointer; font-weight: 700; font-size: .875rem; }
+.groupe-statuts button[aria-pressed="true"] { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); }
+.meta-dossier { color: var(--ink-2); font-size: .9375rem; }
+.etudes { display: grid; gap: 16px; }
+.etude { border: 1px solid var(--line); border-radius: var(--r); background: var(--surface); padding: 18px; display: grid; gap: 14px; min-width: 0; scroll-margin-top: 16px; }
+.etude.surligne { outline: 3px solid var(--accent); outline-offset: 2px; }
+.etude h3 { font-size: 1.125rem; line-height: 1.3; }
+.etude-tete { display: grid; gap: 6px; }
+.etude-meta { color: var(--ink-2); font-size: .875rem; display: flex; flex-wrap: wrap; gap: 2px 14px; }
+.deux-col { display: grid; gap: 18px; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
+.simple { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; font-size: .9375rem; }
+.simple li { display: flex; flex-wrap: wrap; gap: 0 8px; align-items: baseline; padding-left: 14px; position: relative; }
+.simple li::before { content: ""; position: absolute; left: 0; top: .62em; width: 6px; height: 6px; border-radius: 50%; background: var(--line); }
+.simple .crit-tag { background: var(--neutre-soft); color: var(--neutre); }
+.copie { display: inline-flex; flex-wrap: wrap; align-items: center; gap: 6px; }
+.barre { inline-size: 100%; block-size: 8px; border-radius: 99px; background: var(--surface-2); overflow: hidden; margin-top: 4px; }
+.barre i { display: block; block-size: 100%; background: var(--accent); }
+.guide { margin-top: 24px; border: 1px solid var(--line); border-radius: var(--r); background: var(--surface); }
+.guide > summary { cursor: pointer; padding: 14px 18px; font-weight: 700; }
+.guide[open] > summary { border-bottom: 1px solid var(--line); }
+.guide-corps { padding: 18px; display: grid; gap: 18px; font-size: .9375rem; }
+.guide-corps ol { margin: 0; padding-left: 20px; display: grid; gap: 4px; }
+.guide-corps h4 { font-size: .8125rem; letter-spacing: .06em; text-transform: uppercase; color: var(--ink-2); margin-bottom: 6px; }
+pre { margin: 0; padding: 12px; border-radius: var(--r); background: var(--bg); border: 1px solid var(--line); overflow-x: auto; font: .8125rem/1.5 var(--font-mono); }
+code { font-family: var(--font-mono); font-size: .875em; background: var(--bg); padding: 1px 5px; border-radius: 4px; }
+.table-scroll { overflow-x: auto; border: 1px solid var(--line); border-radius: var(--r); }
+table { border-collapse: collapse; width: 100%; font-size: .875rem; }
+th, td { text-align: left; padding: 6px 10px; border-bottom: 1px solid var(--line); vertical-align: top; }
+th { background: var(--bg); font-size: .75rem; letter-spacing: .05em; text-transform: uppercase; color: var(--ink-2); }
+tr:last-child td { border-bottom: 0; }
+.anomalies { padding: 12px 14px; border-radius: var(--r); background: var(--ko-soft); color: var(--ko); }
+.anomalies ul { margin: 6px 0 0; padding-left: 18px; }
+.anomalies-ok { padding: 10px 14px; border-radius: var(--r); background: var(--ok-soft); color: var(--ok); font-weight: 700; }
+
+/* ---------- Outil compte-rendu ---------- */
+.accueil-intro { max-width: 70ch; display: grid; gap: 12px; margin-bottom: 24px; }
+.accueil-intro h2 { font-size: 1.75rem; line-height: 1.2; }
+.accueil-intro p { font-size: 1.0625rem; color: var(--ink-2); }
+.accueil-intro .meta-dossier { font-size: .9375rem; }
+.entrees { display: grid; gap: 16px; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); margin-bottom: 24px; }
+.entree { display: grid; gap: 8px; align-content: start; padding: 20px; border: 1px solid var(--line); border-radius: var(--r); background: var(--surface); color: var(--ink); text-decoration: none; }
+.entree:hover { border-color: var(--accent); }
+.entree strong { font-size: 1.25rem; line-height: 1.25; }
+.entree span { color: var(--ink-2); }
+.entree .entree-go { color: var(--accent); font-weight: 700; margin-top: 4px; text-decoration: underline; text-underline-offset: 3px; }
+.entree.principale { background: var(--accent-soft); border-color: var(--accent); }
+.entree.principale span:not(.entree-go) { color: var(--ink); }
+.accueil-bas { display: grid; gap: 16px; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); }
+.panneau { padding: 18px; border: 1px solid var(--line); border-radius: var(--r); background: var(--surface); min-width: 0; }
+.panneau h3 { font-size: .8125rem; letter-spacing: .06em; text-transform: uppercase; color: var(--ink-2); margin-bottom: 12px; }
+.panneau ul { margin: 0; padding: 0; list-style: none; display: grid; gap: 10px; font-size: .9375rem; }
+.legende li { display: flex; flex-wrap: wrap; gap: 4px 10px; align-items: baseline; }
+.sobre li { position: relative; padding-left: 14px; }
+.sobre li::before { content: ""; position: absolute; left: 0; top: .62em; width: 6px; height: 6px; border-radius: 50%; background: var(--line); }
+.outil { max-width: 760px; border: 1px solid var(--line); border-radius: var(--r); background: var(--surface); padding: 24px; display: grid; gap: 16px; }
+.outil h3 { font-size: 1.25rem; }
+.outil p { color: var(--ink-2); }
+.outil .lance { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; }
+.evolutions { margin: 0; padding-left: 20px; color: var(--ink-2); display: grid; gap: 4px; }
+.technique { padding: 12px 14px; border-radius: var(--r); background: var(--bg); border: 1px dashed var(--line); font-size: .875rem; color: var(--ink-2); }
+
+.pied { margin-top: 32px; padding-top: 16px; border-top: 1px solid var(--line); font-size: .875rem; color: var(--ink-2); }
+.erreur-donnees { margin: 24px 0; padding: 16px; border-radius: var(--r); background: var(--ko-soft); color: var(--ko); font-weight: 700; }
+
+.import { display: grid; gap: 12px; padding: 14px; border: 1px solid var(--line); border-radius: var(--r); background: var(--bg); }
+.import .champ input[type="file"] { min-height: 0; padding: 6px; font-family: var(--font-body); background: var(--surface); }
+.import .rangee { display: grid; gap: 12px 16px; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
+.import textarea { width: 100%; min-height: 220px; padding: 10px; border-radius: var(--r); border: 1px solid var(--line); background: var(--surface); color: var(--ink); font: .8125rem/1.5 var(--font-mono); resize: vertical; }
+.import .avert { padding: 10px 14px; border-radius: var(--r); background: var(--warn-soft); color: var(--warn); }
+.import .avert ul, .anomalies ul { margin: 6px 0 0; padding-left: 18px; }
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+</style>
+
+<header class="tete">
+  <div class="cadre">
+    <div class="marque">
+      <small id="nom-service">Service de neuro-oncologie</small>
+      <h1>Essais cliniques en cours</h1>
+    </div>
+    <nav class="onglets" aria-label="Sections du site">
+      <a href="#accueil" data-vue="accueil">Accueil</a>
+      <a href="#saisie" data-vue="saisie">Orienter un patient</a>
+      <a href="#etudes" data-vue="etudes">Études en cours</a>
+      <a href="#admin" data-vue="admin" id="onglet-admin" hidden>Administration</a>
+    </nav>
+  </div>
+</header>
+<div class="bandeau">
+  <div class="cadre">
+    <span>Aide à l'orientation : l'éligibilité est confirmée par l'investigateur et l'équipe de recherche clinique.</span>
+    <span>Rien n'est enregistré ni transmis. Les réponses disparaissent à la fermeture de la page.</span>
+    <span class="demo" id="avert-demo" hidden>Protocoles fictifs de démonstration : ne pas s'en servir pour de vrais patients.</span>
+  </div>
+</div>
+
+<main>
+  <div class="cadre">
+    <div class="erreur-donnees" id="erreur-donnees" hidden>Les fichiers de données (champs.js, protocoles.js, config.js, moteur.js) n'ont pas pu être lus. Vérifier qu'ils sont dans le même dossier que cette page et qu'aucune erreur de saisie n'y figure.</div>
+
+    <!-- Vue 0 : accueil -->
+    <section id="vue-accueil" data-vue="accueil" aria-labelledby="t-accueil">
+      <div class="accueil-intro">
+        <h2 id="t-accueil">Les essais cliniques du service, et ceux qui conviennent à votre patient</h2>
+        <p>Ce site rassemble les études de recherche clinique en cours dans le service de neuro-oncologie, avec leurs critères d'inclusion et de non-inclusion. Pendant une consultation, il permet de repérer en quelques instants les protocoles auxquels un patient peut être adressé.</p>
+        <p class="meta-dossier" id="accueil-chiffres"></p>
+      </div>
+      <div class="entrees">
+        <a class="entree principale" href="#saisie" data-vue="saisie">
+          <strong>Orienter un patient</strong>
+          <span>Renseigner les informations cliniques du patient : âge, diagnostic, traitements antérieurs, biologie… Les protocoles compatibles s'affichent au fur et à mesure, avec ce qui manque ou ce qui bloque pour chacun.</span>
+          <span class="entree-go">Ouvrir la page</span>
+        </a>
+        <a class="entree" href="#etudes" data-vue="etudes">
+          <strong>Études en cours</strong>
+          <span>Consulter le dossier complet des études : objectif, critères d'inclusion et de non-inclusion, contact de l'équipe de recherche, avancement des inclusions.</span>
+          <span class="entree-go">Ouvrir la page</span>
+        </a>
+      </div>
+      <div class="accueil-bas">
+        <div class="panneau">
+          <h3>Comment lire les résultats</h3>
+          <ul class="legende">
+            <li><span class="pill compatible">Compatible</span><span>Tous les critères que le site peut évaluer sont remplis.</span></li>
+            <li><span class="pill verifier">À vérifier</span><span>Une information manque pour conclure. Elle est indiquée.</span></li>
+            <li><span class="pill non">Non compatible</span><span>Au moins un critère n'est pas rempli. Le critère bloquant est indiqué.</span></li>
+          </ul>
+        </div>
+        <div class="panneau">
+          <h3>À savoir</h3>
+          <ul class="sobre">
+            <li>Le site oriente, il ne décide pas : l'éligibilité est confirmée par l'investigateur et l'équipe de recherche clinique.</li>
+            <li>Aucune donnée n'est enregistrée ni transmise. Ne saisir aucune donnée identifiante.</li>
+            <li>Les critères que le site ne peut pas évaluer, comme le consentement, sont signalés « à confirmer en consultation ».</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- Vue 1 : saisie et résultats -->
+    <section id="vue-saisie" data-vue="saisie" aria-labelledby="t-saisie" hidden>
+      <div class="vue-titre">
+        <div>
+          <h2 id="t-saisie">Orienter un patient</h2>
+          <p>Renseigner ce que l'on sait. Les protocoles compatibles s'affichent au fur et à mesure. Ne saisir aucune donnée identifiante.</p>
+        </div>
+        <div class="actions">
+          <button type="button" class="btn" id="btn-vider">Nouveau patient</button>
+          <button type="button" class="btn" id="btn-exemple">Charger l'exemple</button>
+        </div>
+      </div>
+      <div class="note-exemple" id="note-exemple" hidden>Patient fictif d'exemple chargé. Les valeurs sont modifiables, ou cliquer sur « Nouveau patient » pour repartir de zéro.</div>
+      <div class="saisie">
+        <form id="formulaire" autocomplete="off" onsubmit="return false"></form>
+        <aside class="resultats" id="resultats" aria-live="polite" aria-label="Protocoles correspondant au patient"></aside>
+      </div>
+    </section>
+
+    <!-- Vue 2 : dossier des études -->
+    <section id="vue-etudes" data-vue="etudes" aria-labelledby="t-etudes" hidden>
+      <div class="vue-titre">
+        <div>
+          <h2 id="t-etudes">Études en cours</h2>
+          <p class="meta-dossier" id="meta-dossier"></p>
+        </div>
+      </div>
+      <div class="filtres">
+        <div class="champ">
+          <label for="q">Recherche</label>
+          <input type="search" id="q" placeholder="Acronyme, titre, investigateur, pathologie" autocomplete="off">
+        </div>
+        <div class="champ">
+          <label for="patho">Pathologie</label>
+          <select id="patho"><option value="">Toutes</option></select>
+        </div>
+        <div class="champ">
+          <label id="l-statut">Statut</label>
+          <div class="groupe-statuts" id="statuts" role="group" aria-labelledby="l-statut"></div>
+        </div>
+      </div>
+      <div class="etudes" id="liste-etudes"></div>
+    </section>
+
+    <!-- Vue 4 : administration (réservée à l'équipe, adresse se terminant par #admin) -->
+    <section id="vue-admin" data-vue="admin" aria-labelledby="t-admin" hidden>
+      <div class="vue-titre">
+        <div>
+          <h2 id="t-admin">Administration</h2>
+          <p>Réservé à l'équipe de recherche : mise à jour du dossier des études.</p>
+        </div>
+      </div>
+      <div class="guide" style="margin-top:0"><div class="guide-corps" id="guide-corps"></div></div>
+    </section>
+
+    <div class="pied" id="pied"></div>
+  </div>
+</main>
+
+<div class="barre-mobile" id="barre-mobile" hidden>
+  <span id="barre-texte"></span>
+  <button type="button" class="btn primaire petit" id="barre-aller">Voir les résultats</button>
+</div>
+
+<script src="config.js"></script>
+<script src="champs.js"></script>
+<script src="protocoles.js"></script>
+<script src="moteur.js"></script>
+<script src="convertisseur.js"></script>
+<script>
+(function () {
+  "use strict";
+  var W = window;
+  if (!W.CHAMPS || !W.PROTOCOLES || !W.MOTEUR || !W.CONFIG) {
+    document.getElementById("erreur-donnees").hidden = false;
+    return;
+  }
+  var CHAMPS = W.CHAMPS, PROTOCOLES = W.PROTOCOLES, CONFIG = W.CONFIG, MOTEUR = W.MOTEUR;
+  var META = W.DOSSIER_META || {};
+  var idx = MOTEUR.indexer(CHAMPS);
+
+  var etat = {};               // valeurs saisies (jamais enregistrées)
+  var dom = {};                // id de champ -> { wrap, input }
+  var ouverts = {};            // cartes dépliées dans les résultats
+  var filtres = { q: "", statut: "tous", patho: "" };
+  var exempleActif = false;
+  var adminActif = false;
+  var vueCourante = "saisie";
+  var derniereSynthese = "";
+
+  var STATUTS = { ouvert: "Ouvert aux inclusions", en_preparation: "En préparation", suspendu: "Inclusions suspendues", clos: "Clos aux inclusions" };
+  var VERDICT = { compatible: "Compatible", verifier: "À vérifier", non: "Non compatible" };
+
+  function $(s, r) { return (r || document).querySelector(s); }
+  function el(tag, attrs) {
+    var n = document.createElement(tag);
+    if (attrs) Object.keys(attrs).forEach(function (k) {
+      var v = attrs[k];
+      if (v === null || v === undefined || v === false) return;
+      if (k === "class") n.className = v;
+      else if (k.slice(0, 2) === "on") n.addEventListener(k.slice(2), v);
+      else n.setAttribute(k, v === true ? "" : v);
+    });
+    for (var i = 2; i < arguments.length; i++) ajouter(n, arguments[i]);
+    return n;
+  }
+  function ajouter(n, c) {
+    if (c === null || c === undefined || c === false) return;
+    if (Array.isArray(c)) { c.forEach(function (x) { ajouter(n, x); }); return; }
+    n.appendChild(c.nodeType ? c : document.createTextNode(String(c)));
+  }
+  function get(id) { return MOTEUR.valeur(id, idx, etat); }
+  function pluriel(n, s, p) { return n + " " + (n > 1 ? p : s); }
+
+  /* ---------- Formulaire ---------- */
+  function construireFormulaire() {
+    var cont = $("#formulaire");
+    CHAMPS.forEach(function (sec) {
+      var grille = el("div", { class: "grille" });
+      var cases = el("div", { class: "cases" });
+      sec.champs.forEach(function (def) {
+        var wrap, input, id = "f-" + def.id;
+        if (def.type === "nombre") {
+          input = el("input", { type: "number", id: id, inputmode: "decimal", min: def.min, max: def.max, step: def.step || "any", placeholder: def.placeholder });
+          input.addEventListener("input", function () { etat[def.id] = input.value === "" ? null : Number(input.value); apresSaisie(); });
+          wrap = el("div", { class: "champ" }, el("label", { for: id }, def.label, def.unite ? el("span", { class: "unite" }, def.unite) : null), input);
+          grille.appendChild(wrap);
+        } else if (def.type === "liste") {
+          input = el("select", { id: id }, el("option", { value: "" }, "Non renseigné"));
+          def.options.forEach(function (o) { input.appendChild(el("option", { value: o[0] }, o[1])); });
+          input.addEventListener("change", function () { etat[def.id] = input.value || null; apresSaisie(); });
+          wrap = el("div", { class: "champ" }, el("label", { for: id }, def.label), input);
+          grille.appendChild(wrap);
+        } else {
+          input = el("input", { type: "checkbox", id: id });
+          input.addEventListener("change", function () { etat[def.id] = input.checked; apresSaisie(); });
+          wrap = el("label", { class: "puce", for: id }, input, el("span", null, def.label));
+          cases.appendChild(wrap);
+        }
+        dom[def.id] = { wrap: wrap, input: input, def: def };
+      });
+      cont.appendChild(el("fieldset", { class: "bloc" }, el("legend", null, sec.section), grille, cases));
+    });
+  }
+
+  function majVisibilite() {
+    Object.keys(dom).forEach(function (id) {
+      var d = dom[id];
+      if (!d.def.si) return;
+      d.wrap.hidden = MOTEUR.evaluerCondition(d.def.si, get) !== true;
+    });
+  }
+
+  function appliquer(patient) {
+    Object.keys(etat).forEach(function (k) { delete etat[k]; });
+    Object.keys(dom).forEach(function (id) {
+      var d = dom[id], v = patient ? patient[id] : undefined;
+      if (d.def.type === "case") { d.input.checked = v === true; etat[id] = v === true; }
+      else if (v === undefined || v === null) { d.input.value = ""; etat[id] = null; }
+      else { d.input.value = String(v); etat[id] = d.def.type === "nombre" ? Number(v) : String(v); }
+    });
+    exempleActif = !!patient;
+    majNoteExemple();
+    apresSaisie();
+  }
+  function majNoteExemple() { $("#note-exemple").hidden = !exempleActif; }
+  function apresSaisie() {
+    if (exempleActif && document.activeElement && document.activeElement.closest && document.activeElement.closest("#formulaire")) {
+      exempleActif = false; majNoteExemple();
+    }
+    majVisibilite();
+    rendreResultats();
+  }
+
+  /* ---------- Résultats ---------- */
+  var GLYPHES = { ok: "✓", ko: "✕", inconnu: "?", manuel: "•" };
+  function libelleEtat(r) {
+    var incl = r.critere.type === "inclusion";
+    if (r.etat === "ok") return incl ? "Critère rempli" : "Absent";
+    if (r.etat === "ko") return incl ? "Critère non rempli" : "Présent";
+    if (r.etat === "inconnu") return "À renseigner";
+    return "À confirmer en consultation";
+  }
+  function valeursVues(cond) {
+    return MOTEUR.champsCites(cond).map(function (id) {
+      var d = idx[id];
+      if (!d || d.type === "case") return null;
+      return d.label.split(" (")[0] + " : " + MOTEUR.formater(d, get(id));
+    }).filter(Boolean).slice(0, 2).join(" · ");
+  }
+  function ligneCritere(r) {
+    var tag = r.etat === "ko" ? "Bloquant" : r.etat === "inconnu" ? "À renseigner" : r.etat === "manuel" ? "À confirmer en consultation" : null;
+    var val = r.critere.cond ? valeursVues(r.critere.cond) : "";
+    return el("li", { class: "crit etat-" + r.etat },
+      el("span", { class: "ico", "aria-hidden": "true" }, GLYPHES[r.etat]),
+      el("span", { class: "crit-detail" },
+        el("span", { class: "sr" }, libelleEtat(r) + " : "),
+        el("span", { class: "crit-texte" }, r.critere.texte),
+        tag ? el("span", { class: "crit-tag" }, tag) : null,
+        val ? el("span", { class: "crit-val" }, val) : null));
+  }
+  function raison(ev) {
+    if (ev.statut === "non") {
+      var t = ev.bloquants[0].critere.texte;
+      return "Bloque : " + t + (ev.bloquants.length > 1 ? " (+" + (ev.bloquants.length - 1) + ")" : "");
+    }
+    if (ev.statut === "verifier") {
+      var m = ev.manquants.slice(0, 2).map(function (x) { return x.critere.texte; }).join(" ; ");
+      return "À renseigner : " + m + (ev.manquants.length > 2 ? " (+" + (ev.manquants.length - 2) + ")" : "");
+    }
+    return "Tous les critères évaluables sont remplis" + (ev.manuels.length ? ", " + pluriel(ev.manuels.length, "critère", "critères") + " à confirmer en consultation" : "");
+  }
+  function carte(ev) {
+    var p = ev.p;
+    var incl = ev.resultats.filter(function (r) { return r.critere.type === "inclusion"; });
+    var non = ev.resultats.filter(function (r) { return r.critere.type === "non-inclusion"; });
+    var c = el("details", { class: "carte" },
+      el("summary", null,
+        el("div", { class: "carte-ligne1" },
+          el("span", { class: "acro" }, p.acronyme),
+          el("span", { class: "pill " + ev.statut }, VERDICT[ev.statut]),
+          el("span", { class: "chevron", "aria-hidden": "true" }, "▾")),
+        el("div", { class: "carte-titre" }, p.titre),
+        el("div", { class: "raison" }, raison(ev))),
+      el("div", { class: "carte-corps" },
+        p.resume ? el("p", { class: "resume" }, p.resume) : null,
+        el("dl", { class: "infos" },
+          info("Phase", p.phase), info("Investigateur", p.investigateur),
+          info("Contact", p.contact ? [p.contact.nom, p.contact.email].filter(Boolean).join(" · ") : "")),
+        el("div", null, el("div", { class: "crit-titre" }, "Critères d'inclusion"), el("ul", { class: "crits" }, incl.map(ligneCritere))),
+        el("div", null, el("div", { class: "crit-titre" }, "Critères de non-inclusion"), el("ul", { class: "crits" }, non.map(ligneCritere))),
+        el("div", null, el("button", { type: "button", class: "lien", onclick: function () { ouvrirEtude(p.id); } }, "Voir la fiche complète"))));
+    c.open = !!ouverts[p.id];
+    c.addEventListener("toggle", function () { ouverts[p.id] = c.open; });
+    return c;
+  }
+  function info(t, v) { return v ? el("div", null, el("dt", null, t), el("dd", null, v)) : null; }
+
+  function evaluerTous() {
+    var ouverts_ = PROTOCOLES.filter(function (p) { return p.statut === "ouvert"; });
+    var evs = ouverts_.map(function (p) { var e = MOTEUR.evaluerProtocole(p, get); e.p = p; return e; });
+    var ordre = { compatible: 0, verifier: 1, non: 2 };
+    evs.sort(function (a, b) {
+      return ordre[a.statut] - ordre[b.statut] || a.manquants.length - b.manquants.length || a.bloquants.length - b.bloquants.length || a.p.acronyme.localeCompare(b.p.acronyme);
+    });
+    return evs;
+  }
+
+  function rendreResultats() {
+    var cont = $("#resultats");
+    var champCle = CONFIG.CHAMP_OBLIGATOIRE;
+    var nonOuverts = PROTOCOLES.length - PROTOCOLES.filter(function (p) { return p.statut === "ouvert"; }).length;
+    cont.textContent = "";
+    if (champCle && get(champCle) === null) {
+      cont.appendChild(el("h3", null, "Protocoles correspondants"));
+      cont.appendChild(el("div", { class: "vide" }, "Choisir " + (idx[champCle] ? "le champ « " + idx[champCle].label + " »" : "un diagnostic") + " pour afficher les protocoles qui peuvent convenir."));
+      derniereSynthese = "";
+      majBarre(null);
+      return;
+    }
+    var evs = evaluerTous();
+    var par = { compatible: [], verifier: [], non: [] };
+    evs.forEach(function (e) { par[e.statut].push(e); });
+
+    cont.appendChild(el("h3", null, "Protocoles correspondants"));
+    cont.appendChild(el("div", { class: "synthese" },
+      tuile("compatible", par.compatible.length, par.compatible.length > 1 ? "compatibles" : "compatible"),
+      tuile("verifier", par.verifier.length, "à vérifier"),
+      tuile("non", par.non.length, par.non.length > 1 ? "non compatibles" : "non compatible")));
+
+    if (par.compatible.length) {
+      cont.appendChild(el("div", { class: "titre-groupe" }, "Compatibles avec les informations saisies"));
+      cont.appendChild(el("div", { class: "liste-cartes" }, par.compatible.map(carte)));
+    }
+    if (par.verifier.length) {
+      cont.appendChild(el("div", { class: "titre-groupe" }, "Informations manquantes pour conclure"));
+      cont.appendChild(el("div", { class: "liste-cartes" }, par.verifier.map(carte)));
+    }
+    if (!par.compatible.length && !par.verifier.length) {
+      cont.appendChild(el("div", { class: "vide" }, "Aucun protocole ouvert ne correspond aux informations saisies pour le moment."));
+    }
+    if (par.non.length) {
+      var g = el("details", { class: "groupe-non" }, el("summary", null, "Non compatibles (" + par.non.length + ")"), el("div", { class: "liste-cartes" }, par.non.map(carte)));
+      g.open = !!ouverts.__non;
+      g.addEventListener("toggle", function () { ouverts.__non = g.open; });
+      cont.appendChild(g);
+    }
+    var pied = el("div", { class: "pied-resultats" },
+      el("p", null, "Une case non cochée est comptée comme « absent ». Les critères que l'outil ne peut pas évaluer sont signalés « à confirmer en consultation » et ne modifient pas le résultat."),
+      nonOuverts ? el("p", null, pluriel(nonOuverts, "protocole non ouvert aux inclusions n'est pas proposé", "protocoles non ouverts aux inclusions ne sont pas proposés") + ". Voir ", el("button", { type: "button", class: "lien", onclick: function () { allerVue("etudes"); } }, "Études en cours"), ".") : null,
+      el("div", null, el("button", { type: "button", class: "btn petit", id: "btn-copier", onclick: copierSynthese }, "Copier la synthèse")),
+      el("div", { id: "zone-copie", hidden: true }));
+    cont.appendChild(pied);
+    derniereSynthese = construireSynthese(par);
+    majBarre(par);
+  }
+  function tuile(cls, n, lib) { return el("div", { class: "tuile t-" + cls }, el("b", null, String(n)), el("span", null, lib)); }
+
+  function majBarre(par) {
+    var barre = $("#barre-mobile");
+    if (!par || vueCourante !== "saisie") { barre.hidden = true; document.body.classList.remove("avec-barre"); return; }
+    barre.hidden = false; document.body.classList.add("avec-barre");
+    $("#barre-texte").textContent = pluriel(par.compatible.length, "compatible", "compatibles") + " · " + par.verifier.length + " à vérifier";
+  }
+
+  function construireSynthese(par) {
+    var lignes = ["Aide à l'orientation vers les protocoles de recherche (à confirmer par l'investigateur)", "Date : " + new Date().toLocaleDateString("fr-FR"), "", "Profil saisi :"];
+    CHAMPS.forEach(function (s) {
+      s.champs.forEach(function (d) {
+        var v = get(d.id);
+        if (d.type === "case") { if (v === true) lignes.push("- " + d.label); }
+        else if (v !== null) lignes.push("- " + d.label + " : " + MOTEUR.formater(d, v));
+      });
+    });
+    function liste(titre, tab, f) {
+      lignes.push("", titre + (tab.length ? "" : " : aucun"));
+      tab.forEach(function (e) { lignes.push("- " + e.p.acronyme + (f ? " (" + f(e) + ")" : "")); });
+    }
+    liste("Protocoles compatibles", par.compatible, function (e) { return e.manuels.length ? "à confirmer : " + e.manuels.map(function (m) { return m.critere.texte; }).join(" ; ") : "aucun point à confirmer"; });
+    liste("Protocoles à vérifier", par.verifier, function (e) { return "manque : " + e.manquants.map(function (m) { return m.critere.texte; }).join(" ; "); });
+    return lignes.join("\n");
+  }
+  function copierTexte(texte, apres, zone) {
+    function repli() {
+      if (!zone) return;
+      zone.hidden = false; zone.textContent = "";
+      var ta = el("textarea", { readonly: true, rows: "8", style: "width:100%;font:.8125rem/1.5 var(--font-mono);padding:8px;border-radius:6px;border:1px solid var(--line);background:var(--bg);color:var(--ink)" });
+      ta.value = texte; zone.appendChild(ta); ta.focus(); ta.select();
+    }
+    try {
+      if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(texte).then(apres, repli);
+      else repli();
+    } catch (e) { repli(); }
+  }
+  function copierSynthese() {
+    if (!derniereSynthese) return;
+    var b = $("#btn-copier");
+    copierTexte(derniereSynthese, function () { b.textContent = "Synthèse copiée"; setTimeout(function () { b.textContent = "Copier la synthèse"; }, 2000); }, $("#zone-copie"));
+  }
+
+  /* ---------- Études ---------- */
+  function dateFr(iso) {
+    if (!iso) return "";
+    var d = new Date(iso + "T12:00:00");
+    return isNaN(d) ? iso : d.toLocaleDateString("fr-FR", { day: "numeric", month: "long", year: "numeric" });
+  }
+  function construireFiltres() {
+    var sel = $("#patho");
+    var pathos = [];
+    PROTOCOLES.forEach(function (p) { if (p.pathologie && pathos.indexOf(p.pathologie) === -1) pathos.push(p.pathologie); });
+    pathos.sort().forEach(function (x) { sel.appendChild(el("option", { value: x }, x)); });
+    sel.addEventListener("change", function () { filtres.patho = sel.value; rendreEtudes(); });
+    $("#q").addEventListener("input", function (e) { filtres.q = e.target.value; rendreEtudes(); });
+    var g = $("#statuts");
+    [["tous", "Tous"], ["ouvert", "Ouverts"], ["en_preparation", "En préparation"], ["suspendu", "Suspendus"], ["clos", "Clos"]].forEach(function (s) {
+      var b = el("button", { type: "button", "data-s": s[0], "aria-pressed": s[0] === "tous" ? "true" : "false" }, s[1]);
+      b.addEventListener("click", function () { filtres.statut = s[0]; majBoutonsStatut(); rendreEtudes(); });
+      g.appendChild(b);
+    });
+    $("#meta-dossier").textContent = "Dossier mis à jour le " + dateFr(META.majLe) + (META.responsable ? " · " + META.responsable : "") + ".";
+  }
+  function majBoutonsStatut() {
+    Array.prototype.forEach.call($("#statuts").children, function (b) { b.setAttribute("aria-pressed", b.getAttribute("data-s") === filtres.statut ? "true" : "false"); });
+  }
+  function boutonCopier(texte) {
+    var b = el("button", { type: "button", class: "btn petit" }, "Copier");
+    b.addEventListener("click", function () { copierTexte(texte, function () { b.textContent = "Copié"; setTimeout(function () { b.textContent = "Copier"; }, 1800); }); });
+    return b;
+  }
+  function etude(p) {
+    var incl = p.criteres.filter(function (c) { return c.type === "inclusion"; });
+    var non = p.criteres.filter(function (c) { return c.type === "non-inclusion"; });
+    function li(c) { return el("li", null, el("span", null, c.texte), c.manuel ? el("span", { class: "crit-tag" }, "confirmation en consultation") : null); }
+    var rec = p.recrutement;
+    var pct = rec && rec.objectif ? Math.min(100, Math.round(100 * rec.inclus / rec.objectif)) : null;
+    var ct = p.contact || {};
+    return el("article", { class: "etude", id: "etude-" + p.id },
+      el("div", { class: "etude-tete" },
+        el("div", { class: "carte-ligne1" }, el("span", { class: "acro" }, p.acronyme), el("span", { class: "pill " + p.statut }, STATUTS[p.statut] || p.statut)),
+        el("h3", null, p.titre),
+        el("div", { class: "etude-meta" },
+          p.phase ? el("span", null, "Phase " + p.phase) : null,
+          p.pathologie ? el("span", null, p.pathologie) : null,
+          p.identifiant ? el("span", { class: "mono" }, p.identifiant) : null)),
+      p.resume ? el("p", null, p.resume) : null,
+      el("dl", { class: "infos" },
+        info("Promoteur", p.promoteur),
+        info("Investigateur", p.investigateur),
+        ct.nom || ct.email || ct.tel ? el("div", null, el("dt", null, "Contact"),
+          el("dd", null, ct.nom || "", ct.tel ? " · " + ct.tel : ""),
+          ct.email ? el("dd", { class: "copie" }, el("span", { class: "mono" }, ct.email), boutonCopier(ct.email)) : null) : null,
+        rec ? el("div", null, el("dt", null, "Inclusions"), el("dd", { class: "mono" }, rec.inclus + " / " + rec.objectif),
+          pct !== null ? el("div", { class: "barre", role: "img", "aria-label": pct + " % de l'objectif atteint" }, el("i", { style: "width:" + pct + "%" })) : null) : null,
+        !(p.document || adminActif) ? null : el("div", null, el("dt", null, "Document"), el("dd", null, p.document ? el("a", { href: p.document, target: "_blank", rel: "noopener" }, "Protocole ou résumé") : "À ajouter")),
+        info("Dernière mise à jour", dateFr(p.majLe))),
+      el("div", { class: "deux-col" },
+        el("div", null, el("div", { class: "crit-titre" }, "Critères d'inclusion"), el("ul", { class: "simple" }, incl.map(li))),
+        el("div", null, el("div", { class: "crit-titre" }, "Critères de non-inclusion"), el("ul", { class: "simple" }, non.map(li)))));
+  }
+  function rendreEtudes() {
+    var cont = $("#liste-etudes");
+    var q = filtres.q.trim().toLowerCase();
+    var tab = PROTOCOLES.filter(function (p) {
+      if (filtres.statut !== "tous" && p.statut !== filtres.statut) return false;
+      if (filtres.patho && p.pathologie !== filtres.patho) return false;
+      if (q) {
+        var texte = [p.acronyme, p.titre, p.pathologie, p.investigateur, p.promoteur, p.identifiant, p.resume].join(" ").toLowerCase();
+        if (texte.indexOf(q) === -1) return false;
+      }
+      return true;
+    });
+    var ordre = { ouvert: 0, en_preparation: 1, suspendu: 2, clos: 3 };
+    tab.sort(function (a, b) { return (ordre[a.statut] - ordre[b.statut]) || a.acronyme.localeCompare(b.acronyme); });
+    cont.textContent = "";
+    if (!tab.length) cont.appendChild(el("div", { class: "vide" }, "Aucune étude ne correspond à ces filtres."));
+    tab.forEach(function (p) { cont.appendChild(etude(p)); });
+  }
+  function ouvrirEtude(id) {
+    filtres = { q: "", statut: "tous", patho: "" };
+    $("#q").value = ""; $("#patho").value = ""; majBoutonsStatut();
+    allerVue("etudes");
+    rendreEtudes();
+    var n = document.getElementById("etude-" + id);
+    if (n) {
+      n.scrollIntoView({ block: "start" });
+      n.classList.add("surligne");
+      setTimeout(function () { n.classList.remove("surligne"); }, 1800);
+    }
+  }
+
+  function lireFichier(f) {
+    return new Promise(function (ok, ko) {
+      var r = new FileReader();
+      r.onload = function () {
+        var buf = r.result;
+        try { ok(new TextDecoder("utf-8", { fatal: true }).decode(buf)); }
+        catch (e) { ok(new TextDecoder("windows-1252").decode(buf)); }   // CSV Excel « ANSI »
+      };
+      r.onerror = function () { ko(r.error); };
+      r.readAsArrayBuffer(f);
+    });
+  }
+  function construireImport() {
+    var fp = el("input", { type: "file", id: "csv-prot", accept: ".csv,text/csv,text/plain" });
+    var fc = el("input", { type: "file", id: "csv-crit", accept: ".csv,text/csv,text/plain" });
+    var bouton = el("button", { type: "button", class: "btn primaire", id: "btn-convertir" }, "Convertir");
+    var zone = el("div", { id: "zone-import", "aria-live": "polite", style: "display:grid;gap:12px" });
+    function erreur(titre, liste) {
+      return el("div", { class: "anomalies" }, el("strong", null, titre), el("ul", null, liste.map(function (x) { return el("li", null, x); })));
+    }
+    bouton.addEventListener("click", function () {
+      zone.textContent = "";
+      if (!fp.files[0] || !fc.files[0]) { zone.appendChild(erreur("Choisir les deux fichiers.", ["protocoles.csv et criteres.csv sont tous les deux nécessaires."])); return; }
+      Promise.all([lireFichier(fp.files[0]), lireFichier(fc.files[0])]).then(function (t) {
+        if (!W.CONVERTISSEUR) throw new Error("convertisseur.js introuvable");
+        var r = W.CONVERTISSEUR.convertir(t[0], t[1], { responsable: META.responsable });
+        if (r.erreurs.length) { zone.appendChild(erreur("Conversion impossible : " + pluriel(r.erreurs.length, "point à corriger", "points à corriger") + " dans les CSV", r.erreurs)); return; }
+        var nb = r.protocoles.reduce(function (n, p) { return n + p.criteres.length; }, 0);
+        var anom = MOTEUR.valider(r.protocoles, idx);
+        var ta = el("textarea", { readonly: true, id: "sortie-js", "aria-label": "Contenu de protocoles.js", spellcheck: "false" });
+        ta.value = r.contenu;
+        var etatCopie = el("span", { class: "meta-dossier" });
+        function selection() { ta.focus(); ta.select(); etatCopie.textContent = "Copie automatique impossible : texte sélectionné, faire Ctrl+C."; }
+        var copier = el("button", { type: "button", class: "btn primaire" }, "Copier le contenu de protocoles.js");
+        copier.addEventListener("click", function () {
+          var fini = false;
+          function reussi() { fini = true; etatCopie.textContent = "Copié."; }
+          function echec() { if (!fini) { fini = true; selection(); } }
+          setTimeout(echec, 1500);
+          try { navigator.clipboard.writeText(r.contenu).then(reussi, echec); } catch (e) { echec(); }
+        });
+        zone.appendChild(el("div", { class: "anomalies-ok" }, "Conversion réussie : " + pluriel(r.protocoles.length, "protocole", "protocoles") + ", " + pluriel(nb, "critère", "critères") + "."));
+        if (anom.length) zone.appendChild(el("div", { class: "avert" }, el("strong", null, "À vérifier avant de remplacer le fichier :"), el("ul", null, anom.map(function (a) { return el("li", null, a); }))));
+        zone.appendChild(el("ol", { style: "margin:0;padding-left:20px;display:grid;gap:4px" },
+          el("li", null, "Cliquer sur « Copier le contenu de protocoles.js »"),
+          el("li", null, "Ouvrir protocoles.js dans un éditeur de texte, tout sélectionner, coller, enregistrer."),
+          el("li", null, "Recharger la page.")));
+        zone.appendChild(el("div", { class: "actions" }, copier, etatCopie));
+        zone.appendChild(ta);
+      }).catch(function (e) { zone.appendChild(erreur("Lecture impossible", [String(e && e.message || e)])); });
+    });
+    return el("div", null, el("h4", null, "Convertir les fichiers CSV en protocoles.js"),
+      el("div", { class: "import" },
+        el("p", null, "Choisir les deux fichiers CSV modifiés. Rien n'est envoyé : la conversion se fait dans cette page. Elle remplace tout le contenu de protocoles.js par celui des CSV."),
+        el("div", { class: "rangee" },
+          el("div", { class: "champ" }, el("label", { for: "csv-prot" }, "protocoles.csv"), fp),
+          el("div", { class: "champ" }, el("label", { for: "csv-crit" }, "criteres.csv"), fc)),
+        el("div", { class: "actions" }, bouton),
+        zone));
+  }
+
+  function construireGuide() {
+    var c = $("#guide-corps");
+    var anomalies = MOTEUR.valider(PROTOCOLES, idx);
+    var exemple =
+      '{\n  id: "mon-protocole",\n  acronyme: "ACRONYME",\n  titre: "Titre complet",\n  statut: "ouvert",\n  criteres: [\n' +
+      '    { type: "inclusion", texte: "Âge d\'au moins 18 ans",\n      cond: { champ: "age", op: ">=", val: 18 } },\n' +
+      '    { type: "inclusion", texte: "Glioblastome ou astrocytome",\n      cond: { champ: "diagnostic", op: "dans", val: ["glioblastome", "astro_idh"] } },\n' +
+      '    { type: "non-inclusion", texte: "Grossesse ou allaitement",\n      cond: { champ: "grossesse", op: "=", val: true } },\n' +
+      '    { type: "inclusion", texte: "Consentement signé", manuel: true }\n  ]\n}';
+    var lignes = [];
+    CHAMPS.forEach(function (s) {
+      s.champs.forEach(function (d) {
+        var vals = d.type === "liste" ? d.options.map(function (o) { return o[0]; }).join(", ") : d.type === "case" ? "true / false" : "nombre" + (d.unite ? " (" + d.unite + ")" : "");
+        lignes.push(el("tr", null, el("td", null, el("code", null, d.id)), el("td", null, d.label), el("td", { class: "mono" }, vals)));
+      });
+    });
+    ajouter(c, [
+      el("div", null, el("h4", null, "État du fichier protocoles.js"),
+        anomalies.length
+          ? el("div", { class: "anomalies" }, el("strong", null, pluriel(anomalies.length, "anomalie détectée", "anomalies détectées")), el("ul", null, anomalies.map(function (a) { return el("li", null, a); })))
+          : el("div", { class: "anomalies-ok" }, "Aucune anomalie : chaque critère cite un champ et un opérateur reconnus.")),
+      el("div", null, el("h4", null, "Marche à suivre"),
+        el("ol", null,
+          el("li", null, "Ouvrir le fichier ", el("code", null, "protocoles.js"), " dans un éditeur de texte."),
+          el("li", null, "Copier un protocole existant, changer l'identifiant, l'acronyme, le titre, le statut et les critères."),
+          el("li", null, "Pour clore une étude, passer son statut à ", el("code", null, "clos"), ". Elle reste visible ici mais n'est plus proposée lors de l'orientation."),
+          el("li", null, "Variante : tenir le dossier dans les fichiers CSV (protocoles.csv et criteres.csv), puis les convertir avec le bouton ci-dessous."),
+          el("li", null, "Enregistrer, puis recharger la page. Les anomalies éventuelles s'affichent ci-dessus."))),
+      construireImport(),
+      el("div", null, el("h4", null, "Exemple de protocole"), el("pre", null, exemple)),
+      el("div", null, el("h4", null, "Opérateurs"),
+        el("p", null, el("code", null, "="), " ", el("code", null, "!="), " ", el("code", null, ">="), " ", el("code", null, "<="), " ", el("code", null, ">"), " ", el("code", null, "<"), " pour comparer. ",
+          el("code", null, "dans"), " et ", el("code", null, "pasdans"), " prennent une liste entre crochets. Pour combiner : ",
+          el("code", null, "{ et: [ … ] }"), ", ", el("code", null, "{ ou: [ … ] }"), ", ", el("code", null, "{ non: … }"), ".")),
+      el("div", null, el("h4", null, "Champs disponibles (modifiables dans champs.js)"),
+        el("div", { class: "table-scroll" }, el("table", null, el("thead", null, el("tr", null, el("th", null, "Identifiant"), el("th", null, "Libellé"), el("th", null, "Valeurs"))), el("tbody", null, lignes))))
+    ]);
+  }
+
+  /* ---------- Accueil ---------- */
+  function construireAccueil() {
+    var ouv = PROTOCOLES.filter(function (p) { return p.statut === "ouvert"; }).length;
+    $("#accueil-chiffres").textContent = pluriel(ouv, "étude ouverte aux inclusions", "études ouvertes aux inclusions") + " sur " + PROTOCOLES.length + " dans le dossier" + (META.majLe ? ", mis à jour le " + dateFr(META.majLe) : "") + ".";
+  }
+
+  /* ---------- Navigation ---------- */
+  var VUES = { "accueil": "#vue-accueil", "saisie": "#vue-saisie", "etudes": "#vue-etudes", "admin": "#vue-admin" };
+  function allerVue(nom, sansDefilement) {
+    if (!VUES[nom] || (nom === "admin" && !adminActif)) nom = "accueil";
+    vueCourante = nom;
+    Object.keys(VUES).forEach(function (k) { $(VUES[k]).hidden = k !== nom; });
+    Array.prototype.forEach.call(document.querySelectorAll(".onglets a"), function (a) {
+      if (a.getAttribute("data-vue") === nom) a.setAttribute("aria-current", "page"); else a.removeAttribute("aria-current");
+    });
+    try { history.replaceState(null, "", "#" + nom); } catch (e) { /* page intégrée : ignoré */ }
+    if (nom !== "saisie") majBarre(null); else rendreResultats();
+    if (!sansDefilement) window.scrollTo(0, 0);
+  }
+
+  /* ---------- Démarrage ---------- */
+  $("#nom-service").textContent = CONFIG.SERVICE || "";
+  $("#avert-demo").hidden = !PROTOCOLES.some(function (p) { return p.fictif; });
+  ajouter($("#pied"), ["Une question sur un protocole ? Le contact de l'équipe de recherche figure sur la fiche de chaque étude, dans ", el("a", { href: "#etudes", "data-vue": "etudes", class: "lien" }, "Études en cours"), "."]);
+
+  construireFormulaire();
+  construireFiltres();
+  function appliquerAdmin() {
+    $("#onglet-admin").hidden = !adminActif;
+    if (adminActif && !$("#guide-corps").children.length) construireGuide();
+    rendreEtudes();
+  }
+  adminActif = !!CONFIG.MODE_ADMIN || location.hash === "#admin";
+  appliquerAdmin();
+  construireAccueil();
+
+  Array.prototype.forEach.call(document.querySelectorAll("a[data-vue]"), function (a) {
+    a.addEventListener("click", function (e) { e.preventDefault(); allerVue(a.getAttribute("data-vue")); });
+  });
+  $("#btn-vider").addEventListener("click", function () { appliquer(null); });
+  $("#btn-exemple").addEventListener("click", function () { appliquer(CONFIG.EXEMPLE_PATIENT); });
+  $("#barre-aller").addEventListener("click", function () { $("#resultats").scrollIntoView({ block: "start" }); });
+  window.addEventListener("hashchange", function () {
+    var h = location.hash.replace("#", "");
+    if (h === "admin") { adminActif = true; appliquerAdmin(); allerVue("admin"); return; }
+    if (VUES[h] && h !== vueCourante) allerVue(h);
+  });
+
+  appliquer(CONFIG.EXEMPLE_AU_DEMARRAGE ? CONFIG.EXEMPLE_PATIENT : null);
+  var h0 = location.hash.replace("#", "");
+  allerVue(VUES[h0] ? h0 : "accueil", true);
+})();
+</script>
+
+</body></html>
