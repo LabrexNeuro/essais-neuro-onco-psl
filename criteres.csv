@@ -2,98 +2,423 @@
 LEGATO;inclusion;Âge d'au moins 18 ans;age;>=;18;;
 LEGATO;inclusion;Glioblastome IDH-sauvage prouvé histologiquement (diagnostic ou récidive);diagnostic;egal;glioblastome;;
 LEGATO;inclusion;Première progression ou récidive après le traitement de première intention;situation;egal;recidive1;;
-LEGATO;inclusion;Radiothérapie antérieure terminée depuis au moins 6 mois (26 semaines);rt_cerebrale;egal;VRAI;et;
+LEGATO;inclusion;Radiothérapie antérieure terminée depuis au moins 6 mois (26 semaines);rt_cerebrale;egal;vrai;et;
 LEGATO;inclusion;Radiothérapie antérieure terminée depuis au moins 6 mois (26 semaines);delai_rt;>=;26;et;
-LEGATO;inclusion;Radiothérapie fractionnée ou abrégée d'au moins 15 fractions;rt_fractions;>=;15;;
-LEGATO;inclusion;Indice de performance OMS de 0 à 2;oms;<=;2;;
-LEGATO;inclusion;Maladie mesurable selon RANO, diamètre tumoral maximal de 5 cm au plus;mesurable;egal;mesurable;et;
-LEGATO;inclusion;Maladie mesurable selon RANO, diamètre tumoral maximal de 5 cm au plus;diametre_cm;<=;5;et;
+LEGATO;inclusion;Radiothérapie fractionnée ou abrégée d'au moins 15 fractions;rt_cerebrale;egal;vrai;;
+LEGATO;inclusion;Indice de performance OMS de 0 à 2;kps;>=;50;;
+LEGATO;inclusion;Maladie mesurable selon RANO, diamètre tumoral maximal de 5 cm au plus;taille;dans;t35|t5;;
 LEGATO;inclusion;Corticoïdes : dose stable ou en baisse pendant les 7 jours précédant l'inclusion (ou aucun corticoïde);dexa;<=;0;ou;
 LEGATO;inclusion;Corticoïdes : dose stable ou en baisse pendant les 7 jours précédant l'inclusion (ou aucun corticoïde);cortico_stable;egal;stable;ou;
 LEGATO;inclusion;Si chirurgie pour la récidive : rétablissement complet et récidive confirmée par l'histologie;;;;;oui
-LEGATO;non-inclusion;Traitement antérieur par nitroso-urée;nitrosouree;egal;VRAI;;
-LEGATO;non-inclusion;Traitement anticancéreux déjà reçu pour la récidive (sauf chirurgie);ttt_recidive;egal;VRAI;;
-LEGATO;non-inclusion;Leucémie aiguë ou maladie myéloïde (antécédent ou actuelle);hemopathie;egal;VRAI;;
-LEGATO;non-inclusion;Baisse significative des plaquettes ou des leucocytes, ou insuffisance rénale sévère;insuff_organe;egal;VRAI;;
-LEGATO;non-inclusion;Hypersensibilité connue à la lomustine ou à ses excipients;allergie_lomustine;egal;VRAI;;
-LEGATO;non-inclusion;Maladie cœliaque ou allergie au blé connue;coeliaque;egal;VRAI;;
-LEGATO;non-inclusion;Vaccin vivant atténué dans les 3 mois précédant la lomustine;vaccin_vivant;egal;VRAI;;
-LEGATO;non-inclusion;Affection médicale grave ou non contrôlée (infection, alcoolisme chronique, toxicomanie…) selon l'investigateur;maladie_grave;egal;VRAI;ou;
-LEGATO;non-inclusion;Affection médicale grave ou non contrôlée (infection, alcoolisme chronique, toxicomanie…) selon l'investigateur;infection;egal;VRAI;ou;
-LEGATO;non-inclusion;Contre-indication à l'IRM, au traceur d'imagerie ou au produit de contraste;irm_ci;egal;VRAI;ou;
-LEGATO;non-inclusion;Contre-indication à l'IRM, au traceur d'imagerie ou au produit de contraste;allergie_contraste;egal;VRAI;ou;
+LEGATO;non-inclusion;Traitement antérieur par nitroso-urée;nitrosouree;egal;vrai;;
+LEGATO;non-inclusion;Traitement anticancéreux déjà reçu pour la récidive (sauf chirurgie);situation;egal;recidive2;;
+LEGATO;non-inclusion;Leucémie aiguë ou maladie myéloïde (antécédent ou actuelle);;;;;oui
+LEGATO;non-inclusion;Baisse significative des plaquettes ou des leucocytes, ou insuffisance rénale sévère;;;;;oui
+LEGATO;non-inclusion;Hypersensibilité connue à la lomustine ou à ses excipients;;;;;oui
+LEGATO;non-inclusion;Maladie cœliaque ou allergie au blé connue;;;;;oui
+LEGATO;non-inclusion;Vaccin vivant atténué dans les 3 mois précédant la lomustine;;;;;oui
+LEGATO;non-inclusion;Affection médicale grave ou non contrôlée (infection, alcoolisme chronique, toxicomanie…) selon l'investigateur;;;;;oui
+LEGATO;non-inclusion;Contre-indication à l'IRM, au traceur d'imagerie ou au produit de contraste;irm_ci;egal;vrai;;
 SONOBIRD;inclusion;Âge d'au moins 18 ans;age;>=;18;;
 SONOBIRD;inclusion;Indice de Karnofsky d'au moins 70;kps;>=;70;;
 SONOBIRD;inclusion;Glioblastome en première récidive après le traitement de première ligne;diagnostic;egal;glioblastome;et;
 SONOBIRD;inclusion;Glioblastome en première récidive après le traitement de première ligne;situation;egal;recidive1;et;
-SONOBIRD;inclusion;Taille tumorale de 5 cm au plus (après chirurgie);diametre_cm;<=;5;;
-SONOBIRD;inclusion;Récidive éligible à une résection chirurgicale;resecable;egal;possible;;
-SONOBIRD;non-inclusion;Tumeur infratentorielle;infratentorielle;egal;VRAI;;
+SONOBIRD;inclusion;Taille tumorale de 5 cm au plus (après chirurgie);taille;dans;t35|t5;;
+SONOBIRD;inclusion;Récidive éligible à une résection chirurgicale;chirurgie;egal;a_venir;;
+SONOBIRD;non-inclusion;Tumeur infratentorielle;siege;egal;sous;;
 SONOBIRD;non-inclusion;Corticoïdes pour la tumeur : 6 mg ou plus d'équivalent dexaméthasone;dexa;>=;6;;
 SONOBIRD;non-inclusion;Problème médical compromettant le traitement par ultrasons;;;;;oui
 NAVIG-1;inclusion;Âge d'au moins 18 ans;age;>=;18;;
 NAVIG-1;inclusion;Indice de Karnofsky d'au moins 60;kps;>=;60;;
 NAVIG-1;inclusion;Glioblastome nouvellement diagnostiqué;diagnostic;egal;glioblastome;et;
-NAVIG-1;inclusion;Glioblastome nouvellement diagnostiqué;situation;egal;nouveau;et;
-NAVIG-1;inclusion;Radiochimiothérapie de Stupp terminée (45 Gy ou plus), éligible au témozolomide adjuvant;stupp;egal;terminee;;
+NAVIG-1;inclusion;Glioblastome nouvellement diagnostiqué;situation;dans;nouveau|traitement_initial;et;
+NAVIG-1;inclusion;Radiochimiothérapie de Stupp terminée (45 Gy ou plus), éligible au témozolomide adjuvant;situation;egal;traitement_initial;;
 NAVIG-1;inclusion;Patient HLA-A2;hla_a2;egal;positif;;
 NAVIG-1;inclusion;Expression de PTPRZ1;ptprz1;egal;exprime;;
 NAVIG-1;non-inclusion;Mutation IDH;diagnostic;dans;astro_idh|oligo;;
 NAVIG-1;non-inclusion;Corticoïdes : plus de 10 mg équivalent prednisone (environ 1,5 mg de dexaméthasone);dexa;>;1,5;;
 NAVIG-1;non-inclusion;Optune / champs électriques (TTFields) : exclus en phase 1, autorisés en phase 2;;;;;oui
-NAVIG-1;non-inclusion;Maladie dysimmunitaire;dysimmune;egal;VRAI;;
-NAVIG-1;non-inclusion;Traitement antérieur par bévacizumab;bevacizumab;egal;VRAI;;
+NAVIG-1;non-inclusion;Maladie dysimmunitaire;auto_immune;egal;vrai;;
+NAVIG-1;non-inclusion;Traitement antérieur par bévacizumab;bevacizumab;egal;vrai;;
 RESURGE;inclusion;Âge d'au moins 18 ans;age;>=;18;;
 RESURGE;inclusion;Glioblastome prouvé lors de la première chirurgie;diagnostic;egal;glioblastome;;
-RESURGE;inclusion;Traitement antérieur par radiothérapie, avec ou sans témozolomide;rt_cerebrale;egal;VRAI;;
-RESURGE;inclusion;Intervention chirurgicale réalisable;resecable;egal;possible;;
+RESURGE;inclusion;Traitement antérieur par radiothérapie, avec ou sans témozolomide;rt_cerebrale;egal;vrai;;
+RESURGE;inclusion;Intervention chirurgicale réalisable;chirurgie;egal;a_venir;;
 RESURGE;inclusion;Première progression selon RANO;situation;egal;recidive1;;
 RESURGE;inclusion;Indice de Karnofsky d'au moins 70;kps;>=;70;;
-RESURGE;non-inclusion;Engagement sous-falcoriel à l'IRM;engagement_falcoriel;egal;VRAI;;
-RESURGE;non-inclusion;Prise de contraste en zone fonctionnelle;zone_fonctionnelle;egal;VRAI;;
+RESURGE;non-inclusion;Engagement sous-falcoriel à l'IRM;;;;;oui
+RESURGE;non-inclusion;Prise de contraste en zone fonctionnelle;;;;;oui
 SONOFIRST;inclusion;Âge de 18 à 70 ans;age;>=;18;et;
 SONOFIRST;inclusion;Âge de 18 à 70 ans;age;<=;70;et;
 SONOFIRST;inclusion;Apte à donner un consentement libre et éclairé;;;;;oui
 SONOFIRST;inclusion;Glioblastome IDH-sauvage nouvellement diagnostiqué (biopsie stéréotaxique ou « king size » possible);diagnostic;egal;glioblastome;et;
 SONOFIRST;inclusion;Glioblastome IDH-sauvage nouvellement diagnostiqué (biopsie stéréotaxique ou « king size » possible);situation;egal;nouveau;et;
 SONOFIRST;inclusion;Indice de Karnofsky d'au moins 70;kps;>=;70;;
-SONOFIRST;inclusion;Admissible à une résection chirurgicale totale ou partielle;resecable;egal;possible;;
-SONOFIRST;inclusion;Extension tumorale de 70 mm au plus (IRM T1);diametre_cm;<=;7;;
-SONOFIRST;inclusion;Admissible à la radiochimiothérapie de Stupp;stupp;egal;a_venir;;
-SONOFIRST;inclusion;Hémoglobine d'au moins 10 g/dL;hemoglobine;>=;10;;
-SONOFIRST;inclusion;Leucocytes d'au moins 3 G/L;leucocytes;>=;3;;
-SONOFIRST;inclusion;Neutrophiles d'au moins 1,5 G/L;pnn;>=;1,5;;
-SONOFIRST;inclusion;Plaquettes d'au moins 100 G/L;plaquettes;>=;100;;
-SONOFIRST;inclusion;Bilirubine totale inférieure à 1,5 fois la limite supérieure;bilirubine;<;1,5;;
-SONOFIRST;inclusion;ASAT et ALAT à 3 fois la limite supérieure au plus;transaminases;<=;3;;
-SONOFIRST;inclusion;Phosphatases alcalines inférieures à 3 fois la limite supérieure;pal;<;3;;
-SONOFIRST;inclusion;Clairance de la créatinine d'au moins 60 mL/min;dfg;>=;60;;
+SONOFIRST;inclusion;Admissible à une résection chirurgicale totale ou partielle;chirurgie;egal;a_venir;;
+SONOFIRST;inclusion;Extension tumorale de 70 mm au plus (IRM T1);taille;dans;t35|t5|t7;;
+SONOFIRST;inclusion;Admissible à la radiochimiothérapie de Stupp;traitement_prevu;egal;stupp;;
+SONOFIRST;inclusion;Bilan biologique conforme aux seuils du protocole (numération, bilan hépatique, fonction rénale);;;;;oui
 SONOFIRST;inclusion;"Femme en âge de procréer : test de grossesse négatif et contraception acceptée ; homme : contraception acceptée";;;;;oui
 SONOFIRST;inclusion;Consentement éclairé écrit, daté et signé;;;;;oui
 SONOFIRST;inclusion;Affiliation à la sécurité sociale française (hors AME);;;;;oui
-SONOFIRST;non-inclusion;Tumeur multifocale hors d'une zone de 70 mm, ou de la fosse postérieure;multifocal_large;egal;VRAI;ou;
-SONOFIRST;non-inclusion;Tumeur multifocale hors d'une zone de 70 mm, ou de la fosse postérieure;infratentorielle;egal;VRAI;ou;
-SONOFIRST;non-inclusion;Anomalies FLAIR diffuses attribuables à une gliomatose;gliomatose;egal;VRAI;;
-SONOFIRST;non-inclusion;Signes d'hypertension intracrânienne non contrôlée;htic;egal;VRAI;;
-SONOFIRST;non-inclusion;Épilepsie non contrôlée;epilepsie;egal;VRAI;;
-SONOFIRST;non-inclusion;Traitement antiplaquettaire ou antithrombotique à poursuivre;antiplaquettaire;egal;VRAI;ou;
-SONOFIRST;non-inclusion;Traitement antiplaquettaire ou antithrombotique à poursuivre;anticoag;egal;VRAI;ou;
-SONOFIRST;non-inclusion;Grossesse ou allaitement;grossesse;egal;VRAI;;
-SONOFIRST;non-inclusion;Contre-indication à l'IRM, ou allergie au gadolinium ou à un produit de contraste;irm_ci;egal;VRAI;ou;
-SONOFIRST;non-inclusion;Contre-indication à l'IRM, ou allergie au gadolinium ou à un produit de contraste;allergie_contraste;egal;VRAI;ou;
-SONOFIRST;non-inclusion;Hypersensibilité aux microsphères de perflutrène (Luminity, Definity);allergie_perflutren;egal;VRAI;;
-SONOFIRST;non-inclusion;Anévrisme intracrânien connu, ou matériel implanté (clips, shunt, stent, wafer, substitut de dure-mère non résorbable);anevrisme_materiel;egal;VRAI;;
-SONOFIRST;non-inclusion;Maladie intercurrente ou comorbidité pouvant gêner le dispositif ou l'évaluation (selon l'investigateur);maladie_grave;egal;VRAI;;
-SONOFIRST;non-inclusion;Hypertension artérielle de grade 3 ou plus non contrôlée;hta3;egal;VRAI;;
-SONOFIRST;non-inclusion;Infection connue ou suspectée, ou chronique instable, nécessitant un traitement systémique;infection;egal;VRAI;;
-SONOFIRST;non-inclusion;Maladie cardiaque importante;cardiopathie;egal;VRAI;;
-SONOFIRST;non-inclusion;Maladie pulmonaire importante;pneumopathie;egal;VRAI;;
-SONOFIRST;non-inclusion;Insuffisance rénale grave ou myélosuppression grave;insuff_organe;egal;VRAI;;
-SONOFIRST;non-inclusion;Maladie psychiatrique ou situation sociale limitant le respect de l'étude;psy;egal;VRAI;;
-SONOFIRST;non-inclusion;Immunodéficience (VIH);vih;egal;VRAI;;
-SONOFIRST;non-inclusion;Patient sous protection judiciaire;protection_judiciaire;egal;VRAI;;
-SONOFIRST;non-inclusion;Médicament expérimental dans les 30 jours précédant l'inclusion;med_experimental;egal;VRAI;;
-SONOFIRST;non-inclusion;Antibiotique de neurotoxicité connue, sauf substitution impossible;antibio_neurotoxique;egal;VRAI;;
-SONOFIRST;non-inclusion;Contre-indication au témozolomide ou hypersensibilité à la dacarbazine;ci_tmz;egal;VRAI;;
-SONOFIRST;non-inclusion;Temps de prothrombine ou TCA hors des limites du laboratoire;coag_anormale;egal;VRAI;;
+SONOFIRST;non-inclusion;Tumeur multifocale hors d'une zone de 70 mm, ou de la fosse postérieure (critère partiel : le reste est à confirmer en consultation);siege;egal;sous;;
+SONOFIRST;non-inclusion;Anomalies FLAIR diffuses attribuables à une gliomatose;;;;;oui
+SONOFIRST;non-inclusion;Signes d'hypertension intracrânienne non contrôlée;;;;;oui
+SONOFIRST;non-inclusion;Épilepsie non contrôlée;epilepsie_nc;egal;vrai;;
+SONOFIRST;non-inclusion;Traitement antiplaquettaire ou antithrombotique à poursuivre;;;;;oui
+SONOFIRST;non-inclusion;Grossesse ou allaitement;grossesse;egal;vrai;;
+SONOFIRST;non-inclusion;Contre-indication à l'IRM, ou allergie au gadolinium ou à un produit de contraste;irm_ci;egal;vrai;;
+SONOFIRST;non-inclusion;Hypersensibilité aux microsphères de perflutrène (Luminity, Definity);;;;;oui
+SONOFIRST;non-inclusion;Anévrisme intracrânien connu, ou matériel implanté (clips, shunt, stent, wafer, substitut de dure-mère non résorbable);;;;;oui
+SONOFIRST;non-inclusion;Maladie intercurrente ou comorbidité pouvant gêner le dispositif ou l'évaluation (selon l'investigateur);;;;;oui
+SONOFIRST;non-inclusion;Hypertension artérielle de grade 3 ou plus non contrôlée;;;;;oui
+SONOFIRST;non-inclusion;Infection connue ou suspectée, ou chronique instable, nécessitant un traitement systémique;;;;;oui
+SONOFIRST;non-inclusion;Maladie cardiaque importante;;;;;oui
+SONOFIRST;non-inclusion;Maladie pulmonaire importante;;;;;oui
+SONOFIRST;non-inclusion;Insuffisance rénale grave ou myélosuppression grave;;;;;oui
+SONOFIRST;non-inclusion;Maladie psychiatrique ou situation sociale limitant le respect de l'étude;;;;;oui
+SONOFIRST;non-inclusion;Immunodéficience (VIH);immunodep;egal;vrai;;
+SONOFIRST;non-inclusion;Patient sous protection judiciaire;;;;;oui
+SONOFIRST;non-inclusion;Médicament expérimental dans les 30 jours précédant l'inclusion;;;;;oui
+SONOFIRST;non-inclusion;Antibiotique de neurotoxicité connue, sauf substitution impossible;;;;;oui
+SONOFIRST;non-inclusion;Contre-indication au témozolomide ou hypersensibilité à la dacarbazine;;;;;oui
+SONOFIRST;non-inclusion;Temps de prothrombine ou TCA hors des limites du laboratoire;;;;;oui
 SONOFIRST;non-inclusion;Implantation du SonoCloud-9 impossible selon le neurochirurgien (ex. épaisseur de peau supérieure à 9 mm);;;;;oui
+POLO;inclusion;Tumeur avec co-délétion 1p/19q et mutation IDH (IDH1 ou IDH2), selon le diagnostic local;diagnostic;egal;oligo;;
+POLO;inclusion;Oligodendrogliome de bas grade (grade 2, OMS 2016);grade;egal;2;;
+POLO;inclusion;Confirmation histologique du diagnostic par un laboratoire d'anatomopathologie central;;;;;oui
+POLO;inclusion;Âge d'au moins 18 ans;age;>=;18;;
+POLO;inclusion;"Traitement oncologique autre que la chirurgie nécessaire (prétraité ou non par vorasidenib) pour l'une des raisons suivantes : progression documentée par une augmentation de taille ; maladie symptomatique (symptômes neurologiques ou cognitifs, ou crises d'épilepsie réfractaires) ; âge d'au moins 40 ans avec chirurgie ; âge de moins de 40 ans avec exérèse partielle ou complète ou biopsie";;;;;oui
+POLO;inclusion;Aucune radiothérapie ni chimiothérapie antérieure (chirurgies antérieures acceptées);rt_cerebrale;egal;faux;et;
+POLO;inclusion;Aucune radiothérapie ni chimiothérapie antérieure (chirurgies antérieures acceptées);chimio;egal;faux;et;
+VIGOR;inclusion;Âge d'au moins 18 ans;age;>=;18;;
+VIGOR;inclusion;Astrocytome IDH muté de grade 2 ou 3 (diagnostic local);diagnostic;egal;astro_idh;et;
+VIGOR;inclusion;Astrocytome IDH muté de grade 2 ou 3 (diagnostic local);grade;>=;2;et;
+VIGOR;inclusion;Astrocytome IDH muté de grade 2 ou 3 (diagnostic local);grade;<=;3;et;
+VIGOR;inclusion;Indice de Karnofsky d'au moins 70;kps;>=;70;;
+VIGOR;inclusion;Au moins une chirurgie antérieure;;;;;oui
+VIGOR;inclusion;Radiothérapie antérieure de 50,4 Gy (photons ou protons) (critère partiel : le reste est à confirmer en consultation);rt_cerebrale;egal;vrai;;
+VIGOR;inclusion;Chimiothérapie antérieure après la radiothérapie;chimio;egal;vrai;;
+VIGOR;inclusion;4 à 12 cycles de témozolomide ou 2 à 6 cycles de PCV;;;;;oui
+VIGOR;inclusion;Dernière dose de chimiothérapie 6 à 12 semaines avant l'inclusion;;;;;oui
+VIGOR;inclusion;Récupération de toutes les toxicités cliniquement pertinentes (ou stables et contrôlées selon l'investigateur);;;;;oui
+VIGOR;inclusion;Numération formule sanguine et bilan hépatique normaux;;;;;oui
+VIGOR;inclusion;Indice de performance OMS de 0 à 2;kps;>=;50;;
+VIGOR;inclusion;Corticoïdes : dose stable ou en baisse pendant les 7 derniers jours (ou aucun corticoïde);dexa;<=;0;ou;
+VIGOR;inclusion;Corticoïdes : dose stable ou en baisse pendant les 7 derniers jours (ou aucun corticoïde);cortico_stable;egal;stable;ou;
+VIGOR;inclusion;Femme en âge de procréer : test de grossesse négatif, pas d'allaitement et double méthode de contraception;;;;;oui
+VIGOR;non-inclusion;Codélétion 1p/19q;diagnostic;egal;oligo;;
+VIGOR;non-inclusion;Récidive ou progression selon RANO 2.0 entre le premier jour de radiothérapie et l'inclusion;situation;dans;recidive1|recidive2;;
+VIGOR;non-inclusion;Autre cancer dont l'histoire naturelle pourrait interférer avec la tolérance ou l'efficacité du traitement;autre_cancer;egal;vrai;;
+VIGOR;non-inclusion;Astrocytome de grade 4;grade;egal;4;;
+VIGOR;non-inclusion;Traitement concomitant par des substrats des CYP2C8, 2C9, 2C19 ou 3A;;;;;oui
+FREEDOME;inclusion;Âge d'au moins 18 ans;age;>=;18;;
+FREEDOME;inclusion;Gliome diffus de grade 2 ou 3;diagnostic;dans;astro_idh|oligo|gliome_autre;et;
+FREEDOME;inclusion;Gliome diffus de grade 2 ou 3;grade;>=;2;et;
+FREEDOME;inclusion;Gliome diffus de grade 2 ou 3;grade;<=;3;et;
+FREEDOME;inclusion;Score OMS « > ou = 2 » dans le résumé source (sens à vérifier, ≤ 2 probable);;;;;oui
+FREEDOME;inclusion;Exérèse chirurgicale réalisée depuis au moins 12 mois (52 semaines);;;;;oui
+FREEDOME;inclusion;Fin du traitement oncologique depuis au moins 6 mois (26 semaines), s'il y en a eu un (hors vorasidenib, accepté) (critère partiel : le reste est à confirmer en consultation);situation;egal;surveillance;;
+FREEDOME;inclusion;Plainte cognitive (réponses au moins « assez » aux items 20 et 25 du questionnaire EORTC QLQ-C30);;;;;oui
+FREEDOME;inclusion;Utilisation régulière possible d'un outil numérique;;;;;oui
+FREEDOME;non-inclusion;Participation concomitante à une étude dont le critère d'évaluation est la cognition (ex. POLCA, POLO);;;;;oui
+FREEDOME;non-inclusion;Altération cognitive sévère (MoCA inférieur à 20);;;;;oui
+TEMOTRAD;inclusion;Âge d'au moins 18 ans;age;>=;18;;
+TEMOTRAD;inclusion;Indice de Karnofsky d'au moins 50;kps;>=;50;;
+TEMOTRAD;inclusion;Lésion ne prenant pas le contraste à l'IRM;;;;;oui
+TEMOTRAD;inclusion;Tumeur infiltrante du tronc cérébral (gliome diffus du tronc cérébral de l'adulte);diagnostic;dans;dmg|gliome_autre|astro_idh;et;
+TEMOTRAD;inclusion;Tumeur infiltrante du tronc cérébral (gliome diffus du tronc cérébral de l'adulte);siege;egal;sous;et;
+TEMOTRAD;inclusion;Preuve histologique de tumeur infiltrante du tronc cérébral (sauf exception);;;;;oui
+TEMOTRAD;inclusion;Progression clinique et/ou radiologique sur un mode infiltrant mais non menaçant;;;;;oui
+BIOMEDE 2;inclusion;Âge d'au moins 6 mois;age;>=;0,5;;
+BIOMEDE 2;inclusion;Indice de Karnofsky d'au moins 50;kps;>=;50;;
+BIOMEDE 2;inclusion;Éligible pour une biopsie, ou matériel de biopsie disponible pour l'évaluation des biomarqueurs;;;;;oui
+BIOMEDE 2;inclusion;Éligible à la radiothérapie cérébrale ou cranio-spinale;;;;;oui
+BIOMEDE 2;inclusion;Tumeur nouvellement diagnostiquée, sans chimiothérapie ni autre traitement anticancéreux antérieur;situation;egal;nouveau;et;
+BIOMEDE 2;inclusion;Tumeur nouvellement diagnostiquée, sans chimiothérapie ni autre traitement anticancéreux antérieur;chimio;egal;faux;et;
+BIOMEDE 2;inclusion;Gliome pontique intrinsèque diffus (DIPG), ou gliome diffus de la ligne médiane non DIPG avec mutation H3K28M ou perte de la triméthylation H3K28 avec surexpression d'EZHIP;diagnostic;egal;dmg;;
+BIOMEDE 2;inclusion;Consentement éclairé requis pour la vérification histologique (biopsie) et pour l'examen central des biomarqueurs;;;;;oui
+BIOMEDE 2;non-inclusion;Toxicité d'organe actuelle de grade supérieur à 2;;;;;oui
+BIOMEDE 2;non-inclusion;QTc supérieur à 480 ms;;;;;oui
+Acsé Pemigatinib;inclusion;Tumeur solide avec réarrangement, fusion ou mutation de FGFR1, FGFR2 ou FGFR3;fgfr;egal;presente;;
+Acsé Pemigatinib;inclusion;Tumeur solide (hors lymphome et maladies neuro-immunes);diagnostic;pasdans;lcp|encephalite_ai|nsp;;
+Acsé Pemigatinib;inclusion;Âge d'au moins 18 ans;age;>=;18;;
+Acsé Pemigatinib;inclusion;Indice de performance ECOG de 0 à 2;kps;>=;50;;
+Acsé Pemigatinib;inclusion;Espérance de vie supérieure à 3 mois (13 semaines);;;;;oui
+Acsé Pemigatinib;inclusion;Maladie mesurable selon RECIST 1.1;;;;;oui
+Acsé Pemigatinib;inclusion;Deux imageries pré-traitement disponibles, espacées d'au moins 4 semaines, sans traitement anticancéreux entre les deux;;;;;oui
+Acsé Pemigatinib;inclusion;Croissance tumorale d'au moins 0,1 mm/jour sur les imageries pré-traitement;;;;;oui
+Acsé Pemigatinib;inclusion;Bilan biologique conforme aux seuils du protocole (numération, bilan hépatique, fonction rénale);;;;;oui
+Acsé Pemigatinib;non-inclusion;Traitement antérieur par un anti-FGFR;;;;;oui
+Acsé Pemigatinib;non-inclusion;Dernier traitement anticancéreux « > 4 semaines (> 6 semaines pour les nitrosourées) » dans le résumé source (sens à vérifier : probable délai minimum de sevrage);;;;;oui
+Acsé Pemigatinib;non-inclusion;Pathologie cornéale ou rétinienne cliniquement significative;;;;;oui
+Acsé Pemigatinib;non-inclusion;Troubles de l'hémostase du calcium et/ou du phosphate;;;;;oui
+Acsé Pemigatinib;non-inclusion;Maladie cardiaque non contrôlée;;;;;oui
+GBM AGILE;inclusion;Âge d'au moins 18 ans;age;>=;18;;
+GBM AGILE;inclusion;Indice de Karnofsky d'au moins 60;kps;>=;60;;
+GBM AGILE;inclusion;Glioblastome nouvellement diagnostiqué, éligible à la radiochimiothérapie concomitante par témozolomide (protocole de Stupp);diagnostic;egal;glioblastome;et;
+GBM AGILE;inclusion;Glioblastome nouvellement diagnostiqué, éligible à la radiochimiothérapie concomitante par témozolomide (protocole de Stupp);situation;egal;nouveau;et;
+GBM AGILE;inclusion;Glioblastome nouvellement diagnostiqué, éligible à la radiochimiothérapie concomitante par témozolomide (protocole de Stupp);traitement_prevu;egal;stupp;et;
+GBM AGILE;inclusion;Tissu tumoral disponible pour déterminer le statut MGMT;;;;;oui
+GBM AGILE;non-inclusion;Implant de carmustine ou autre traitement antitumoral supplémentaire;;;;;oui
+GBM AGILE;non-inclusion;Atteinte méningée extensive;leptomeninge;egal;vrai;;
+GBM AGILE;non-inclusion;QTc supérieur à 450 ms;;;;;oui
+Gliofocus;inclusion;Âge d'au moins 18 ans;age;>=;18;;
+Gliofocus;inclusion;Indice de Karnofsky d'au moins 70;kps;>=;70;;
+Gliofocus;inclusion;Glioblastome nouvellement diagnostiqué, MGMT non méthylé, éligible à la radiochimiothérapie standard;diagnostic;egal;glioblastome;et;
+Gliofocus;inclusion;Glioblastome nouvellement diagnostiqué, MGMT non méthylé, éligible à la radiochimiothérapie standard;situation;egal;nouveau;et;
+Gliofocus;inclusion;Glioblastome nouvellement diagnostiqué, MGMT non méthylé, éligible à la radiochimiothérapie standard;mgmt;egal;non_methyle;et;
+Gliofocus;inclusion;Glioblastome nouvellement diagnostiqué, MGMT non méthylé, éligible à la radiochimiothérapie standard;traitement_prevu;egal;stupp;et;
+Gliofocus;non-inclusion;Implant de carmustine ou autre traitement antitumoral supplémentaire;;;;;oui
+Gliofocus;non-inclusion;Atteinte méningée extensive;leptomeninge;egal;vrai;;
+STRATEGLIO;inclusion;Âge d'au moins 18 ans;age;>=;18;;
+STRATEGLIO;inclusion;Glioblastome de novo prouvé histologiquement (diagnostic extemporané ou examen anatomopathologique standard);diagnostic;egal;glioblastome;et;
+STRATEGLIO;inclusion;Glioblastome de novo prouvé histologiquement (diagnostic extemporané ou examen anatomopathologique standard);situation;egal;nouveau;et;
+STRATEGLIO;inclusion;Indice de Karnofsky d'au moins 60;kps;>=;60;;
+STRATEGLIO;inclusion;Éligible à une radiothérapie standard (60 Gy en 30 fractions);traitement_prevu;egal;stupp;;
+STRATEGLIO;inclusion;"Contraception efficace pendant l'étude et au moins 6 mois après la fin du traitement ; test de grossesse urinaire ou sérique négatif dans les 7 jours";;;;;oui
+STRATEGLIO;non-inclusion;Glioblastome secondaire ou récurrent (critère partiel : le reste est à confirmer en consultation);situation;dans;recidive1|recidive2;;
+STRATEGLIO;non-inclusion;Myélosuppression sévère avant l'inclusion;;;;;oui
+STRATEGLIO;non-inclusion;Antécédent d'autre cancer dans les 5 ans précédant l'inclusion;autre_cancer;egal;vrai;;
+STRATEGLIO;non-inclusion;Groupe expérimental : délai de plus de 15 jours entre la chirurgie ou la biopsie initiale et le début du traitement;;;;;oui
+STRATEGLIO;non-inclusion;Délai de plus de 43 jours entre la chirurgie ou la biopsie initiale et le début de la radiothérapie;;;;;oui
+STRATEGLIO;non-inclusion;Utilisation prévue de champs électriques (TTFields) pour le traitement de la tumeur;;;;;oui
+STRATEGLIO;non-inclusion;Implant contenant de la carmustine;;;;;oui
+STRATEGLIO;non-inclusion;Toxicités d'un traitement anticancéreux antérieur non revenues à un grade ≤ 1 (CTCAE), hors alopécie, nausées, vomissements et symptômes neurologiques;;;;;oui
+STRATEGLIO;non-inclusion;Hypersensibilité à la substance active ou à un excipient des produits expérimentaux;;;;;oui
+STRATEGLIO;non-inclusion;Participation en cours à une autre recherche, ou agent ou dispositif expérimental dans les 30 jours précédant l'inclusion;;;;;oui
+STRATEGLIO;non-inclusion;Condition médicale ou psychiatrique, ou anomalie de laboratoire, pouvant empêcher le suivi;;;;;oui
+STRATEGLIO;non-inclusion;Incapacité à avaler ou à absorber un traitement par voie orale;;;;;oui
+STRATEGLIO;non-inclusion;Sérologie VIH, VHB ou VHC positive;immunodep;egal;vrai;;
+STRATEGLIO;non-inclusion;Grossesse ou allaitement;grossesse;egal;vrai;;
+OPTIMUM;inclusion;Âge d'au moins 18 ans;age;>=;18;;
+OPTIMUM;inclusion;Indice de performance ECOG de 0 à 2;kps;>=;50;;
+OPTIMUM;inclusion;Glioblastome IDH-sauvage supratentoriel nouvellement diagnostiqué;diagnostic;egal;glioblastome;et;
+OPTIMUM;inclusion;Glioblastome IDH-sauvage supratentoriel nouvellement diagnostiqué;situation;egal;nouveau;et;
+OPTIMUM;inclusion;Tumeur supratentorielle;siege;egal;sus;;
+OPTIMUM;inclusion;Glioblastome de type OXPHOS (classification moléculaire, selon le titre de l'essai);;;;;oui
+OPTIMUM;inclusion;Candidat à une radiochimiothérapie concomitante selon Stupp (protocole de Stupp accéléré non éligible);traitement_prevu;egal;stupp;;
+OPTIMUM;inclusion;Début de la radiothérapie dans les 7 semaines suivant le diagnostic;;;;;oui
+OPTIMUM;non-inclusion;Insuffisance rénale sévère;;;;;oui
+OPTIMUM;non-inclusion;Antécédent de pré-coma diabétique;;;;;oui
+OPTIMUM;non-inclusion;Antécédent d'acidose métabolique aiguë;;;;;oui
+EF-41 Keynote;inclusion;Âge d'au moins 18 ans;age;>=;18;;
+EF-41 Keynote;inclusion;Indice de performance ECOG de 0 à 1;kps;>=;70;;
+EF-41 Keynote;inclusion;Glioblastome (OMS 2021) nouvellement diagnostiqué;diagnostic;egal;glioblastome;et;
+EF-41 Keynote;inclusion;Glioblastome (OMS 2021) nouvellement diagnostiqué;situation;egal;nouveau;et;
+EF-41 Keynote;inclusion;Candidat à une radiochimiothérapie concomitante selon Stupp (protocole de Stupp accéléré non éligible);traitement_prevu;egal;stupp;;
+EF-41 Keynote;inclusion;Matériel tumoral disponible pour envoi centralisé (statut MGMT);;;;;oui
+EF-41 Keynote;non-inclusion;Maladie auto-immune;auto_immune;egal;vrai;;
+EF-41 Keynote;non-inclusion;Plus de 2 mg de dexaméthasone;dexa;>;2;;
+EF-41 Keynote;non-inclusion;Contre-indication à l'Optune (TTFields);;;;;oui
+EF-41 Keynote;non-inclusion;Localisation infratentorielle ou leptoméningée;siege;egal;sous;ou;
+EF-41 Keynote;non-inclusion;Localisation infratentorielle ou leptoméningée;leptomeninge;egal;vrai;ou;
+SIBDOPA;inclusion;Âge d'au moins 18 ans;age;>=;18;;
+SIBDOPA;inclusion;Indice de Karnofsky d'au moins 50;kps;>=;50;;
+SIBDOPA;inclusion;Patient fragile (unfit), sans indication au protocole de Stupp;situation;egal;nouveau;et;
+SIBDOPA;inclusion;Patient fragile (unfit), sans indication au protocole de Stupp;traitement_prevu;egal;pas_stupp;et;
+SIBDOPA;inclusion;Patient non opérable de 18 à 70 ans : résultat de biopsie disponible;;;;;oui
+SIBDOPA;inclusion;Patient de plus de 70 ans : score de Balducci I ou II ou G8 supérieur à 9, Karnofsky d'au moins 60, et résection partielle (IRM post-opératoire) ou résultat de biopsie disponible;;;;;oui
+SIBDOPA;inclusion;Glioblastome prouvé histologiquement;diagnostic;egal;glioblastome;;
+SIBDOPA;inclusion;Augmentation du métabolisme des acides aminés en TEP-FDOPA permettant le contourage du volume cible biologique;;;;;oui
+SIBDOPA;inclusion;Aucun antécédent dans les 5 ans de radiothérapie, chimiothérapie, immunothérapie ou thérapie ciblée, ni de cancer autre que le glioblastome;rt_cerebrale;egal;faux;et;
+SIBDOPA;inclusion;Aucun antécédent dans les 5 ans de radiothérapie, chimiothérapie, immunothérapie ou thérapie ciblée, ni de cancer autre que le glioblastome;chimio;egal;faux;et;
+SIBDOPA;inclusion;Aucun antécédent dans les 5 ans de radiothérapie, chimiothérapie, immunothérapie ou thérapie ciblée, ni de cancer autre que le glioblastome;autre_cancer;egal;faux;et;
+SIBDOPA;non-inclusion;Indication à une irradiation selon le protocole de Stupp (patient fit);traitement_prevu;egal;stupp;;
+SIBDOPA;non-inclusion;Antécédent de métastases cérébrales;;;;;oui
+SIBDOPA;non-inclusion;PTV2 à moins de 2 cm du chiasma et des nerfs optiques;;;;;oui
+SIBDOPA;non-inclusion;Absence de captation de FDOPA;;;;;oui
+IPAX-3 / IPAX BrIGHT;inclusion;Âge d'au moins 18 ans;age;>=;18;;
+IPAX-3 / IPAX BrIGHT;inclusion;Indice de Karnofsky d'au moins 70;kps;>=;70;;
+IPAX-3 / IPAX BrIGHT;inclusion;Glioblastome confirmé histologiquement;diagnostic;egal;glioblastome;;
+IPAX-3 / IPAX BrIGHT;inclusion;Première récidive ou progression après le traitement de première ligne;situation;egal;recidive1;;
+IPAX-3 / IPAX BrIGHT;inclusion;Récidive au moins 3 mois (13 semaines) après la fin de la radiothérapie initiale;delai_rt;>=;13;;
+IPAX-3 / IPAX BrIGHT;inclusion;Maladie mesurable selon les critères PET-RANO;;;;;oui
+IPAX-3 / IPAX BrIGHT;inclusion;Fixation tumorale augmentée au PET-FET (TBRmax d'au moins 2,3);;;;;oui
+IPAX-3 / IPAX BrIGHT;inclusion;En cas de chirurgie de la récidive : maladie résiduelle mesurable;;;;;oui
+IPAX-3 / IPAX BrIGHT;inclusion;Corticoïdes : dose stable ou en baisse depuis au moins 7 jours (ou aucun corticoïde);dexa;<=;0;ou;
+IPAX-3 / IPAX BrIGHT;inclusion;Corticoïdes : dose stable ou en baisse depuis au moins 7 jours (ou aucun corticoïde);cortico_stable;egal;stable;ou;
+IPAX-3 / IPAX BrIGHT;inclusion;Fonctions hématologique, rénale et hépatique compatibles avec le traitement;;;;;oui
+IPAX-3 / IPAX BrIGHT;non-inclusion;Radiothérapie cérébrale dans les 3 mois précédents;delai_rt;<;13;;
+IPAX-3 / IPAX BrIGHT;non-inclusion;Bévacizumab dans les 6 semaines précédentes;;;;;oui
+IPAX-3 / IPAX BrIGHT;non-inclusion;Contre-indication au PET-FET ou à l'IRM (critère partiel : le reste est à confirmer en consultation);irm_ci;egal;vrai;;
+IPAX-3 / IPAX BrIGHT;non-inclusion;Impossibilité de respecter les contraintes d'hospitalisation et d'isolement liées à l'administration d'iode 131;;;;;oui
+FORTE;inclusion;Âge d'au moins 10 ans;age;>=;10;;
+FORTE;inclusion;Indice de Karnofsky d'au moins 60;kps;>=;60;;
+FORTE;inclusion;Gliome de bas grade ou de haut grade avec mutation BRAF V600 ou fusion BRAF;diagnostic;dans;glioblastome|astro_idh|oligo|dmg|gliome_autre;et;
+FORTE;inclusion;Gliome de bas grade ou de haut grade avec mutation BRAF V600 ou fusion BRAF;braf;egal;presente;et;
+FORTE;non-inclusion;Traitement antérieur par un anti-BRAF et/ou un anti-MEK;;;;;oui
+FORTE;non-inclusion;Atteinte méningée extensive;leptomeninge;egal;vrai;;
+AMG 193;inclusion;Âge d'au moins 18 ans;age;>=;18;;
+AMG 193;inclusion;Indice de Karnofsky d'au moins 70;kps;>=;70;;
+AMG 193;inclusion;Gliome de haut grade récidivant avec délétion de MTAP;diagnostic;dans;glioblastome|dmg|astro_idh|oligo|gliome_autre;et;
+AMG 193;inclusion;Gliome de haut grade récidivant avec délétion de MTAP;situation;dans;recidive1|recidive2;et;
+AMG 193;inclusion;Gliome de haut grade récidivant avec délétion de MTAP;mtap;egal;presente;et;
+AMG 193;inclusion;Gliome de haut grade (grade 3 ou 4);diagnostic;dans;glioblastome|dmg;ou;
+AMG 193;inclusion;Gliome de haut grade (grade 3 ou 4);grade;dans;3|4;ou;
+AMG 193;non-inclusion;Plus de 2 lignes de traitement antérieures;;;;;oui
+AMG 193;non-inclusion;Traitement antérieur par bévacizumab;bevacizumab;egal;vrai;;
+AMG 193;non-inclusion;Atteinte méningée extensive;leptomeninge;egal;vrai;;
+RéciDOPA;inclusion;Glioblastome de grade IV OMS, IDH non muté, initialement prouvé histologiquement;diagnostic;egal;glioblastome;;
+RéciDOPA;inclusion;Indice de Karnofsky d'au moins 50;kps;>=;50;;
+RéciDOPA;inclusion;Statut neurologique ≥ 2 (annexe 4 du protocole);;;;;oui
+RéciDOPA;inclusion;Délai d'au moins 16 semaines entre la dernière séance de radiothérapie et la récidive;delai_rt;>=;16;;
+RéciDOPA;inclusion;Délai de plus de 15 jours entre la dernière prise de chimiothérapie et le début de la radiothérapie;;;;;oui
+RéciDOPA;inclusion;Délai d'au moins 48 heures entre la dernière prise de chimiothérapie et la TEP F-DOPA;;;;;oui
+RéciDOPA;inclusion;Antécédent de radiothérapie sur le site à ré-irradier ou à proximité (5 à 7 cm);rt_cerebrale;egal;vrai;;
+RéciDOPA;inclusion;Récidive prouvée radiologiquement selon les critères 1 et 2 de Wen et al.;situation;dans;recidive1|recidive2;;
+RéciDOPA;inclusion;Reliquat après chirurgie partielle de la récidive;;;;;oui
+RéciDOPA;inclusion;Un à trois sites de récidive, de grand axe inférieur à 35 mm (critère partiel : le reste est à confirmer en consultation);taille;egal;t35;;
+RéciDOPA;inclusion;Sites de récidive séparés d'au moins 5 mm;;;;;oui
+RéciDOPA;inclusion;Volume de chaque lésion inférieur à 35 mL;;;;;oui
+RéciDOPA;inclusion;Distance supérieure à 10 mm entre les nodules de récidive et les voies optiques (nerfs optiques, chiasma) et/ou le tronc cérébral;;;;;oui
+RéciDOPA;inclusion;Captation de F-DOPA à un niveau tumoral (analyse visuelle et semi-quantitative);;;;;oui
+RéciDOPA;inclusion;Irradiation en conditions stéréotaxiques validée en réunion de concertation pluridisciplinaire de neuro-oncologie;;;;;oui
+RéciDOPA;non-inclusion;Contre-indication à l'IRM ou à la TEP (critère partiel : le reste est à confirmer en consultation);irm_ci;egal;vrai;;
+RéciDOPA;non-inclusion;Hypersensibilité à la substance active ou à un constituant des produits utilisés pour l'imagerie (18F-DOPA, gadolinium) (critère partiel : le reste est à confirmer en consultation);irm_ci;egal;vrai;;
+RéciDOPA;non-inclusion;Gliomatose;;;;;oui
+HARM GLIO;inclusion;Âge d'au moins 65 ans;age;>=;65;;
+HARM GLIO;inclusion;Gliome malin de grade 4 IDH-sauvage (OMS 2021) confirmé histopathologiquement;diagnostic;egal;glioblastome;;
+HARM GLIO;inclusion;Biopsie ou résection subtotale réalisée au plus 6 semaines avant l'inclusion (critère partiel : le reste est à confirmer en consultation);chirurgie;dans;biopsie|partielle;;
+HARM GLIO;inclusion;Jugé apte à recevoir 15 fractions quotidiennes de radiothérapie sur 3 semaines avec témozolomide concomitant;situation;egal;nouveau;et;
+HARM GLIO;inclusion;Jugé apte à recevoir 15 fractions quotidiennes de radiothérapie sur 3 semaines avec témozolomide concomitant;traitement_prevu;egal;hypofractionne;et;
+HARM GLIO;inclusion;Espérance de vie d'au moins 12 semaines;;;;;oui
+HARM GLIO;inclusion;Indice de Karnofsky d'au moins 70;kps;>=;70;;
+HARM GLIO;inclusion;Volume cible macroscopique de 5 cm au plus sur l'axe maximal (IRM T1 gadolinium);taille;dans;t35|t5;;
+HARM GLIO;inclusion;Volume cible macroscopique à au moins 2 cm du tronc cérébral et des voies optiques (chiasma, nerfs optiques);;;;;oui
+HARM GLIO;inclusion;Corticoïdes : dose stable ou en baisse pendant les 7 jours précédant la randomisation (ou aucun corticoïde);dexa;<=;0;ou;
+HARM GLIO;inclusion;Corticoïdes : dose stable ou en baisse pendant les 7 jours précédant la randomisation (ou aucun corticoïde);cortico_stable;egal;stable;ou;
+HARM GLIO;inclusion;Corticoïdes : moins de 40 mg/jour d'équivalent prednisone (environ 6 mg de dexaméthasone);dexa;<;6;;
+HARM GLIO;inclusion;Capacité et volonté de remplir les questionnaires de qualité de vie et neuropsychologiques;;;;;oui
+HARM GLIO;inclusion;Bilan biologique conforme aux seuils du protocole (numération, bilan hépatique, fonction rénale);;;;;oui
+HARM GLIO;non-inclusion;Gliome avec mutation IDH;diagnostic;dans;astro_idh|oligo;;
+HARM GLIO;non-inclusion;Glioblastome multifocal (au moins deux volumes cibles en IRM T1 gadolinium);;;;;oui
+HARM GLIO;non-inclusion;Contre-indication à l'IRM ou aux produits de contraste à base de gadolinium;irm_ci;egal;vrai;;
+HARM GLIO;non-inclusion;Incapacité à rester allongé en position couchée pendant au moins 90 minutes;;;;;oui
+HARM GLIO;non-inclusion;Incapacité à tolérer l'immobilisation dans un masque thermoplastique;;;;;oui
+HARM GLIO;non-inclusion;Poids supérieur à 140 kg et/ou circonférence supérieure à 60 cm;;;;;oui
+HARM GLIO;non-inclusion;Leucocytes inférieurs à 4 000/mm³, hémoglobine inférieure à 10 g/dL, plaquettes inférieures à 100 000/mm³, ou insuffisance rénale ou hépatique sévère;;;;;oui
+HARM GLIO;non-inclusion;Antécédent de radiothérapie cérébrale;rt_cerebrale;egal;vrai;;
+HARM GLIO;non-inclusion;Gliome malin touchant le pont, le bulbe rachidien ou la moelle épinière;;;;;oui
+HARM GLIO;non-inclusion;Dissémination leptoméningée de la maladie;leptomeninge;egal;vrai;;
+LUMEN 1;inclusion;Méningiome réfractaire (après chirurgie et radiothérapie), avant tout traitement systémique;diagnostic;egal;meningiome;et;
+LUMEN 1;inclusion;Méningiome réfractaire (après chirurgie et radiothérapie), avant tout traitement systémique;evolution_men;egal;refractaire;et;
+LUMEN 1;inclusion;Méningiome réfractaire (après chirurgie et radiothérapie), avant tout traitement systémique;ttt_syst;egal;faux;et;
+LUMEN 1;inclusion;Méningiome de grade 1, 2 ou 3;grade;>=;1;et;
+LUMEN 1;inclusion;Méningiome de grade 1, 2 ou 3;grade;<=;3;et;
+LUMEN 1;inclusion;Progression radiologique selon les critères RANO;evolution_men;egal;refractaire;;
+LUMEN 1;inclusion;Progression de plus de 25 % sur 2 ans selon les critères RANO;;;;;oui
+LUMEN 1;inclusion;Positivité des récepteurs de la somatostatine en TEP;tep_somato;egal;positive;;
+ELUMEN;inclusion;Méningiome réfractaire (après chirurgie et radiothérapie);diagnostic;egal;meningiome;et;
+ELUMEN;inclusion;Méningiome réfractaire (après chirurgie et radiothérapie);evolution_men;egal;refractaire;et;
+ELUMEN;inclusion;De préférence avant tout traitement systémique;;;;;oui
+ELUMEN;inclusion;Méningiome de grade 2 ou 3;grade;>=;2;et;
+ELUMEN;inclusion;Méningiome de grade 2 ou 3;grade;<=;3;et;
+ELUMEN;inclusion;Progression radiologique selon les critères RANO;evolution_men;egal;refractaire;;
+ELUMEN;inclusion;Progression avec une pente de 10 à 30 % sur les 6 derniers mois selon les critères RANO;;;;;oui
+ELUMEN;inclusion;Positivité des récepteurs de la somatostatine en TEP;tep_somato;egal;positive;;
+COG PROTON 01;inclusion;Méningiome du sinus caverneux, ou de l'étage antérieur de la base du crâne avec envahissement du sinus caverneux;diagnostic;egal;meningiome;et;
+COG PROTON 01;inclusion;Méningiome du sinus caverneux, ou de l'étage antérieur de la base du crâne avec envahissement du sinus caverneux;localisation;egal;sinus;et;
+COG PROTON 01;inclusion;Méningiome du sinus caverneux : CTV supérieur à 3 cm;;;;;oui
+COG PROTON 01;inclusion;Méningiome de grade 1 prouvé histologiquement (ou suspecté si biopsie impossible);grade;egal;1;;
+COG PROTON 01;non-inclusion;Méningiome d'une autre localisation que le sinus caverneux;localisation;egal;autre;;
+COG PROTON 01;non-inclusion;Mutation génétique de prédisposition aux méningiomes (NF2, SMARCE1, etc.);;;;;oui
+COG PROTON 01;non-inclusion;Radiochirurgie ou schéma hypofractionné prévu;;;;;oui
+COG PROTON 01;non-inclusion;Traitement antiépileptique non stabilisé (crise dans les 6 dernières semaines);epilepsie_nc;egal;vrai;;
+COG PROTON 01;non-inclusion;Pathologie neurologique ou psychiatrique sévère;;;;;oui
+Methoglu;inclusion;Lymphome primitif du SNC de type DLBCL, avec preuve histologique ou cytologique au diagnostic initial;diagnostic;egal;lcp;;
+Methoglu;inclusion;Rechute cérébrale, sans atteinte systémique;situation;dans;recidive1|recidive2;et;
+Methoglu;inclusion;Rechute cérébrale, sans atteinte systémique;lcp_extension;egal;cerebral;et;
+Methoglu;inclusion;Rémission complète d'au moins 6 mois (26 semaines) en première ligne après une chimiothérapie à base de méthotrexate haute dose (critère partiel : le reste est à confirmer en consultation);mtx_hd;egal;recu;;
+Methoglu;inclusion;Indice de Karnofsky d'au moins 50;kps;>=;50;;
+Methoglu;inclusion;Fonctions rénale et hépatique et numération formule sanguine adéquates;;;;;oui
+Methoglu;non-inclusion;Immunodépression, quelle qu'en soit la cause;immunodep;egal;vrai;;
+Methoglu;non-inclusion;Hépatite B active ou infection VIH connue;immunodep;egal;vrai;;
+Methoglu;non-inclusion;Autre cancer actif, à l'exception d'un carcinome baso-cellulaire cutané ou d'un cancer du col in situ;autre_cancer;egal;vrai;;
+Methoglu;non-inclusion;Obésité (IMC supérieur à 30);;;;;oui
+CA-4948-101 - Partie B;inclusion;Lymphome primitif du SNC en rechute;diagnostic;egal;lcp;et;
+CA-4948-101 - Partie B;inclusion;Lymphome primitif du SNC en rechute;situation;dans;recidive1|recidive2;et;
+CA-4948-101 - Partie B;inclusion;Échappement à un traitement comprenant de l'ibrutinib;ibtk;egal;recu;;
+CA-4948-101 - Partie B;inclusion;Au plus 3 lignes de traitement antérieures;;;;;oui
+CA-4948-101 - Partie B;inclusion;Indice de performance ECOG de 0 à 2;kps;>=;50;;
+CA-4948-101 - Partie B;inclusion;Lésion parenchymateuse mesurable ou cytologie positive dans le LCR;;;;;oui
+CA-4948-101 - Partie B;non-inclusion;Patients immunodéprimés;immunodep;egal;vrai;;
+CA-4948-101 - Partie B;non-inclusion;Atteinte intraoculaire isolée;lcp_extension;egal;oeil;;
+CA-4948-101 - Partie B;non-inclusion;Prise concomitante de médicaments allongeant le QT;;;;;oui
+CA-4948-101 - Partie C;inclusion;Lymphome primitif du SNC en première rechute;diagnostic;egal;lcp;et;
+CA-4948-101 - Partie C;inclusion;Lymphome primitif du SNC en première rechute;situation;egal;recidive1;et;
+CA-4948-101 - Partie C;inclusion;Première ligne contenant du méthotrexate haute dose;mtx_hd;egal;recu;;
+CA-4948-101 - Partie C;inclusion;Indice de performance ECOG de 0 à 2;kps;>=;50;;
+CA-4948-101 - Partie C;inclusion;Lésion parenchymateuse mesurable ou cytologie positive dans le LCR;;;;;oui
+CA-4948-101 - Partie C;inclusion;Corticoïdes à dose stable (ou aucun corticoïde);dexa;<=;0;ou;
+CA-4948-101 - Partie C;inclusion;Corticoïdes à dose stable (ou aucun corticoïde);cortico_stable;egal;stable;ou;
+CA-4948-101 - Partie C;inclusion;Dexaméthasone : 8 mg au plus;dexa;<=;8;;
+CA-4948-101 - Partie C;non-inclusion;Patients immunodéprimés;immunodep;egal;vrai;;
+CA-4948-101 - Partie C;non-inclusion;Atteinte intraoculaire isolée;lcp_extension;egal;oeil;;
+CA-4948-101 - Partie C;non-inclusion;Prise concomitante de médicaments allongeant le QT;;;;;oui
+CA-4948-101 - Partie C;non-inclusion;Traitement préalable par un inhibiteur de BTK;ibtk;egal;recu;;
+Glucarpidase;inclusion;Lymphome primitif du SNC;diagnostic;egal;lcp;;
+Glucarpidase;inclusion;Patient recevant la glucarpidase selon l'indication reconnue : retard d'élimination du méthotrexate ou risque de toxicité du méthotrexate;retard_mtx;egal;retard;;
+E-REVRI;inclusion;Lymphome primitif du SNC de type DLBCL, avec preuve histologique ou cytologique au diagnostic initial;diagnostic;egal;lcp;;
+E-REVRI;inclusion;Rechute cérébrale, sans atteinte systémique;situation;dans;recidive1|recidive2;et;
+E-REVRI;inclusion;Rechute cérébrale, sans atteinte systémique;lcp_extension;egal;cerebral;et;
+E-REVRI;inclusion;Au moins une ligne de traitement antérieure contenant du méthotrexate haute dose;mtx_hd;egal;recu;;
+E-REVRI;inclusion;Indice de performance ECOG de 0 à 2;kps;>=;50;;
+E-REVRI;inclusion;Fonctions rénale et hépatique et numération formule sanguine adéquates;;;;;oui
+E-REVRI;non-inclusion;Immunodépression, quelle qu'en soit la cause;immunodep;egal;vrai;;
+E-REVRI;non-inclusion;Hépatite B active ou infection VIH connue;immunodep;egal;vrai;;
+E-REVRI;non-inclusion;Lénalidomide ou anticorps bispécifique déjà reçu;;;;;oui
+CAROLYN;inclusion;Lymphome primitif du SNC de type DLBCL, avec preuve histologique ou cytologique au diagnostic initial;diagnostic;egal;lcp;;
+CAROLYN;inclusion;Patient en première ligne de traitement;situation;dans;nouveau|traitement_initial;;
+CAROLYN;inclusion;4 à 6 injections de méthotrexate haute dose, avec réponse partielle ou complète (critère partiel : le reste est à confirmer en consultation);mtx_hd;egal;recu;;
+CAROLYN;inclusion;Jugé non éligible à une autogreffe mais éligible aux CAR T-cells;;;;;oui
+CAROLYN;inclusion;Indice de performance ECOG de 0 à 2;kps;>=;50;;
+CAROLYN;non-inclusion;Immunodépression, quelle qu'en soit la cause;immunodep;egal;vrai;;
+CAROLYN;non-inclusion;Hépatite B active ou infection VIH connue;immunodep;egal;vrai;;
+CAROLYN;non-inclusion;Atteinte ophtalmologique ou du LCR isolée;lcp_extension;dans;oeil|lcr;;
+SONIMEL;inclusion;Mélanome métastatique confirmé histologiquement;diagnostic;egal;meta_melanome;;
+SONIMEL;inclusion;Effets secondaires du traitement le plus récent (systémique ou local) revenus à un grade ≤ 1;;;;;oui
+SONIMEL;inclusion;Au moins une métastase cérébrale de 5 à 35 mm de diamètre;;;;;oui
+SONIMEL;inclusion;Métastase cérébrale non traitée préalablement par chirurgie et/ou radiochirurgie, et située à moins de 5 cm du crâne;;;;;oui
+SONIMEL;inclusion;Si radiochirurgie ou chirurgie antérieure : au moins une nouvelle métastase cérébrale selon les critères RANO et RECIST;;;;;oui
+SONIMEL;inclusion;Indice de performance ECOG de 0 à 1;kps;>=;70;;
+SONIMEL;inclusion;Espérance de vie supérieure à 3 mois (13 semaines);;;;;oui
+SONIMEL;inclusion;Âge supérieur à 18 ans;age;>;18;;
+ENCEPHATAIP;inclusion;Âge d'au moins 18 ans;age;>=;18;;
+ENCEPHATAIP;inclusion;Encéphalite auto-immune de novo;diagnostic;egal;encephalite_ai;;
+ENCEPHATAIP;inclusion;Critères de Graus 2016 (encéphalite limbique auto-immune certaine, ou encéphalite auto-immune possible avec auto-anticorps dans le sérum ou le LCR) ou syndrome paranéoplasique probable ou certain selon Graus 2021 (hors syndromes neurologiques périphériques);;;;;oui
+ENCEPHATAIP;inclusion;Début des symptômes il y a moins de 6 mois (26 semaines);debut_sympt;<;6;;
+ENCEPHATAIP;non-inclusion;Traitement immunomodulateur débuté depuis plus de 10 jours;;;;;oui
+ENCEPHATAIP;non-inclusion;Antécédent de tumeur cérébrale, traumatisme crânien, infarctus ou hématome susceptible de modifier le métabolisme glucidique cérébral;;;;;oui
+ENCEPHATAIP;non-inclusion;Patient intubé et ventilé;;;;;oui
+ENCEPHATAIP;non-inclusion;Troubles cognitifs incompatibles avec une bonne coopération à l'examen TEP;;;;;oui
+NESPA;inclusion;Âge d'au moins 18 ans;age;>=;18;;
+NESPA;inclusion;Neuronopathie sensitive « possible » selon les critères cliniques et électrophysiologiques de 2009, avec un score ONLS de 1 (critère partiel : le reste est à confirmer en consultation);diagnostic;egal;nsp;;
+NESPA;inclusion;Tableau dominant d'ataxie sensitive (atteinte du SNC et/ou de la jonction neuromusculaire admise si impact mineur sur le handicap);;;;;oui
+NESPA;inclusion;Anticorps anti-Hu positifs dans le sang et/ou le LCR;anticorps;egal;hu;;
+NESPA;inclusion;Score mRS de 2 à 3;mrs;>=;2;et;
+NESPA;inclusion;Score mRS de 2 à 3;mrs;<=;3;et;
+NESPA;inclusion;Début des symptômes neurologiques il y a moins de 3 mois (13 semaines);debut_sympt;<;3;;
+NESPA;non-inclusion;Contre-indication absolue aux immunoglobulines intraveineuses;;;;;oui
+NESPA;non-inclusion;Contre-indication absolue au cyclophosphamide;;;;;oui
+NESPA;non-inclusion;Contre-indication à la méthylprednisolone;;;;;oui
+NESPA;non-inclusion;Vaccin vivant ou vivant atténué dans les 3 mois précédents;;;;;oui
+NESPA;non-inclusion;État infectieux ou virose en évolution (herpès, varicelle, zona);;;;;oui
+NESPA;non-inclusion;Deux cures d'immunoglobulines intraveineuses dans les 3 mois précédant le recrutement;;;;;oui
+NESPA;non-inclusion;Autre immunothérapie concomitante;;;;;oui
+NESPA;non-inclusion;Autre cause d'immunodépression;immunodep;egal;vrai;;
+NESPA;non-inclusion;Traitement par inhibiteur de checkpoint dans les 3 mois précédents;;;;;oui
+CIELO;inclusion;Début des symptômes il y a moins de 9 mois (39 semaines);debut_sympt;<;9;;
+CIELO;inclusion;Score mRS d'au moins 2;mrs;>=;2;;
+CIELO;inclusion;"Encéphalite « new-onset » : traitement de première ligne (méthylprednisolone 6MP ≥ 500 mg ou équivalent pendant ≥ 3 jours ; IgIV ou échanges plasmatiques ≥ 3 jours ; ou combinaison) débuté depuis moins de 6 semaines, plusieurs cures permises ; pas de rituximab, tocilizumab ni autre immunosuppresseur (cyclophosphamide, MMF, méthotrexate, ciclosporine, tacrolimus, azathioprine)";;;;;oui
+CIELO;inclusion;"Répondeur incomplet (« incomplete responder ») : première ligne débutée depuis plus de 6 semaines, puis autre ligne immunomodulatrice : rituximab (débuté depuis ≥ 2 mois, dernière cure ≥ 4 semaines, sans amélioration du mRS sur les 4 dernières semaines) ou autre immunosuppresseur (MMF, cyclophosphamide IV, azathioprine, etc.) (débuté depuis ≥ 2 mois, dose stable ≥ 4 semaines, sans amélioration du mRS) ; si corticoïdes oraux : dose stable ≥ 20 mg d'équivalent prednisone, sans amélioration du mRS sur les 4 dernières semaines";;;;;oui
+CIELO;inclusion;Encéphalite anti-NMDAR (probable ou définie selon Graus 2016) ou anti-LGI1;diagnostic;egal;encephalite_ai;et;
+CIELO;inclusion;Encéphalite anti-NMDAR (probable ou définie selon Graus 2016) ou anti-LGI1;anticorps;dans;nmda|lgi1;et;
+CIELO;inclusion;Âge d'au moins 12 ans (cohorte anti-NMDAR);age;>=;12;;
+CIELO;inclusion;Cohorte anti-LGI1 : âge d'au moins 18 ans, anticorps anti-LGI1 présents et début subaigu (moins de 4 mois) de troubles de la mémoire, d'épilepsie et de troubles psychiatriques évoquant une encéphalite limbique;anticorps;pasdans;lgi1;ou;
+CIELO;inclusion;Cohorte anti-LGI1 : âge d'au moins 18 ans, anticorps anti-LGI1 présents et début subaigu (moins de 4 mois) de troubles de la mémoire, d'épilepsie et de troubles psychiatriques évoquant une encéphalite limbique;age;>=;18;ou;
+CIELO;non-inclusion;Tératome ou thymome non traité (incluable si exérèse au moins 1 semaine avant l'inclusion);;;;;oui
+CIELO;non-inclusion;Autre cancer actif;autre_cancer;egal;vrai;;
+CIELO;non-inclusion;Anticorps dirigé contre un antigène intracellulaire ou un antigène de surface autre que NMDAR et LGI1;anticorps;egal;autre;;
+CIELO;non-inclusion;Traitement antérieur par anti-IL6, alemtuzumab, greffe de moelle osseuse, anti-CD19, bélimumab, cladribine, mitoxantrone, traitement de déplétion des cellules T ou cyclophosphamide oral;;;;;oui
+CIELO;non-inclusion;"Traitement de fond par une combinaison de plus d'un immunosuppresseur (azathioprine, MMF, cyclophosphamide IV) ; un immunosuppresseur avec corticoïdes oraux est admis";;;;;oui

@@ -1,238 +1,140 @@
 /* ------------------------------------------------------------------
-   CHAMPS DE SAISIE (page « Orienter un patient »)
-   Chaque champ a un identifiant (id) que les protocoles utilisent dans
-   leurs critères. Pour ajouter un champ : copier une ligne, changer
-   l'id et le libellé, puis l'utiliser dans protocoles.js (ou criteres.csv).
+   CHAMPS DE SAISIE (page « Orienter un patient ») - version 35 essais
+   Ordre : 1. Maladie  2. Chirurgie et imagerie  3. Traitements  4. Patient.
+   Le formulaire s'adapte : chaque question n'apparaît que si elle sert à
+   départager des essais pour le diagnostic choisi (propriété « si »).
+   Une section sans question visible est masquée.
+   Aucun résultat biologique n'est demandé : ces critères sont signalés
+   « à confirmer en consultation ».
 
-   type : "nombre"  valeur libre (unite, min, max, step, placeholder)
-          "liste"   liste déroulante (options : [valeur, libellé])
-          "case"    case à cocher (décochée = absent)
-   si   : (facultatif) le champ n'apparaît que si cette condition est vraie.
-          Un champ masqué compte comme « non renseigné ».
-
-   Règle de conception :
-   - une information dont l'ABSENCE est la situation normale (allergie, comorbidité,
-     traitement interdit) est une case à cocher : décochée = absente ;
-   - une information qui doit être POSITIVE pour inclure (marqueur, maladie mesurable,
-     résection possible) est une liste : « non renseigné » laisse le protocole « à vérifier »
-     au lieu de l'exclure à tort.
-   Dans les listes, éviter les valeurs oui / non / vrai / faux (réservées par l'import CSV).
+   type : "nombre" (valeur libre) | "liste" (options : [valeur, libellé]) | "case"
+   si   : le champ (ou la section) n'apparaît que si la condition est vraie.
+          Un champ masqué compte comme « non renseigné » (case : « absent »).
+   Règle : une situation dont l'ABSENCE est la règle est une case (décochée = absente) ;
+   une information qui doit être POSITIVE pour inclure est une liste (« non renseigné »
+   laisse l'essai « à vérifier » au lieu de l'exclure à tort).
+   Éviter les valeurs oui / non / vrai / faux dans les listes (réservées à l'import CSV).
    ------------------------------------------------------------------ */
-window.CHAMPS = [
-  {
-    section: "Patient",
-    champs: [
-      { id: "age", type: "nombre", label: "Âge", unite: "ans", min: 0, max: 120, step: 1 },
-      { id: "sexe", type: "liste", label: "Sexe", options: [["F", "Femme"], ["M", "Homme"]] },
-      {
-        id: "kps", type: "liste", label: "Indice de Karnofsky",
-        options: [
-          ["100", "100 · Aucun symptôme"],
-          ["90", "90 · Activité normale, symptômes mineurs"],
-          ["80", "80 · Activité normale avec effort"],
-          ["70", "70 · Autonome, activité normale impossible"],
-          ["60", "60 · Aide occasionnelle"],
-          ["50", "50 · Aide et soins fréquents"],
-          ["40", "40 · Invalide, soins spécialisés"],
-          ["30", "30 · Grabataire, hospitalisation"],
-          ["20", "20 · Très malade"],
-          ["10", "10 · Moribond"]
-        ]
-      },
-      {
-        id: "oms", type: "liste", label: "Indice de performance OMS (ECOG)",
-        options: [
-          ["0", "0 · Activité normale"],
-          ["1", "1 · Symptomatique, ambulatoire"],
-          ["2", "2 · Alité moins de 50 % du temps"],
-          ["3", "3 · Alité plus de 50 % du temps"],
-          ["4", "4 · Alité en permanence"]
-        ]
-      }
-    ]
-  },
-  {
-    section: "Maladie",
-    champs: [
-      {
-        id: "diagnostic", type: "liste", label: "Diagnostic",
-        options: [
-          ["glioblastome", "Glioblastome, IDH-sauvage"],
-          ["astro_idh", "Astrocytome IDH-muté"],
-          ["oligo", "Oligodendrogliome IDH-muté, codélété 1p/19q"],
-          ["dmg", "Gliome diffus de la ligne médiane, H3 K27-altéré"],
-          ["meningiome", "Méningiome"],
-          ["metastases", "Métastases cérébrales"],
-          ["lcp", "Lymphome cérébral primitif"],
-          ["autre", "Autre diagnostic"]
-        ]
-      },
-      {
-        id: "grade", type: "liste", label: "Grade OMS",
-        options: [["1", "Grade 1"], ["2", "Grade 2"], ["3", "Grade 3"], ["4", "Grade 4"]],
-        si: { champ: "diagnostic", op: "dans", val: ["astro_idh", "oligo", "meningiome", "autre"] }
-      },
-      {
-        id: "situation", type: "liste", label: "Situation actuelle",
-        options: [
-          ["nouveau", "Nouveau diagnostic, avant traitement adjuvant"],
-          ["recidive1", "Première récidive ou progression"],
-          ["recidive2", "Récidive ultérieure (2e et plus)"],
-          ["surveillance", "Surveillance, maladie stable"]
-        ]
-      },
-      {
-        id: "chirurgie", type: "liste", label: "Chirurgie",
-        options: [
-          ["aucune", "Aucune"],
-          ["biopsie", "Biopsie seule"],
-          ["partielle", "Exérèse partielle"],
-          ["complete", "Exérèse complète"]
-        ]
-      },
-      {
-        id: "mgmt", type: "liste", label: "Promoteur MGMT",
-        options: [["methyle", "Méthylé"], ["non_methyle", "Non méthylé"]],
-        si: { champ: "diagnostic", op: "=", val: "glioblastome" }
-      },
-      {
-        id: "hla_a2", type: "liste", label: "Typage HLA-A2",
-        options: [["positif", "HLA-A2 positif"], ["negatif", "HLA-A2 négatif"]],
-        si: { champ: "diagnostic", op: "=", val: "glioblastome" }
-      },
-      {
-        id: "ptprz1", type: "liste", label: "Expression de PTPRZ1",
-        options: [["exprime", "Exprimé"], ["non_exprime", "Non exprimé"]],
-        si: { champ: "diagnostic", op: "=", val: "glioblastome" }
-      },
-      {
-        id: "primitif", type: "liste", label: "Cancer primitif",
-        options: [
-          ["poumon", "Poumon non à petites cellules"],
-          ["melanome", "Mélanome"],
-          ["sein", "Sein"],
-          ["colorectal", "Colorectal"],
-          ["rein", "Rein"],
-          ["autre", "Autre"]
-        ],
-        si: { champ: "diagnostic", op: "=", val: "metastases" }
-      },
-      {
-        id: "nb_metas", type: "nombre", label: "Nombre de métastases", min: 0, max: 100, step: 1,
-        si: { champ: "diagnostic", op: "=", val: "metastases" }
-      }
-    ]
-  },
-  {
-    section: "Imagerie et chirurgie",
-    champs: [
-      { id: "diametre_cm", type: "nombre", label: "Diamètre tumoral maximal à l'IRM actuelle", unite: "cm", min: 0, max: 20, step: "any", placeholder: "Après chirurgie si opéré" },
-      {
-        id: "mesurable", type: "liste", label: "Maladie mesurable (RANO)",
-        options: [["mesurable", "Mesurable"], ["non_mesurable", "Non mesurable"]]
-      },
-      {
-        id: "resecable", type: "liste", label: "Résection chirurgicale (totale ou partielle)",
-        options: [["possible", "Possible"], ["impossible", "Non envisageable"]]
-      },
-      {
-        id: "stupp", type: "liste", label: "Radiochimiothérapie de Stupp",
-        options: [
-          ["a_venir", "Éligible, pas encore débutée"],
-          ["terminee", "Terminée (45 Gy ou plus), éligible au témozolomide adjuvant"],
-          ["non_eligible", "Non éligible"]
-        ],
-        si: { champ: "situation", op: "=", val: "nouveau" }
-      },
-      { id: "infratentorielle", type: "case", label: "Tumeur infratentorielle (fosse postérieure)" },
-      { id: "multifocal_large", type: "case", label: "Lésions multifocales non contenues dans une zone de 70 mm" },
-      { id: "gliomatose", type: "case", label: "Gliomatose (anomalies FLAIR diffuses)" },
-      { id: "engagement_falcoriel", type: "case", label: "Engagement sous-falcoriel à l'IRM" },
-      { id: "zone_fonctionnelle", type: "case", label: "Prise de contraste en zone fonctionnelle" },
-      { id: "htic", type: "case", label: "Hypertension intracrânienne non contrôlée" }
-    ]
-  },
-  {
-    section: "Traitements",
-    champs: [
-      { id: "lignes", type: "nombre", label: "Lignes systémiques antérieures", min: 0, max: 10, step: 1, placeholder: "0 si aucune" },
-      { id: "dexa", type: "nombre", label: "Dexaméthasone (ou équivalent)", unite: "mg/j", min: 0, max: 100, step: "any", placeholder: "0 si aucune" },
-      {
-        id: "cortico_stable", type: "liste", label: "Évolution des corticoïdes sur les 7 derniers jours",
-        options: [["stable", "Dose stable ou en baisse"], ["hausse", "Dose augmentée"]],
-        si: { champ: "dexa", op: ">", val: 0 }
-      },
-      {
-        id: "delai_rt", type: "nombre", label: "Délai depuis la fin de la radiothérapie", unite: "semaines", min: 0, max: 1000, step: 1,
-        si: { champ: "rt_cerebrale", op: "=", val: true }
-      },
-      {
-        id: "rt_fractions", type: "nombre", label: "Nombre de fractions de la radiothérapie", min: 0, max: 60, step: 1,
-        si: { champ: "rt_cerebrale", op: "=", val: true }
-      },
-      { id: "rt_cerebrale", type: "case", label: "Radiothérapie cérébrale" },
-      { id: "temozolomide", type: "case", label: "Témozolomide" },
-      { id: "nitrosouree", type: "case", label: "Nitroso-urée" },
-      { id: "bevacizumab", type: "case", label: "Bévacizumab" },
-      { id: "immunotherapie", type: "case", label: "Immunothérapie" },
-      {
-        id: "ttt_recidive", type: "case", label: "Traitement anticancéreux déjà reçu pour la récidive (hors chirurgie)",
-        si: { champ: "situation", op: "dans", val: ["recidive1", "recidive2"] }
-      },
-      { id: "anticoag", type: "case", label: "Anticoagulation curative" },
-      { id: "antiplaquettaire", type: "case", label: "Antiagrégant plaquettaire à poursuivre" },
-      { id: "vaccin_vivant", type: "case", label: "Vaccin vivant atténué dans les 3 derniers mois" },
-      { id: "med_experimental", type: "case", label: "Médicament expérimental dans les 30 derniers jours" },
-      { id: "antibio_neurotoxique", type: "case", label: "Antibiotique neurotoxique (aminosides, céphalosporines, quinolones)" }
-    ]
-  },
-  {
-    section: "Biologie",
-    champs: [
-      { id: "hemoglobine", type: "nombre", label: "Hémoglobine", unite: "g/dL", min: 0, max: 25, step: "any" },
-      { id: "leucocytes", type: "nombre", label: "Leucocytes", unite: "G/L", min: 0, max: 200, step: "any" },
-      { id: "pnn", type: "nombre", label: "Polynucléaires neutrophiles", unite: "G/L", min: 0, max: 100, step: "any" },
-      { id: "plaquettes", type: "nombre", label: "Plaquettes", unite: "G/L", min: 0, max: 2000, step: "any" },
-      { id: "lymphocytes", type: "nombre", label: "Lymphocytes", unite: "G/L", min: 0, max: 100, step: "any" },
-      { id: "dfg", type: "nombre", label: "Débit de filtration glomérulaire", unite: "mL/min", min: 0, max: 200, step: "any" },
-      { id: "transaminases", type: "nombre", label: "ASAT / ALAT", unite: "× limite sup.", min: 0, max: 100, step: "any" },
-      { id: "bilirubine", type: "nombre", label: "Bilirubine totale", unite: "× limite sup.", min: 0, max: 100, step: "any" },
-      { id: "pal", type: "nombre", label: "Phosphatases alcalines", unite: "× limite sup.", min: 0, max: 100, step: "any" },
-      { id: "coag_anormale", type: "case", label: "TP ou TCA hors des limites du laboratoire" }
-    ]
-  },
-  {
-    section: "Comorbidités à cocher si présentes",
-    champs: [
-      { id: "grossesse", type: "case", label: "Grossesse ou allaitement" },
-      { id: "epilepsie", type: "case", label: "Épilepsie non contrôlée" },
-      { id: "hemorragie", type: "case", label: "Hémorragie intracrânienne récente" },
-      { id: "leptomeninge", type: "case", label: "Atteinte leptoméningée" },
-      { id: "cancer_actif", type: "case", label: "Autre cancer actif ou traité depuis moins de 3 ans" },
-      { id: "infection", type: "case", label: "Infection active ou chronique instable nécessitant un traitement" },
-      { id: "vih", type: "case", label: "Infection par le VIH" },
-      { id: "immunosupp", type: "case", label: "Traitement immunosuppresseur" },
-      { id: "dysimmune", type: "case", label: "Maladie dysimmunitaire" },
-      { id: "hemopathie", type: "case", label: "Leucémie aiguë ou maladie myéloïde (antécédent ou actuelle)" },
-      { id: "insuff_organe", type: "case", label: "Myélosuppression ou insuffisance rénale sévère" },
-      { id: "hta3", type: "case", label: "Hypertension artérielle de grade 3 ou plus non contrôlée" },
-      { id: "cardiopathie", type: "case", label: "Maladie cardiaque importante" },
-      { id: "pneumopathie", type: "case", label: "Maladie pulmonaire importante" },
-      { id: "psy", type: "case", label: "Maladie psychiatrique ou situation sociale limitant le suivi" },
-      { id: "maladie_grave", type: "case", label: "Autre affection grave ou non contrôlée, selon l'investigateur" },
-      { id: "protection_judiciaire", type: "case", label: "Protection judiciaire" }
-    ]
-  },
-  {
-    section: "Allergies et contre-indications à cocher si présentes",
-    champs: [
-      { id: "irm_ci", type: "case", label: "Contre-indication à l'IRM" },
-      { id: "allergie_contraste", type: "case", label: "Allergie au gadolinium ou aux produits de contraste" },
-      { id: "allergie_lomustine", type: "case", label: "Hypersensibilité à la lomustine" },
-      { id: "coeliaque", type: "case", label: "Maladie cœliaque ou allergie au blé" },
-      { id: "allergie_perflutren", type: "case", label: "Hypersensibilité aux microsphères de perflutrène (Luminity, Definity)" },
-      { id: "anevrisme_materiel", type: "case", label: "Anévrisme intracrânien ou matériel implanté (clips, shunt, stent, wafer…)" },
-      { id: "ci_tmz", type: "case", label: "Contre-indication au témozolomide ou hypersensibilité à la dacarbazine" }
-    ]
-  }
-];
+(function () {
+  var GLIOMES = ["glioblastome", "astro_idh", "oligo", "dmg", "gliome_autre"];
+  var NEURO = ["encephalite_ai", "nsp"];
+  var GBM = { champ: "diagnostic", op: "=", val: "glioblastome" };
+  var GLIO = { champ: "diagnostic", op: "dans", val: GLIOMES };
+  var GLIO_AUTRE = { champ: "diagnostic", op: "dans", val: GLIOMES.concat(["autre"]) };
+  var PAS_NEURO = { champ: "diagnostic", op: "pasdans", val: NEURO };
+  var APRES_DEBUT = ["traitement_initial", "recidive1", "recidive2", "surveillance"];
+  var KPS = [
+    ["100", "100 · Aucun symptôme (OMS 0)"], ["90", "90 · Symptômes mineurs (OMS 0)"],
+    ["80", "80 · Activité normale avec effort (OMS 1)"], ["70", "70 · Autonome, activité normale impossible (OMS 1)"],
+    ["60", "60 · Aide occasionnelle (OMS 2)"], ["50", "50 · Aide et soins fréquents (OMS 2)"],
+    ["40", "40 · Invalide (OMS 3)"], ["30", "30 · Grabataire (OMS 3)"], ["20", "20 · Très malade (OMS 4)"], ["10", "10 · Moribond (OMS 4)"]
+  ];
+  var MRS = [
+    ["0", "0 · Aucun symptôme"], ["1", "1 · Pas de handicap significatif"], ["2", "2 · Handicap léger"],
+    ["3", "3 · Handicap modéré, marche sans aide"], ["4", "4 · Handicap modérément sévère"], ["5", "5 · Handicap sévère, alité"]
+  ];
+
+  window.CHAMPS = [
+    { section: "Maladie", champs: [
+      { id: "diagnostic", type: "liste", label: "Diagnostic", options: [
+        ["glioblastome", "Glioblastome"], ["astro_idh", "Astrocytome"],
+        ["oligo", "Oligodendrogliome"], ["dmg", "Gliome de la ligne médiane"],
+        ["gliome_autre", "Autre gliome"], ["meningiome", "Méningiome"],
+        ["lcp", "Lymphome cérébral primitif"], ["meta_melanome", "Métastases cérébrales de mélanome"],
+        ["meta_autre", "Autres métastases cérébrales"], ["encephalite_ai", "Encéphalite auto-immune"],
+        ["nsp", "Neuronopathie sensitive"], ["autre", "Autre diagnostic"]] },
+      { id: "grade", type: "liste", label: "Grade OMS", options: [["1", "Grade 1"], ["2", "Grade 2"], ["3", "Grade 3"], ["4", "Grade 4"]],
+        si: { champ: "diagnostic", op: "dans", val: ["astro_idh", "oligo", "gliome_autre", "meningiome"] } },
+      { id: "situation", type: "liste", label: "Où en est la maladie ?", options: [
+        ["nouveau", "Nouveau diagnostic, avant tout traitement (hors chirurgie)"],
+        ["traitement_initial", "Traitement initial en cours ou terminé (1re ligne)"],
+        ["recidive1", "Première récidive ou progression, pas encore traitée"],
+        ["recidive2", "Récidive ultérieure, ou récidive déjà traitée"],
+        ["surveillance", "Surveillance, maladie stable, à distance des traitements"]],
+        si: { champ: "diagnostic", op: "pasdans", val: NEURO.concat(["meningiome", "meta_melanome", "meta_autre", "autre"]) } }
+    ] },
+
+    { section: "Marqueurs tumoraux", champs: [
+      { id: "mgmt", type: "liste", label: "Promoteur MGMT", options: [["methyle", "Méthylé"], ["non_methyle", "Non méthylé"]],
+        si: { et: [GBM, { champ: "situation", op: "=", val: "nouveau" }] } },
+      { id: "hla_a2", type: "liste", label: "Typage HLA-A2", options: [["positif", "HLA-A2 positif"], ["negatif", "HLA-A2 négatif"]],
+        si: { et: [GBM, { champ: "situation", op: "dans", val: ["nouveau", "traitement_initial"] }] } },
+      { id: "ptprz1", type: "liste", label: "Expression de PTPRZ1", options: [["exprime", "Exprimé"], ["non_exprime", "Non exprimé"]],
+        si: { et: [GBM, { champ: "situation", op: "dans", val: ["nouveau", "traitement_initial"] }] } },
+      { id: "braf", type: "liste", label: "Mutation BRAF V600 ou fusion BRAF", options: [["presente", "Présente"], ["absente", "Absente"]], si: GLIO_AUTRE },
+      { id: "mtap", type: "liste", label: "Délétion MTAP", options: [["presente", "Présente"], ["absente", "Absente"]], si: GLIO_AUTRE },
+      { id: "fgfr", type: "liste", label: "Altération FGFR1/2/3 (fusion ou mutation)", options: [["presente", "Présente"], ["absente", "Absente"]],
+        si: { champ: "diagnostic", op: "pasdans", val: NEURO.concat(["lcp"]) } }
+    ] },
+
+    { section: "Chirurgie et imagerie", si: GLIO, champs: [
+      { id: "chirurgie", type: "liste", label: "Chirurgie (de la tumeur ou de la récidive)", options: [
+        ["a_venir", "Réalisable, pas encore faite"], ["biopsie", "Biopsie seule"],
+        ["partielle", "Exérèse partielle (reliquat)"], ["complete", "Exérèse complète"]], si: GBM },
+      { id: "taille", type: "liste", label: "Plus grande lésion à l'IRM", options: [
+        ["t35", "Moins de 3,5 cm"], ["t5", "De 3,5 à 5 cm"], ["t7", "De 5 à 7 cm"], ["t7plus", "Plus de 7 cm"]], si: GBM },
+      { id: "siege", type: "liste", label: "Siège de la tumeur", options: [["sus", "Sus-tentoriel"], ["sous", "Sous-tentoriel (tronc cérébral, cervelet)"]] },
+      { id: "leptomeninge", type: "case", label: "Atteinte leptoméningée" }
+    ] },
+
+    { section: "Méningiome", si: { champ: "diagnostic", op: "=", val: "meningiome" }, champs: [
+      { id: "evolution_men", type: "liste", label: "Où en est le méningiome ?", options: [
+        ["a_traiter", "Pas encore traité (avant chirurgie ou radiothérapie)"],
+        ["apres_chir", "Opéré, sans radiothérapie"],
+        ["apres_rt", "Opéré et irradié, sans progression"],
+        ["refractaire", "Opéré et irradié, en progression (réfractaire)"]] },
+      { id: "ttt_syst", type: "case", label: "Traitement systémique déjà reçu (hors chirurgie et radiothérapie)" },
+      { id: "localisation", type: "liste", label: "Localisation", options: [["sinus", "Sinus caverneux (ou base du crâne antérieure envahissant le sinus caverneux)"], ["autre", "Autre localisation"]] },
+      { id: "tep_somato", type: "liste", label: "TEP aux récepteurs de la somatostatine", options: [["positive", "Positive"], ["negative", "Négative"]] }
+    ] },
+
+    { section: "Lymphome cérébral primitif", si: { champ: "diagnostic", op: "=", val: "lcp" }, champs: [
+      { id: "lcp_extension", type: "liste", label: "Localisation de la maladie", options: [
+        ["cerebral", "Cérébrale uniquement"], ["lcr", "Liquide cérébrospinal isolé"], ["oeil", "Oculaire isolée"], ["systemique", "Cérébrale et systémique"]] },
+      { id: "mtx_hd", type: "liste", label: "Méthotrexate haute dose en 1re ligne", options: [["recu", "Reçu"], ["non_recu", "Non reçu"]] },
+      { id: "ibtk", type: "liste", label: "Ibrutinib (ou autre inhibiteur de BTK)", options: [["recu", "Déjà reçu"], ["non_recu", "Jamais reçu"]] },
+      { id: "retard_mtx", type: "liste", label: "Élimination du méthotrexate", options: [["retard", "Retard d'élimination ou risque de toxicité"], ["normale", "Normale"]] }
+    ] },
+
+    { section: "Encéphalite et neuronopathie", si: { champ: "diagnostic", op: "dans", val: NEURO }, champs: [
+      { id: "anticorps", type: "liste", label: "Anticorps", options: [["nmda", "Anti-NMDAR"], ["lgi1", "Anti-LGI1"], ["hu", "Anti-Hu"], ["autre", "Autre anticorps ou séronégatif"]] },
+      { id: "debut_sympt", type: "nombre", label: "Délai depuis le début des symptômes", unite: "mois", min: 0, max: 600, step: "any" },
+      { id: "mrs", type: "liste", label: "Score de Rankin modifié (mRS)", options: MRS }
+    ] },
+
+    { section: "Traitements", si: GLIO, champs: [
+      { id: "traitement_prevu", type: "liste", label: "Traitement envisagé", options: [
+        ["stupp", "Radiochimiothérapie de Stupp standard (60 Gy)"], ["hypofractionne", "Radiothérapie hypofractionnée ou Stupp accéléré (patient âgé)"],
+        ["pas_stupp", "Pas de Stupp standard (patient fragile)"]],
+        si: { et: [GBM, { champ: "situation", op: "=", val: "nouveau" }] } },
+      { id: "rt_cerebrale", type: "case", label: "Radiothérapie cérébrale déjà reçue",
+        si: { champ: "situation", op: "dans", val: APRES_DEBUT } },
+      { id: "delai_rt", type: "nombre", label: "Délai depuis la fin de la radiothérapie", unite: "semaines", min: 0, max: 1000, step: 1,
+        si: { champ: "rt_cerebrale", op: "=", val: true } },
+      { id: "chimio", type: "case", label: "Chimiothérapie antérieure (témozolomide, PCV…), hors vorasidenib",
+        si: { champ: "situation", op: "dans", val: APRES_DEBUT } },
+      { id: "nitrosouree", type: "case", label: "Nitroso-urée déjà reçue (lomustine, carmustine, PCV)",
+        si: { et: [GLIO, { champ: "situation", op: "dans", val: APRES_DEBUT }] } },
+      { id: "bevacizumab", type: "case", label: "Bévacizumab déjà reçu",
+        si: { et: [GLIO, { champ: "situation", op: "dans", val: APRES_DEBUT }] } }
+    ] },
+
+    { section: "Patient", champs: [
+      { id: "age", type: "nombre", label: "Âge", unite: "ans", min: 0, max: 120, step: "any" },
+      { id: "kps", type: "liste", label: "Indice de performance (Karnofsky, équivalent OMS)", options: KPS, si: PAS_NEURO },
+      { id: "dexa", type: "nombre", label: "Corticoïdes, en équivalent dexaméthasone", unite: "mg/j", min: 0, max: 100, step: "any",
+        placeholder: "0 si aucun", si: PAS_NEURO },
+      { id: "cortico_stable", type: "liste", label: "Corticoïdes sur les 7 derniers jours", options: [["stable", "Dose stable ou en baisse"], ["hausse", "Dose augmentée"]],
+        si: { champ: "dexa", op: ">", val: 0 } }
+    ] },
+
+    { section: "À cocher si présent", champs: [
+      { id: "grossesse", type: "case", label: "Grossesse ou allaitement", si: PAS_NEURO },
+      { id: "epilepsie_nc", type: "case", label: "Épilepsie non contrôlée", si: PAS_NEURO },
+      { id: "auto_immune", type: "case", label: "Maladie auto-immune ou dysimmunitaire", si: PAS_NEURO },
+      { id: "irm_ci", type: "case", label: "Contre-indication à l'IRM ou au gadolinium", si: PAS_NEURO },
+      { id: "autre_cancer", type: "case", label: "Autre cancer actif ou dans les 5 dernières années" },
+      { id: "immunodep", type: "case", label: "Immunodépression (dont VIH, hépatite B ou C)" }
+    ] }
+  ];
+})();

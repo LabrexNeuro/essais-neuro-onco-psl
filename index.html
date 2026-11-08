@@ -243,6 +243,15 @@ tr:last-child td { border-bottom: 0; }
 .anomalies ul { margin: 6px 0 0; padding-left: 18px; }
 .anomalies-ok { padding: 10px 14px; border-radius: var(--r); background: var(--ok-soft); color: var(--ok); font-weight: 700; }
 
+/* Critères repliables dans la fiche d'une étude */
+.crit-liste { border: 1px solid var(--line); border-radius: var(--r); background: var(--bg); min-width: 0; }
+.crit-liste > summary { cursor: pointer; padding: 10px 14px; font-weight: 700; font-size: .9375rem; list-style: none; display: flex; align-items: center; gap: 8px; }
+.crit-liste > summary::-webkit-details-marker { display: none; }
+.crit-liste > summary::before { content: "▸"; color: var(--ink-2); font-size: .75rem; transition: transform .15s; }
+.crit-liste[open] > summary::before { transform: rotate(90deg); }
+.crit-liste[open] > summary { border-bottom: 1px solid var(--line); }
+.crit-liste .nb { font-family: var(--font-mono); font-size: .8125rem; font-weight: 400; color: var(--ink-2); }
+.crit-liste .simple { padding: 12px 14px; }
 /* ---------- Outil compte-rendu ---------- */
 .accueil-intro { max-width: 70ch; display: grid; gap: 12px; margin-bottom: 24px; }
 .accueil-intro h2 { font-size: 1.75rem; line-height: 1.2; }
@@ -311,14 +320,14 @@ tr:last-child td { border-bottom: 0; }
     <!-- Vue 0 : accueil -->
     <section id="vue-accueil" data-vue="accueil" aria-labelledby="t-accueil">
       <div class="accueil-intro">
-        <h2 id="t-accueil">Les essais cliniques du service et ceux qui conviennent à votre patient</h2>
+        <h2 id="t-accueil">Les essais cliniques du service, et ceux qui conviennent à votre patient</h2>
         <p>Ce site rassemble les études de recherche clinique en cours dans le service de neuro-oncologie, avec leurs critères d'inclusion et de non-inclusion. Pendant une consultation, il permet de repérer en quelques instants les protocoles auxquels un patient peut être adressé.</p>
         <p class="meta-dossier" id="accueil-chiffres"></p>
       </div>
       <div class="entrees">
         <a class="entree principale" href="#saisie" data-vue="saisie">
           <strong>Orienter un patient</strong>
-          <span>Renseigner les informations cliniques du patient : âge, diagnostic, traitements antérieurs, biologie… Les protocoles compatibles s'affichent au fur et à mesure, avec ce qui manque ou ce qui bloque pour chacun.</span>
+          <span>Renseigner les informations cliniques du patient : commencer par le diagnostic, puis les traitements antérieurs et les données du patient. Le formulaire s'adapte au diagnostic choisi. Les protocoles compatibles s'affichent au fur et à mesure, avec ce qui manque ou ce qui bloque pour chacun.</span>
           <span class="entree-go">Ouvrir la page</span>
         </a>
         <a class="entree" href="#etudes" data-vue="etudes">
@@ -356,7 +365,6 @@ tr:last-child td { border-bottom: 0; }
         </div>
         <div class="actions">
           <button type="button" class="btn" id="btn-vider">Nouveau patient</button>
-          <button type="button" class="btn" id="btn-exemple">Charger l'exemple</button>
         </div>
       </div>
       <div class="note-exemple" id="note-exemple" hidden>Patient fictif d'exemple chargé. Les valeurs sont modifiables, ou cliquer sur « Nouveau patient » pour repartir de zéro.</div>
@@ -426,9 +434,15 @@ tr:last-child td { border-bottom: 0; }
   }
   var CHAMPS = W.CHAMPS, PROTOCOLES = W.PROTOCOLES, CONFIG = W.CONFIG, MOTEUR = W.MOTEUR;
   var META = W.DOSSIER_META || {};
+  // Une condition posée sur une section s'applique à chacun de ses champs.
+  CHAMPS.forEach(function (sec) {
+    if (!sec.si) return;
+    sec.champs.forEach(function (def) { def.si = def.si ? { et: [sec.si, def.si] } : sec.si; });
+  });
   var idx = MOTEUR.indexer(CHAMPS);
+  var blocs = [];              // sections du formulaire : { fieldset, ids }
 
-  var etat = {};               // valeurs saisies (jamais enregistrées)
+  var etat = {};             // valeurs saisies (jamais enregistrées)
   var dom = {};                // id de champ -> { wrap, input }
   var ouverts = {};            // cartes dépliées dans les résultats
   var filtres = { q: "", statut: "tous", patho: "" };
@@ -488,7 +502,9 @@ tr:last-child td { border-bottom: 0; }
         }
         dom[def.id] = { wrap: wrap, input: input, def: def };
       });
-      cont.appendChild(el("fieldset", { class: "bloc" }, el("legend", null, sec.section), grille, cases));
+      var bloc = el("fieldset", { class: "bloc" }, el("legend", null, sec.section), grille, cases);
+      cont.appendChild(bloc);
+      blocs.push({ fieldset: bloc, ids: sec.champs.map(function (d) { return d.id; }) });
     });
   }
 
@@ -497,6 +513,10 @@ tr:last-child td { border-bottom: 0; }
       var d = dom[id];
       if (!d.def.si) return;
       d.wrap.hidden = MOTEUR.evaluerCondition(d.def.si, get) !== true;
+    });
+    // Une section dont aucune question n'est visible disparaît.
+    blocs.forEach(function (b) {
+      b.fieldset.hidden = !b.ids.some(function (id) { return !dom[id].wrap.hidden; });
     });
   }
 
@@ -530,16 +550,40 @@ tr:last-child td { border-bottom: 0; }
     if (r.etat === "inconnu") return "À renseigner";
     return "À confirmer en consultation";
   }
-  function valeursVues(cond) {
-    return MOTEUR.champsCites(cond).map(function (id) {
+  // Champs à renseigner pour trancher : un champ vide, ou, pour une case masquée faute de réponse
+  // préalable (ex. radiothérapie tant que la situation n'est pas choisie), le champ qui la commande.
+  function champsAManquer(cond) {
+    var res = [];
+    MOTEUR.champsCites(cond).forEach(function (id) {
       var d = idx[id];
-      if (!d || d.type === "case") return null;
+      if (!d) return;
+      if (d.type === "case") {
+        if (d.si && MOTEUR.evaluerCondition(d.si, get) === null) {
+          MOTEUR.champsCites(d.si).forEach(function (j) { if (get(j) === null && res.indexOf(j) === -1) res.push(j); });
+        }
+      } else if (get(id) === null && res.indexOf(id) === -1) res.push(id);
+    });
+    return res;
+  }
+  function valeursVues(cond, etat) {
+    if (etat === "inconnu") {
+      var m = champsAManquer(cond);
+      if (m.length) return m.slice(0, 2).map(function (id) { return idx[id].label.split(" (")[0] + " : Non renseigné"; }).join(" · ");
+    }
+    // Les champs non renseignés d'abord, pour que la valeur manquante soit celle qui est affichée.
+    return MOTEUR.champsCites(cond).filter(function (id) {
+      var d = idx[id];
+      return d && d.type !== "case";
+    }).sort(function (a, b) {
+      return (get(a) === null ? 0 : 1) - (get(b) === null ? 0 : 1);
+    }).map(function (id) {
+      var d = idx[id];
       return d.label.split(" (")[0] + " : " + MOTEUR.formater(d, get(id));
-    }).filter(Boolean).slice(0, 2).join(" · ");
+    }).slice(0, 2).join(" · ");
   }
   function ligneCritere(r) {
     var tag = r.etat === "ko" ? "Bloquant" : r.etat === "inconnu" ? "À renseigner" : r.etat === "manuel" ? "À confirmer en consultation" : null;
-    var val = r.critere.cond ? valeursVues(r.critere.cond) : "";
+    var val = r.critere.cond ? valeursVues(r.critere.cond, r.etat) : "";
     return el("li", { class: "crit etat-" + r.etat },
       el("span", { class: "ico", "aria-hidden": "true" }, GLYPHES[r.etat]),
       el("span", { class: "crit-detail" },
@@ -693,10 +737,14 @@ tr:last-child td { border-bottom: 0; }
     var d = new Date(iso + "T12:00:00");
     return isNaN(d) ? iso : d.toLocaleDateString("fr-FR", { day: "numeric", month: "long", year: "numeric" });
   }
+  function listePatho(p) {
+    return String(p.pathologie || "").split("|").map(function (x) { return x.trim(); }).filter(Boolean);
+  }
   function construireFiltres() {
     var sel = $("#patho");
     var pathos = [];
-    PROTOCOLES.forEach(function (p) { if (p.pathologie && pathos.indexOf(p.pathologie) === -1) pathos.push(p.pathologie); });
+    // Une étude peut concerner plusieurs pathologies, séparées par « | » dans la colonne pathologie.
+    PROTOCOLES.forEach(function (p) { listePatho(p).forEach(function (x) { if (pathos.indexOf(x) === -1) pathos.push(x); }); });
     pathos.sort().forEach(function (x) { sel.appendChild(el("option", { value: x }, x)); });
     sel.addEventListener("change", function () { filtres.patho = sel.value; rendreEtudes(); });
     $("#q").addEventListener("input", function (e) { filtres.q = e.target.value; rendreEtudes(); });
@@ -729,7 +777,7 @@ tr:last-child td { border-bottom: 0; }
         el("h3", null, p.titre),
         el("div", { class: "etude-meta" },
           p.phase ? el("span", null, "Phase " + p.phase) : null,
-          p.pathologie ? el("span", null, p.pathologie) : null,
+          p.pathologie ? el("span", null, listePatho(p).join(", ")) : null,
           p.identifiant ? el("span", { class: "mono" }, p.identifiant) : null)),
       p.resume ? el("p", null, p.resume) : null,
       el("dl", { class: "infos" },
@@ -743,15 +791,15 @@ tr:last-child td { border-bottom: 0; }
         !(p.document || adminActif) ? null : el("div", null, el("dt", null, "Document"), el("dd", null, p.document ? el("a", { href: p.document, target: "_blank", rel: "noopener" }, "Protocole ou résumé") : "À ajouter")),
         info("Dernière mise à jour", dateFr(p.majLe))),
       el("div", { class: "deux-col" },
-        el("div", null, el("div", { class: "crit-titre" }, "Critères d'inclusion"), el("ul", { class: "simple" }, incl.map(li))),
-        el("div", null, el("div", { class: "crit-titre" }, "Critères de non-inclusion"), el("ul", { class: "simple" }, non.map(li)))));
+        el("details", { class: "crit-liste" }, el("summary", null, "Critères d'inclusion", el("span", { class: "nb" }, "(" + incl.length + ")")), el("ul", { class: "simple" }, incl.map(li))),
+        el("details", { class: "crit-liste" }, el("summary", null, "Critères de non-inclusion", el("span", { class: "nb" }, "(" + non.length + ")")), el("ul", { class: "simple" }, non.map(li)))));
   }
   function rendreEtudes() {
     var cont = $("#liste-etudes");
     var q = filtres.q.trim().toLowerCase();
     var tab = PROTOCOLES.filter(function (p) {
       if (filtres.statut !== "tous" && p.statut !== filtres.statut) return false;
-      if (filtres.patho && p.pathologie !== filtres.patho) return false;
+      if (filtres.patho && listePatho(p).indexOf(filtres.patho) === -1) return false;
       if (q) {
         var texte = [p.acronyme, p.titre, p.pathologie, p.investigateur, p.promoteur, p.identifiant, p.resume].join(" ").toLowerCase();
         if (texte.indexOf(q) === -1) return false;
@@ -917,7 +965,6 @@ tr:last-child td { border-bottom: 0; }
     a.addEventListener("click", function (e) { e.preventDefault(); allerVue(a.getAttribute("data-vue")); });
   });
   $("#btn-vider").addEventListener("click", function () { appliquer(null); });
-  $("#btn-exemple").addEventListener("click", function () { appliquer(CONFIG.EXEMPLE_PATIENT); });
   $("#barre-aller").addEventListener("click", function () { $("#resultats").scrollIntoView({ block: "start" }); });
   window.addEventListener("hashchange", function () {
     var h = location.hash.replace("#", "");
@@ -925,7 +972,7 @@ tr:last-child td { border-bottom: 0; }
     if (VUES[h] && h !== vueCourante) allerVue(h);
   });
 
-  appliquer(CONFIG.EXEMPLE_AU_DEMARRAGE ? CONFIG.EXEMPLE_PATIENT : null);
+  appliquer(null);
   var h0 = location.hash.replace("#", "");
   allerVue(VUES[h0] ? h0 : "accueil", true);
 })();

@@ -14,7 +14,13 @@
   function indexer(champs) {
     var idx = {};
     champs.forEach(function (s) {
-      s.champs.forEach(function (c) { idx[c.id] = c; });
+      s.champs.forEach(function (c) {
+        // La condition d'affichage de la section s'ajoute à celle du champ.
+        var si = s.si ? (c.si ? { et: [s.si, c.si] } : s.si) : c.si;
+        var def = {}; for (var k in c) def[k] = c[k];
+        if (si) def.si = si;
+        idx[c.id] = def;
+      });
     });
     return idx;
   }
@@ -27,6 +33,8 @@
     if (def && def.si) {
       var visible = evaluerCondition(def.si, function (i) { return valeur(i, idx, brut); });
       if (visible !== true) v = undefined;
+      // Masqué faute de réponse préalable (condition inconnue) : on ne sait pas, ce n'est pas « absent ».
+      if (visible === null && def.type === "case") return null;
     }
     if (def && def.type === "case") return v === true;
     if (v === undefined || v === null || v === "") return null;

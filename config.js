@@ -14,15 +14,5 @@ window.CONFIG = {
   MODE_ADMIN: false,
 
   // Les résultats n'apparaissent qu'une fois ce champ renseigné.
-  CHAMP_OBLIGATOIRE: "diagnostic",
-
-  // Patient fictif chargé à l'ouverture pour montrer le fonctionnement.
-  // Mettre false pour ouvrir le formulaire vide.
-  EXEMPLE_AU_DEMARRAGE: true,
-  EXEMPLE_PATIENT: {
-    age: 54, sexe: "M", kps: "80",
-    diagnostic: "glioblastome", situation: "recidive1", chirurgie: "partielle", mgmt: "non_methyle",
-    lignes: 1, dexa: 4, rt_cerebrale: true, delai_rt: 20, temozolomide: true,
-    dfg: 85, pnn: 3.2, plaquettes: 210, transaminases: 1.2
-  }
+  CHAMP_OBLIGATOIRE: "diagnostic"
 };
