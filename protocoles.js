@@ -2,7 +2,7 @@
    Pour modifier le dossier : corriger les CSV puis refaire la conversion dans la page « Études en cours ». */
 
 window.DOSSIER_META = {
-  "majLe": "2026-11-07",
+  "majLe": "2026-11-09",
   "responsable": ""
 };
 
@@ -202,7 +202,7 @@ window.PROTOCOLES = [
       "email": "nabila.rousseaux@aphp.fr",
       "tel": "01 42 16 04 31"
     },
-    "statut": "ouvert",
+    "statut": "clos",
     "recrutement": {
       "inclus": 18,
       "objectif": 15
@@ -1137,16 +1137,16 @@ window.PROTOCOLES = [
     "resume": "",
     "phase": "II",
     "pathologie": "Gliome de la ligne médiane | Astrocytome | Autre gliome",
-    "promoteur": "",
+    "promoteur": "APHP",
     "investigateur": "F. Laigle-Donadey",
-    "identifiant": "",
+    "identifiant": "NCT03932981",
     "contact": {
       "nom": "",
       "email": "",
       "tel": ""
     },
     "statut": "ouvert",
-    "document": "",
+    "document": "https://clinicaltrials.gov/study/NCT03932981?term=temozolomide%20alone%20adult%20brainstem%20gliomas%20diffuse%20subtype%20radiological%20progression&viewType=Card&rank=1",
     "majLe": "2026-11-07",
     "criteres": [
       {
@@ -1300,7 +1300,7 @@ window.PROTOCOLES = [
   {
     "id": "Acsé Pemigatinib",
     "acronyme": "Acsé Pemigatinib",
-    "titre": "Pemigatinib pour le traitement des tumeurs solides récidivants présentant une altération des gènes FGFR",
+    "titre": "Pemigatinib pour le traitement des tumeurs solides récidivantes présentant une altération des gènes FGFR",
     "resume": "",
     "phase": "II",
     "pathologie": "Autre diagnostic | Autres métastases cérébrales",
@@ -1509,7 +1509,7 @@ window.PROTOCOLES = [
       "email": "",
       "tel": ""
     },
-    "statut": "ouvert",
+    "statut": "clos",
     "document": "https://clinicaltrials.gov/study/NCT06388733?cond=Glioblastoma&term=niraparib%20&viewType=Card&intr=temozolomide&rank=3",
     "majLe": "2026-11-07",
     "criteres": [
@@ -1590,7 +1590,7 @@ window.PROTOCOLES = [
       "email": "",
       "tel": ""
     },
-    "statut": "ouvert",
+    "statut": "clos",
     "document": "https://clinicaltrials.gov/study/NCT03663725?cond=Glioblastoma&term=STRATEGLIO&viewType=Card&rank=1",
     "majLe": "2026-11-07",
     "criteres": [
@@ -1850,7 +1850,7 @@ window.PROTOCOLES = [
       "email": "",
       "tel": ""
     },
-    "statut": "ouvert",
+    "statut": "clos",
     "document": "https://clinicaltrials.gov/study/NCT04471844?cond=Glioblastoma&term=Optune&viewType=Card&rank=3",
     "majLe": "2026-11-07",
     "criteres": [
@@ -2299,7 +2299,7 @@ window.PROTOCOLES = [
       "email": "",
       "tel": ""
     },
-    "statut": "ouvert",
+    "statut": "clos",
     "document": "https://clinicaltrials.gov/study/NCT05975073?intr=amg%20193&viewType=Card&rank=1",
     "majLe": "2026-11-07",
     "criteres": [
@@ -3851,7 +3851,7 @@ window.PROTOCOLES = [
       "email": "",
       "tel": ""
     },
-    "statut": "ouvert",
+    "statut": "clos",
     "document": "https://clinicaltrials.gov/study/NCT05503264?term=CIELO&intr=satralizumab%20&viewType=Card&rank=1",
     "majLe": "2026-11-07",
     "criteres": [
