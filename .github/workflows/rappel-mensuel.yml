@@ -1,1 +1,36 @@
+name: Rappel mensuel aux investigateurs
 
+on:
+  schedule:
+    - cron: "0 7 1 * *"        # le 1er de chaque mois, vers 8 h ou 9 h en France
+  workflow_dispatch:            # lancement manuel (onglet Actions) pour tester
+    inputs:
+      envoyer:
+        description: "Envoyer réellement les courriels (sinon : simulation)"
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+
+jobs:
+  rappel:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Envoi des rappels
+        env:
+          GMAIL_ADRESSE: ${{ secrets.GMAIL_ADRESSE }}
+          GMAIL_MOT_DE_PASSE_APPLICATION: ${{ secrets.GMAIL_MOT_DE_PASSE_APPLICATION }}
+          INVESTIGATEURS: ${{ secrets.INVESTIGATEURS }}
+          FORM_URL: ${{ vars.FORM_URL }}
+          ENTREE_PROTOCOLE: ${{ vars.ENTREE_PROTOCOLE }}
+          ENTREE_STATUT: ${{ vars.ENTREE_STATUT }}
+          ENTREE_INCLUS: ${{ vars.ENTREE_INCLUS }}
+        run: |
+          # Planifié : envoi réel. Lancé à la main : simulation sauf case « envoyer » cochée.
+          if [ "${{ github.event_name }}" = "schedule" ] || [ "${{ github.event.inputs.envoyer }}" = "true" ]; then
+            python3 rappel_mensuel.py --envoyer
+          else
+            python3 rappel_mensuel.py
+          fi
