@@ -22,13 +22,13 @@ window.PROTOCOLES = [
       "email": "lamine.bernezkallah-ext@aphp.fr",
       "tel": "01 42 16 04 41"
     },
-    "statut": "ouvert",
+    "statut": "suspendu",
     "recrutement": {
-      "inclus": 0,
+      "inclus": 35,
       "objectif": 411
     },
     "document": "https://clinicaltrials.gov/study/NCT05904119?term=LEGATO&viewType=Card&intr=%20Lomustine%20&rank=1",
-    "majLe": "2026-10-30",
+    "majLe": "2026-11-17",
     "criteres": [
       {
         "type": "inclusion",
@@ -309,11 +309,11 @@ window.PROTOCOLES = [
     },
     "statut": "ouvert",
     "recrutement": {
-      "inclus": 22,
+      "inclus": 32,
       "objectif": 10
     },
     "document": "https://clinicaltrials.gov/study/NCT06622434?term=Litenimod%20temozolomide%20&viewType=Card&rank=1",
-    "majLe": "2026-10-30",
+    "majLe": "2026-11-17",
     "criteres": [
       {
         "type": "inclusion",
