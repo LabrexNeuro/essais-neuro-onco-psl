@@ -2,7 +2,7 @@
    Pour modifier le dossier : corriger les CSV puis refaire la conversion dans la page « Études en cours ». */
 
 window.DOSSIER_META = {
-  "majLe": "2026-11-09",
+  "majLe": "2026-11-17",
   "responsable": ""
 };
 
@@ -531,7 +531,7 @@ window.PROTOCOLES = [
       "email": "nabila.rousseaux@aphp.fr",
       "tel": "01 42 16 04 31"
     },
-    "statut": "ouvert",
+    "statut": "clos",
     "recrutement": {
       "inclus": 30,
       "objectif": 10
@@ -788,7 +788,7 @@ window.PROTOCOLES = [
     "investigateur": "C. Dehais",
     "identifiant": "NCT04702581",
     "contact": {
-      "nom": "",
+      "nom": "Armelle",
       "email": "",
       "tel": ""
     },
@@ -864,7 +864,7 @@ window.PROTOCOLES = [
     "investigateur": "A. Laurenge-Leprince",
     "identifiant": "NCT06809322",
     "contact": {
-      "nom": "",
+      "nom": "Margaux",
       "email": "",
       "tel": ""
     },
@@ -1141,7 +1141,7 @@ window.PROTOCOLES = [
     "investigateur": "F. Laigle-Donadey",
     "identifiant": "NCT03932981",
     "contact": {
-      "nom": "",
+      "nom": "Yah-se",
       "email": "",
       "tel": ""
     },
@@ -1217,7 +1217,7 @@ window.PROTOCOLES = [
     "investigateur": "M. Touat",
     "identifiant": "NCT05476939",
     "contact": {
-      "nom": "",
+      "nom": "Margaux",
       "email": "",
       "tel": ""
     },
@@ -1312,7 +1312,7 @@ window.PROTOCOLES = [
       "email": "",
       "tel": ""
     },
-    "statut": "ouvert",
+    "statut": "en_preparation",
     "document": "https://clinicaltrials.gov/study/NCT06022289?term=Pemigatinib%E2%80%AF%20&viewType=Card&cond=FGFR&rank=2",
     "majLe": "2026-11-07",
     "criteres": [
@@ -1419,7 +1419,7 @@ window.PROTOCOLES = [
     "investigateur": "M. Touat",
     "identifiant": "NCT03970447",
     "contact": {
-      "nom": "",
+      "nom": "Haysam",
       "email": "",
       "tel": ""
     },
@@ -1505,7 +1505,7 @@ window.PROTOCOLES = [
     "investigateur": "M. Touat",
     "identifiant": "NCT06388733",
     "contact": {
-      "nom": "",
+      "nom": "Haysam",
       "email": "",
       "tel": ""
     },
@@ -1586,7 +1586,7 @@ window.PROTOCOLES = [
     "investigateur": "A. Alentorn",
     "identifiant": "NCT03663725",
     "contact": {
-      "nom": "",
+      "nom": "Yah-se",
       "email": "",
       "tel": ""
     },
@@ -1746,7 +1746,7 @@ window.PROTOCOLES = [
     "investigateur": "M. Sanson",
     "identifiant": "NCT04945148",
     "contact": {
-      "nom": "",
+      "nom": "Gaëlle",
       "email": "",
       "tel": ""
     },
@@ -1846,7 +1846,7 @@ window.PROTOCOLES = [
     "investigateur": "K.Hoang-Xuan",
     "identifiant": "NCT04471844",
     "contact": {
-      "nom": "",
+      "nom": "Gaëlle",
       "email": "",
       "tel": ""
     },
@@ -2218,7 +2218,7 @@ window.PROTOCOLES = [
     "investigateur": "M. Touat",
     "identifiant": "NCT05503797",
     "contact": {
-      "nom": "",
+      "nom": "Gaëlle",
       "email": "",
       "tel": ""
     },
@@ -3021,7 +3021,7 @@ window.PROTOCOLES = [
     "investigateur": "K. Hoang-Xuan, C. Houillier",
     "identifiant": "NCT05135858",
     "contact": {
-      "nom": "",
+      "nom": "Yah-se",
       "email": "",
       "tel": ""
     },
@@ -3127,7 +3127,7 @@ window.PROTOCOLES = [
     "investigateur": "C. Houillier",
     "identifiant": "NCT03328078",
     "contact": {
-      "nom": "",
+      "nom": "Yah-se",
       "email": "",
       "tel": ""
     },
@@ -3220,7 +3220,7 @@ window.PROTOCOLES = [
     "investigateur": "C. Houillier",
     "identifiant": "NCT03328078",
     "contact": {
-      "nom": "",
+      "nom": "Yah-se",
       "email": "",
       "tel": ""
     },
@@ -3380,7 +3380,7 @@ window.PROTOCOLES = [
     "investigateur": "Caroline Houillier, Sylvain Choquet",
     "identifiant": "NCT06931652",
     "contact": {
-      "nom": "",
+      "nom": "Yah-se",
       "email": "",
       "tel": ""
     },
@@ -3645,7 +3645,7 @@ window.PROTOCOLES = [
     "investigateur": "D Psimaras",
     "identifiant": "NCT06079294",
     "contact": {
-      "nom": "",
+      "nom": "Nadia",
       "email": "",
       "tel": ""
     },
@@ -3718,7 +3718,7 @@ window.PROTOCOLES = [
     "investigateur": "D Psimaras",
     "identifiant": "NCT06373211",
     "contact": {
-      "nom": "",
+      "nom": "Nadia",
       "email": "",
       "tel": ""
     },
@@ -3847,7 +3847,7 @@ window.PROTOCOLES = [
     "investigateur": "D Psimaras",
     "identifiant": "NCT05503264",
     "contact": {
-      "nom": "",
+      "nom": "Gaëlle",
       "email": "",
       "tel": ""
     },
