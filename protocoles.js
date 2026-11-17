@@ -65,7 +65,7 @@ window.PROTOCOLES = [
             {
               "champ": "rt_cerebrale",
               "op": "=",
-              "val": true
+              "val": "recue"
             },
             {
               "champ": "delai_rt",
@@ -81,7 +81,7 @@ window.PROTOCOLES = [
         "cond": {
           "champ": "rt_cerebrale",
           "op": "=",
-          "val": true
+          "val": "recue"
         }
       },
       {
@@ -474,7 +474,7 @@ window.PROTOCOLES = [
         "cond": {
           "champ": "rt_cerebrale",
           "op": "=",
-          "val": true
+          "val": "recue"
         }
       },
       {
@@ -841,12 +841,12 @@ window.PROTOCOLES = [
             {
               "champ": "rt_cerebrale",
               "op": "=",
-              "val": false
+              "val": "non_recue"
             },
             {
               "champ": "chimio",
               "op": "=",
-              "val": false
+              "val": "non_recue"
             }
           ]
         }
@@ -924,7 +924,7 @@ window.PROTOCOLES = [
         "cond": {
           "champ": "rt_cerebrale",
           "op": "=",
-          "val": true
+          "val": "recue"
         }
       },
       {
@@ -933,7 +933,7 @@ window.PROTOCOLES = [
         "cond": {
           "champ": "chimio",
           "op": "=",
-          "val": true
+          "val": "recue"
         }
       },
       {
@@ -1266,7 +1266,7 @@ window.PROTOCOLES = [
             {
               "champ": "chimio",
               "op": "=",
-              "val": false
+              "val": "non_recue"
             }
           ]
         }
@@ -2034,12 +2034,12 @@ window.PROTOCOLES = [
             {
               "champ": "rt_cerebrale",
               "op": "=",
-              "val": false
+              "val": "non_recue"
             },
             {
               "champ": "chimio",
               "op": "=",
-              "val": false
+              "val": "non_recue"
             },
             {
               "champ": "autre_cancer",
@@ -2469,7 +2469,7 @@ window.PROTOCOLES = [
         "cond": {
           "champ": "rt_cerebrale",
           "op": "=",
-          "val": true
+          "val": "recue"
         }
       },
       {
@@ -2735,7 +2735,7 @@ window.PROTOCOLES = [
         "cond": {
           "champ": "rt_cerebrale",
           "op": "=",
-          "val": true
+          "val": "recue"
         }
       },
       {

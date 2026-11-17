@@ -35,6 +35,8 @@
       if (visible !== true) v = undefined;
       // Masqué faute de réponse préalable (condition inconnue) : on ne sait pas, ce n'est pas « absent ».
       if (visible === null && def.type === "case") return null;
+      // Masqué parce que la situation exclut définitivement ce champ (ex. nouveau diagnostic) : valeur par défaut.
+      if (visible === false && def.defaut !== undefined) return def.defaut;
     }
     if (def && def.type === "case") return v === true;
     if (v === undefined || v === null || v === "") return null;
