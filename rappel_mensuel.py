@@ -17,7 +17,8 @@ from email.message import EmailMessage
 # FORM_URL : l'adresse du formulaire se terminant par /viewform
 # ENTREES : numéros des questions (entry.XXXXXXX) obtenus avec « Obtenir le lien pré-rempli »
 # ------------------------------------------------------------------
-FORM_URL = os.environ.get("FORM_URL", "")
+# On ne garde que l'adresse avant le « ? » : un lien pré-rempli collé en entier fonctionne aussi.
+FORM_URL = os.environ.get("FORM_URL", "").strip().split("?")[0]
 ENTREES = {
     "protocole": os.environ.get("ENTREE_PROTOCOLE", ""),   # question « Protocole »
     "statut": os.environ.get("ENTREE_STATUT", ""),         # question « Statut »
@@ -60,7 +61,10 @@ def bloc(p):
 def main():
     reel = "--envoyer" in sys.argv
     protocoles = {p["id"]: p for p in lire_protocoles("protocoles.csv")}
-    investigateurs = json.loads(os.environ.get("INVESTIGATEURS") or "{}")
+    try:
+        investigateurs = json.loads(os.environ.get("INVESTIGATEURS") or "{}")
+    except json.JSONDecodeError as e:
+        print("ERREUR : le secret INVESTIGATEURS n'est pas un JSON valide :", e, file=sys.stderr); return 1
     par_adresse = {}
     for pid, adresses in investigateurs.items():
         pid = " ".join(pid.split())
@@ -73,11 +77,19 @@ def main():
         for a in ([adresses] if isinstance(adresses, str) else adresses):
             par_adresse.setdefault(a.strip(), []).append(p)
     if not par_adresse:
-        print("Aucun destinataire."); return 0
+        print("ERREUR : aucun destinataire. Secret INVESTIGATEURS vide, mal formé, ou protocoles tous clos.", file=sys.stderr); return 1
     expediteur = os.environ.get("GMAIL_ADRESSE", "")
     ctx = ssl.create_default_context()
-    serveur = smtplib.SMTP_SSL("smtp.gmail.com", 465, context=ctx) if reel else None
-    if reel: serveur.login(expediteur, os.environ["GMAIL_MOT_DE_PASSE_APPLICATION"])
+    serveur = None
+    if reel:
+        mdp = os.environ.get("GMAIL_MOT_DE_PASSE_APPLICATION", "")
+        if not expediteur or not mdp:
+            print("ERREUR : secret GMAIL_ADRESSE ou GMAIL_MOT_DE_PASSE_APPLICATION vide ou absent.", file=sys.stderr); return 1
+        try:
+            serveur = smtplib.SMTP_SSL("smtp.gmail.com", 465, context=ctx)
+            serveur.login(expediteur, mdp)
+        except smtplib.SMTPAuthenticationError as e:
+            print("ERREUR : Gmail refuse la connexion (mot de passe d'application invalide ou révoqué).", e, file=sys.stderr); return 1
     for adresse, liste in sorted(par_adresse.items()):
         msg = EmailMessage()
         msg["Subject"] = "Rappel mensuel : statut et inclusions de vos protocoles de recherche"
