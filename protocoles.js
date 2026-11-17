@@ -1146,6 +1146,10 @@ window.PROTOCOLES = [
       "tel": ""
     },
     "statut": "ouvert",
+    "recrutement": {
+      "inclus": 0,
+      "objectif": 40
+    },
     "document": "https://clinicaltrials.gov/study/NCT03932981?term=temozolomide%20alone%20adult%20brainstem%20gliomas%20diffuse%20subtype%20radiological%20progression&viewType=Card&rank=1",
     "majLe": "2026-11-07",
     "criteres": [
@@ -1222,6 +1226,10 @@ window.PROTOCOLES = [
       "tel": ""
     },
     "statut": "ouvert",
+    "recrutement": {
+      "inclus": 10,
+      "objectif": 10
+    },
     "document": "https://clinicaltrials.gov/study/NCT05476939?cond=Glioma&term=ONC201&viewType=Card&rank=10",
     "majLe": "2026-11-07",
     "criteres": [
@@ -1591,6 +1599,10 @@ window.PROTOCOLES = [
       "tel": ""
     },
     "statut": "clos",
+    "recrutement": {
+      "inclus": 0,
+      "objectif": 500
+    },
     "document": "https://clinicaltrials.gov/study/NCT03663725?cond=Glioblastoma&term=STRATEGLIO&viewType=Card&rank=1",
     "majLe": "2026-11-07",
     "criteres": [
@@ -2090,7 +2102,7 @@ window.PROTOCOLES = [
       "email": "",
       "tel": ""
     },
-    "statut": "ouvert",
+    "statut": "en_preparation",
     "document": "https://clinicaltrials.gov/study/NCT07100730?cond=Glioblastoma&term=TLX101-Tx%20&viewType=Card&rank=1",
     "majLe": "2026-11-07",
     "criteres": [
@@ -2563,7 +2575,7 @@ window.PROTOCOLES = [
       "email": "",
       "tel": ""
     },
-    "statut": "ouvert",
+    "statut": "en_preparation",
     "document": "",
     "majLe": "2026-11-07",
     "criteres": [
@@ -3026,6 +3038,10 @@ window.PROTOCOLES = [
       "tel": ""
     },
     "statut": "ouvert",
+    "recrutement": {
+      "inclus": 0,
+      "objectif": 22
+    },
     "document": "https://clinicaltrials.gov/study/NCT05135858?cond=Lymphoma&term=Methoglu&viewType=Card&rank=1",
     "majLe": "2026-11-07",
     "criteres": [
@@ -3132,6 +3148,10 @@ window.PROTOCOLES = [
       "tel": ""
     },
     "statut": "ouvert",
+    "recrutement": {
+      "inclus": 0,
+      "objectif": 152
+    },
     "document": "https://clinicaltrials.gov/study/NCT03328078?cond=Lymphoma&term=CA-4948-101%20&viewType=Card&rank=1",
     "majLe": "2026-11-07",
     "criteres": [
@@ -3225,6 +3245,10 @@ window.PROTOCOLES = [
       "tel": ""
     },
     "statut": "ouvert",
+    "recrutement": {
+      "inclus": 0,
+      "objectif": 152
+    },
     "document": "https://clinicaltrials.gov/study/NCT03328078?cond=Lymphoma&term=CA-4948-101%20&viewType=Card&rank=1",
     "majLe": "2026-11-07",
     "criteres": [
@@ -3345,7 +3369,7 @@ window.PROTOCOLES = [
       "email": "",
       "tel": ""
     },
-    "statut": "ouvert",
+    "statut": "en_preparation",
     "document": "",
     "majLe": "2026-11-07",
     "criteres": [
@@ -3385,6 +3409,10 @@ window.PROTOCOLES = [
       "tel": ""
     },
     "statut": "ouvert",
+    "recrutement": {
+      "inclus": 0,
+      "objectif": 60
+    },
     "document": "https://clinicaltrials.gov/study/NCT06931652?cond=Lymphoma&term=E-REVRI%20&viewType=Card&rank=1",
     "majLe": "2026-11-07",
     "criteres": [
@@ -3650,6 +3678,10 @@ window.PROTOCOLES = [
       "tel": ""
     },
     "statut": "ouvert",
+    "recrutement": {
+      "inclus": 0,
+      "objectif": 56
+    },
     "document": "https://clinicaltrials.gov/study/NCT06079294?term=ENCEPHATAIP&viewType=Card&rank=1",
     "majLe": "2026-11-07",
     "criteres": [
@@ -3723,6 +3755,10 @@ window.PROTOCOLES = [
       "tel": ""
     },
     "statut": "ouvert",
+    "recrutement": {
+      "inclus": 0,
+      "objectif": 4
+    },
     "document": "https://clinicaltrials.gov/study/NCT06373211?cond=Neuronopathy&term=NESPA&viewType=Card&rank=1",
     "majLe": "2026-11-07",
     "criteres": [
