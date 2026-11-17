@@ -1,0 +1,36 @@
+name: Mise à jour des protocoles depuis le formulaire
+
+on:
+  schedule:
+    - cron: "0 6 * * *"        # chaque jour vers 7 h ou 8 h (France)
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  maj:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Lire les réponses et mettre à jour protocoles.csv
+        env:
+          REPONSES_CSV_URL: ${{ vars.REPONSES_CSV_URL }}
+        run: python3 maj_depuis_reponses.py
+      - name: Régénérer protocoles.js
+        run: |
+          if ! git diff --quiet protocoles.csv; then node regenerer.js; fi
+      - name: Proposer la modification (demande à relire et accepter)
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          if git diff --quiet protocoles.csv; then echo "Rien à proposer."; exit 0; fi
+          branche="maj-reponses-$(date +%Y%m%d-%H%M)"
+          git config user.name "Mise à jour automatique"
+          git config user.email "actions@users.noreply.github.com"
+          git checkout -b "$branche"
+          git add protocoles.csv protocoles.js
+          git commit -m "Mise à jour des protocoles depuis les réponses du formulaire"
+          git push origin "$branche"
+          gh pr create --title "Mise à jour des protocoles ($(date +%d/%m/%Y))" --body-file resume-pr.md --base "${{ github.event.repository.default_branch }}"
