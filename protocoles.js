@@ -2,7 +2,7 @@
    Pour modifier le dossier : corriger les CSV puis refaire la conversion dans la page « Études en cours ». */
 
 window.DOSSIER_META = {
-  "majLe": "2026-11-17",
+  "majLe": "2026-11-18",
   "responsable": ""
 };
 
@@ -28,7 +28,7 @@ window.PROTOCOLES = [
       "objectif": 411
     },
     "document": "https://clinicaltrials.gov/study/NCT05904119?term=LEGATO&viewType=Card&intr=%20Lomustine%20&rank=1",
-    "majLe": "2026-10-30",
+    "majLe": "2026-11-17",
     "criteres": [
       {
         "type": "inclusion",
@@ -313,7 +313,7 @@ window.PROTOCOLES = [
       "objectif": 10
     },
     "document": "https://clinicaltrials.gov/study/NCT06622434?term=Litenimod%20temozolomide%20&viewType=Card&rank=1",
-    "majLe": "2026-10-30",
+    "majLe": "2026-11-17",
     "criteres": [
       {
         "type": "inclusion",
