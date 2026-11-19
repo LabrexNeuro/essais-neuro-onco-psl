@@ -199,6 +199,7 @@ main .cadre { padding-block: 24px 56px; }
 .groupe-non > summary { cursor: pointer; padding: 10px 14px; font-weight: 700; font-size: .9375rem; color: var(--ink-2); }
 .groupe-non[open] > summary { border-bottom: 1px solid var(--line); }
 .groupe-non .liste-cartes { padding: 10px; margin: 0; }
+.note-prep { margin: 0; padding: 10px 14px 0; color: var(--ink-2); font-size: .875rem; }
 
 .barre-mobile { position: fixed; left: 0; right: 0; bottom: 0; z-index: 20; background: var(--surface); border-top: 1px solid var(--line);
   padding: 10px max(16px, env(safe-area-inset-right, 0px)) calc(10px + env(safe-area-inset-bottom, 0px)) max(16px, env(safe-area-inset-left, 0px));
@@ -611,7 +612,7 @@ tr:last-child td { border-bottom: 0; }
       el("summary", null,
         el("div", { class: "carte-ligne1" },
           el("span", { class: "acro" }, p.acronyme),
-          el("span", { class: "pill " + ev.statut }, VERDICT[ev.statut]),
+          el("span", { class: "pill " + ev.statut }, ev.prep ? "En préparation · " + VERDICT[ev.statut].toLowerCase() : VERDICT[ev.statut]),
           el("span", { class: "chevron", "aria-hidden": "true" }, "▾")),
         el("div", { class: "carte-titre" }, p.titre),
         el("div", { class: "raison" }, raison(ev))),
@@ -639,10 +640,19 @@ tr:last-child td { border-bottom: 0; }
     return evs;
   }
 
+  // Protocoles « en préparation » : évalués à part, jamais comptés ; affichés seulement s'ils ne sont pas exclus.
+  function evaluerPrep() {
+    return PROTOCOLES.filter(function (p) { return p.statut === "en_preparation"; })
+      .map(function (p) { var e = MOTEUR.evaluerProtocole(p, get); e.p = p; e.prep = true; return e; })
+      .filter(function (e) { return e.statut !== "non"; })
+      .sort(function (a, b) { return a.manquants.length - b.manquants.length || a.p.acronyme.localeCompare(b.p.acronyme); });
+  }
+
   function rendreResultats() {
     var cont = $("#resultats");
     var champCle = CONFIG.CHAMP_OBLIGATOIRE;
-    var nonOuverts = PROTOCOLES.length - PROTOCOLES.filter(function (p) { return p.statut === "ouvert"; }).length;
+    var prep = champCle && get(champCle) === null ? [] : evaluerPrep();
+    var nonOuverts = PROTOCOLES.filter(function (p) { return p.statut !== "ouvert"; }).length - prep.length;
     cont.textContent = "";
     if (champCle && get(champCle) === null) {
       cont.appendChild(el("h3", null, "Protocoles correspondants"));
@@ -670,7 +680,15 @@ tr:last-child td { border-bottom: 0; }
       cont.appendChild(el("div", { class: "liste-cartes" }, par.verifier.map(carte)));
     }
     if (!par.compatible.length && !par.verifier.length) {
-      cont.appendChild(el("div", { class: "vide" }, "Aucun protocole ouvert ne correspond aux informations saisies pour le moment."));
+      cont.appendChild(el("div", { class: "vide" }, "Aucun protocole ouvert ne correspond aux informations saisies pour le moment." + (prep.length ? " Voir ci-dessous les protocoles en préparation." : "")));
+    }
+    if (prep.length) {
+      var gp = el("details", { class: "groupe-non groupe-prep" }, el("summary", null, "Bientôt ouverts : en préparation (" + prep.length + ")"),
+        el("p", { class: "note-prep" }, "Ces protocoles ne recrutent pas encore. Ils ne sont pas comptés ci-dessus et sont indiqués à titre d'information."),
+        el("div", { class: "liste-cartes" }, prep.map(carte)));
+      gp.open = !!ouverts.__prep;
+      gp.addEventListener("toggle", function () { ouverts.__prep = gp.open; });
+      cont.appendChild(gp);
     }
     if (par.non.length) {
       var g = el("details", { class: "groupe-non" }, el("summary", null, "Non compatibles (" + par.non.length + ")"), el("div", { class: "liste-cartes" }, par.non.map(carte)));
