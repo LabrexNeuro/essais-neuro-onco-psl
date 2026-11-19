@@ -702,7 +702,7 @@ tr:last-child td { border-bottom: 0; }
       el("div", null, el("button", { type: "button", class: "btn petit", id: "btn-copier", onclick: copierSynthese }, "Copier la synthèse")),
       el("div", { id: "zone-copie", hidden: true }));
     cont.appendChild(pied);
-    derniereSynthese = construireSynthese(par);
+    derniereSynthese = construireSynthese(par, prep);
     majBarre(par);
   }
   function tuile(cls, n, lib) { return el("div", { class: "tuile t-" + cls }, el("b", null, String(n)), el("span", null, lib)); }
@@ -714,10 +714,11 @@ tr:last-child td { border-bottom: 0; }
     $("#barre-texte").textContent = pluriel(par.compatible.length, "compatible", "compatibles") + " · " + par.verifier.length + " à vérifier";
   }
 
-  function construireSynthese(par) {
+  function construireSynthese(par, prep) {
     var lignes = ["Aide à l'orientation vers les protocoles de recherche (à confirmer par l'investigateur)", "Date : " + new Date().toLocaleDateString("fr-FR"), "", "Profil saisi :"];
     CHAMPS.forEach(function (s) {
       s.champs.forEach(function (d) {
+        if (dom[d.id] && dom[d.id].wrap.hidden) return;   // champ masqué (ou valeur par défaut) : absent du profil
         var v = get(d.id);
         if (d.type === "case") { if (v === true) lignes.push("- " + d.label); }
         else if (v !== null) lignes.push("- " + d.label + " : " + MOTEUR.formater(d, v));
@@ -729,6 +730,14 @@ tr:last-child td { border-bottom: 0; }
     }
     liste("Protocoles compatibles", par.compatible, function (e) { return e.manuels.length ? "à confirmer : " + e.manuels.map(function (m) { return m.critere.texte; }).join(" ; ") : "aucun point à confirmer"; });
     liste("Protocoles à vérifier", par.verifier, function (e) { return "manque : " + e.manquants.map(function (m) { return m.critere.texte; }).join(" ; "); });
+    if (prep && prep.length) {
+      lignes.push("", "Protocoles en préparation (pas encore ouverts aux inclusions, à titre d'information)");
+      prep.forEach(function (e) {
+        lignes.push("- " + e.p.acronyme + " (" + (e.statut === "verifier"
+          ? "manque : " + e.manquants.map(function (m) { return m.critere.texte; }).join(" ; ")
+          : (e.manuels.length ? "à confirmer : " + e.manuels.map(function (m) { return m.critere.texte; }).join(" ; ") : "aucun point à confirmer")) + ")");
+      });
+    }
     return lignes.join("\n");
   }
   function copierTexte(texte, apres, zone) {
